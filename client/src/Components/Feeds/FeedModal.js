@@ -1,9 +1,36 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
+import reduceTextLengh from '../../utility/reduceTextLengh';
+
+var moment = require('moment');
 
 export default function FeedModal({ open, setOpen }) {
+
+  const { livefeed } = useSelector(state => {
+    return {
+      livefeed: state.livefeed,
+    };
+  });
+
+  let tag = livefeed.livefeedData.tag;
+  let marketType, tagColor;
+
+  if (tag === 1) {
+    marketType = 'Bearish'
+    tagColor = 'dark-red'
+  } else if (tag === 2) {
+    marketType = 'Bullish'
+    tagColor = 'green'
+  } else if (tag === 3) {
+    marketType = 'LMAO'
+    tagColor = 'yellow'
+  } else {
+    marketType = 'not-found'
+    tagColor = 'white'
+  }
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -39,11 +66,13 @@ export default function FeedModal({ open, setOpen }) {
 
                     <div className="flex items-start justify-between text-brand-gray-300">
                       <h2 className="text-lg font-semibold">
-                        Marvel Icon Behind Batman, Green Lantern To Launch Exclusive Comic NFT Collection
+                        {livefeed.livefeedData.title}
                         <span className="inline-block ml-1">
-                          <svg className="w-4 h-4">
-                            <use href="assets/icons/link.svg#icon-linked"></use>
-                          </svg>
+                          <a href={livefeed.livefeedData.link} target="_blank">
+                            <svg className="w-4 h-4">
+                              <use href="assets/icons/link.svg#icon-linked"></use>
+                            </svg>
+                          </a>
                         </span>
                       </h2>
                       <div className="ml-7 flex items-center">
@@ -63,24 +92,30 @@ export default function FeedModal({ open, setOpen }) {
                           NBA Top shot
                         </p>
                       </div>
-                      <p className="bg-brand-dark-red bg-opacity-20 flex items-center rounded-full px-2.5 py-1 ml-auto">
-                        <img src="assets/icons/bearish.svg" alt="" />
-                        <span className="text-xxs text-brand-dark-red font-semibold ml-1">Bearish</span>
-                      </p>
+                      {tag !== 0 ?
+                        <p className={`bg-brand-${tagColor} bg-opacity-20 flex items-center rounded-full px-2.5 py-1`}>
+                          <img src={`../assets/icons/${marketType.toLowerCase()}.svg`} alt="" />
+                          <span className={`text-xxs text-brand-${tagColor}  font-semibold ml-1`}>
+                            {marketType}
+                          </span>
+                        </p>
+                        :
+                        null
+                      }
 
                       <div className="flex items-center mt-2 md:mt-0 space-x-3">
 
                         <p className="flex items-center">
                           <img src="assets/icons/clock.svg" alt="" />
-                          <span className="ml-1.5">15 min ago</span>
+                          <span className="ml-1.5">{moment(livefeed.livefeedData.created_time).fromNow()}</span>
                         </p>
                         <p className="flex items-center">
                           <img src="assets/icons/web.svg" alt="" />
-                          <span className="ml-1.5">zycrypto</span>
+                          <span className="ml-1.5">{reduceTextLengh(livefeed.livefeedData.link, 25)}</span>
                         </p>
                         <p className="flex items-center">
                           <img src="assets/icons/comment.svg" alt="" />
-                          <span className="ml-1.5">15</span>
+                          <span className="ml-1.5">{livefeed.livefeedData.tag}</span>
                         </p>
                       </div>
 
@@ -89,13 +124,10 @@ export default function FeedModal({ open, setOpen }) {
 
                       {/* <!-- Image --> */}
                       <div className="h-44 rounded-md overflow-hidden py-4">
-                        <img className="w-full h-full object-cover object-center" src="assets/images/feed-image.png" alt="" />
+                        <img className="w-full h-full object-cover object-center" src={livefeed.livefeedData.media} alt="" />
                       </div>
                       <p className="text-sm text-brand-gray-400">
-                        The art world and the world of blockchain are currently seeing a huge intersection thanks to the rise
-                        of non-fungible tokens or NFTs as they are commonly called. Top artists from around the world have
-                        been selling their work as NFTs with millions of dollars being raised and NFT platforms seeing more
-                        attention...
+                        {livefeed.livefeedData.description}
                       </p>
                     </div>
                   </div>

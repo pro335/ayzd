@@ -1,12 +1,22 @@
 import React from 'react'
+import { useSelector, useDispatch } from 'react-redux';
 import SwiperCore from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
-import { Link } from "react-router-dom";
+import isValid from '../../utility/isValid';
+import config from '../../config/config';
 
 SwiperCore.use([]);
 
 const MediaList = () => {
+    
+  const { project } = useSelector(state => {
+    return {
+      project: state.project,
+    };
+  });
+
+  var url = null;
 
   return (
     <>
@@ -27,13 +37,15 @@ const MediaList = () => {
         }}
       >
         {
-          [...Array(12).keys()].map(slide => (
-            <SwiperSlide key={slide} className="pl-4">
-              <Link to="/" className="block lg:flex-shrink-0 bg-brand-gray-800 rounded-lg overflow-hidden">
+          project.projectData.media_list.map((media, index) => (
+            url = isValid(media.url) && media.type === 0 ? media.url : `${config.bucket_url}/${config.common_image}`,
+
+            <SwiperSlide key={index} className="pl-4">
+              <a href={url} className="block lg:flex-shrink-0 bg-brand-gray-800 rounded-lg overflow-hidden" target="_blank">
                 <div className="w-full">
-                  <img className="w-full" src="../assets/images/media.png" alt="" />
+                  <img className="w-full" src={url} alt="" />
                 </div>
-              </Link>
+              </a>
             </SwiperSlide>
           ))
         }

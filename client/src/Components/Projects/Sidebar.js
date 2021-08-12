@@ -1,10 +1,22 @@
 import React, { useState } from 'react'
 import ProjectsList from "./ProjectsList"
 import MobileSelectProjects from "./MobileSelectProjects";
+import { useSelector, useDispatch } from 'react-redux';
+import * as actions from '../../redux/actions';
+import * as ActionTypes from '../../redux/ActionTypes';
+import isValid from '../../utility/reduceTextLengh';
+
 import data from '../../data.json'
 
 const Sidebar = () => {
-  const projects = data.projects;
+
+  const { project } = useSelector(state => {
+    return {
+      project: state.project,
+    };
+  });
+
+  const projects = project.projects;
   const [filterProject, setFilterProject] = useState(projects);
   const [isActive, setIsActive] = useState(projects[0].name)
 
