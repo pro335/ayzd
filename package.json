@@ -1,0 +1,27 @@
+{
+  "name": "ayzd-frontend-part",
+  "version": "1.0.0",
+  "homepage": "./",
+  "description": "This is the frontend part of ayzd",
+  "main": "server.js",
+  "scripts": {
+    "client-install": "npm install --prefix client",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install webpack@4.42.0 --prefix && npm install --prefix client && npm run build --prefix client"
+  },
+  "author": "author",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "concurrently": "^5.0.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "path": "^0.12.7"
+  },
+  "engines": {
+    "node": "14.17.0"
+  }
+}

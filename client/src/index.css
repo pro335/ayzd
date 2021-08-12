@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body, html {
+    @apply h-full
+  }
+
+  body {
+    @apply relative bg-brand-gray-900 font-inter text-brand-gray-500 text-sm font-medium
+  }
+
+  ::-webkit-scrollbar {
+    @apply h-px w-px rounded-full
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-transparent
+  }
+}
+
+.similar-projects-slider .swiper-slide {
+  height: calc((100% - 15px) / 2);
+}
+
+@layer utilities {
+
+  /* Custom class for smooth hover */
+  .onHover,
+  .nav-menu a {
+    @apply transition-colors duration-200 ease-out
+  }
+
+  .nav-menu a.active {
+    @apply text-brand-gray-100 border-brand-AYZD-PURPLE
+  }
+
+  .nav-menu a.active svg,
+  .mobile-nav-menu a.active svg {
+    @apply text-brand-AYZD-PURPLE
+  }
+
+  .mobile-nav-menu a.active {
+    @apply text-brand-gray-100
+  }
+
+  .form-checkbox {
+    @apply focus:ring-0 focus:border-brand-gray-700 focus:shadow-none focus:ring-offset-0
+  }
+
+}
+
+@media screen and (min-width: 1024px) {
+  main {
+    height: calc(100vh - 32px);
+  }
+}
