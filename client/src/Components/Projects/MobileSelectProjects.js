@@ -1,26 +1,58 @@
 import { Fragment, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
 import { Listbox, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 import { Link } from "react-router-dom";
-
+import isValid from '../../utility/isValid';
+import config from '../../config/config';
+import * as actions from '../../redux/actions';
+import * as ActionTypes from '../../redux/ActionTypes';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function MobileSelectProjects({ projects }) {
-  const [selected, setSelected] = useState(projects[3])
+
+  const dispatch = useDispatch();
+
+  const { project } = useSelector(state => {
+    return {
+      project: state.project,
+    };
+  });
+
+  const [selected, setSelected] = useState(isValid(projects) ? projects[0] : "");
+
+  const handleClick = (proj) => {
+
+    dispatch({
+      type: ActionTypes.SET_PROJECT_ID,
+      data: proj._id,
+    });
+  
+    let data = project.projects.filter(function(item) {
+      return item._id === proj._id;
+    });
+    if(isValid(data)) {
+      dispatch({
+        type: ActionTypes.SET_PROJECT,
+        data: data[0],
+      });
+    }
+  }
 
   return (
     <Listbox value={selected} onChange={setSelected}>
-      {({ open }) => (
+      {isValid(selected) ?
+      ({ open }) => (
         <>
 
           <div className="pt-4 relative">
 
             <Listbox.Button className="relative w-full bg-brand-gray-800 rounded-md shadow-sm pl-3 pr-10 py-2 text-left focus:outline-none">
               <span className="flex items-center">
-                <img src={`../assets/logos/${selected.icon}.svg`} alt={selected.name} className="flex-shrink-0 h-6 w-6 rounded-full" />
+                <img src={selected.main_image} className="flex-shrink-0 h-6 w-6 rounded-full" />
 
                 <span className="block text-sm font-medium text-gray-200 ml-3">
                   {selected.name}
@@ -45,7 +77,7 @@ export default function MobileSelectProjects({ projects }) {
               >
                 {
                   projects.map((person, index) => {
-                    const url = person.name.toLowerCase().replace(/\s/g, '-')
+                    const main_image = isValid(person.main_image) ? person.main_image.url : `${config.bucket_url}/${config.common_image}`;
 
                     return (
                       <Listbox.Option
@@ -60,8 +92,8 @@ export default function MobileSelectProjects({ projects }) {
                       >
                         {({ selected }) => (
                           <>
-                            <Link to={url === 'nba-top-shot' ? "/nba-top-shot" : "/"} className="flex items-center">
-                              <img src={`../assets/logos/${person.icon}.svg`} alt="" className="flex-shrink-0 h-6 w-6 rounded-full" />
+                            <Link to={"/nba-top-shot"} className="flex items-center" onClick={() => handleClick(person)}>
+                              <img src={main_image} alt="" className="flex-shrink-0 h-6 w-6 rounded-full" />
                               <span
                                 className={classNames(selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}
                               >
@@ -77,7 +109,9 @@ export default function MobileSelectProjects({ projects }) {
             </Transition>
           </div>
         </>
-      )}
+      )
+      :
+      null }
     </Listbox>
   )
 }

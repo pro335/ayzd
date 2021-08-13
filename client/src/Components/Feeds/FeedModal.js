@@ -5,6 +5,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import reduceTextLengh from '../../utility/reduceTextLengh';
 import isValid from '../../utility/isValid';
+import config from '../../config/config';
 
 var moment = require('moment');
 
@@ -16,7 +17,19 @@ export default function FeedModal({ open, setOpen }) {
     };
   });
 
-  let tag = isValid(livefeed.livefeedData) ? livefeed.livefeedData.tag : 0;
+  const livefeedData = isValid(livefeed.livefeedData) ?
+    livefeed.livefeedData
+    :
+    {
+      title: "",
+      link: "",
+      created_time: "2021-07-22T12:41:00.000+00:00",
+      description: "",
+      tag: 0,
+      media: `${config.bucket_url}/${config.common_image}`,
+    };
+
+  let tag = isValid(livefeedData) ? livefeedData.tag : 0;
   let marketType, tagColor;
 
   if (tag === 1) {
@@ -67,9 +80,9 @@ export default function FeedModal({ open, setOpen }) {
 
                     <div className="flex items-start justify-between text-brand-gray-300">
                       <h2 className="text-lg font-semibold">
-                        {livefeed.livefeedData.title}
+                        {livefeedData.title}
                         <span className="inline-block ml-1">
-                          <a href={livefeed.livefeedData.link} target="_blank">
+                          <a href={livefeedData.link} target="_blank">
                             <svg className="w-4 h-4">
                               <use href="assets/icons/link.svg#icon-linked"></use>
                             </svg>
@@ -108,15 +121,15 @@ export default function FeedModal({ open, setOpen }) {
 
                         <p className="flex items-center">
                           <img src="assets/icons/clock.svg" alt="" />
-                          <span className="ml-1.5">{moment(livefeed.livefeedData.created_time).fromNow()}</span>
+                          <span className="ml-1.5">{moment(livefeedData.created_time).fromNow()}</span>
                         </p>
                         <p className="flex items-center">
                           <img src="assets/icons/web.svg" alt="" />
-                          <span className="ml-1.5">{reduceTextLengh(livefeed.livefeedData.link, 25)}</span>
+                          <span className="ml-1.5">{reduceTextLengh(livefeedData.link, 25)}</span>
                         </p>
                         <p className="flex items-center">
                           <img src="assets/icons/comment.svg" alt="" />
-                          <span className="ml-1.5">{livefeed.livefeedData.tag}</span>
+                          <span className="ml-1.5">{livefeedData.tag}</span>
                         </p>
                       </div>
 
@@ -125,10 +138,10 @@ export default function FeedModal({ open, setOpen }) {
 
                       {/* <!-- Image --> */}
                       <div className="h-44 rounded-md overflow-hidden py-4">
-                        <img className="w-full h-full object-cover object-center" src={livefeed.livefeedData.media} alt="" />
+                        <img className="w-full h-full object-cover object-center" src={livefeedData.media} alt="" />
                       </div>
                       <p className="text-sm text-brand-gray-400">
-                        {livefeed.livefeedData.description}
+                        {livefeedData.description}
                       </p>
                     </div>
                   </div>
