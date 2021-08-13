@@ -18,7 +18,7 @@ const Sidebar = () => {
 
   const projects = project.projects;
   const [filterProject, setFilterProject] = useState(projects);
-  const [isActive, setIsActive] = useState(projects[0].name)
+  const [isActive, setIsActive] = useState(isValid(projects) ? projects[0].name : "");
 
   const activeHandler = text => {
     setIsActive(text)

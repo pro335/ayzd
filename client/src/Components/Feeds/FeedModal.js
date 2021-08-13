@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import reduceTextLengh from '../../utility/reduceTextLengh';
+import isValid from '../../utility/isValid';
 
 var moment = require('moment');
 
@@ -15,7 +16,7 @@ export default function FeedModal({ open, setOpen }) {
     };
   });
 
-  let tag = livefeed.livefeedData.tag;
+  let tag = isValid(livefeed.livefeedData) ? livefeed.livefeedData.tag : 0;
   let marketType, tagColor;
 
   if (tag === 1) {
