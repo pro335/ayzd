@@ -2,7 +2,7 @@ import React from 'react'
 import SectionHeading from "./../SectionHeading";
 import { Link } from "react-router-dom";
 
-export const RankingSales = ({ projects, title, icon, day, classes }) => {
+const RankingSales = ({ projects, title, icon, day, classes }) => {
   return (
     <>
       <div className="border-r border-brand-gray-800">
@@ -71,3 +71,5 @@ export const RankingSales = ({ projects, title, icon, day, classes }) => {
     </>
   )
 }
+
+export default RankingSales;

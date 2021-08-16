@@ -3,10 +3,22 @@ import SwiperCore from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import Card from "../Card";
+import { useSelector, useDispatch } from 'react-redux';
+import isValid from '../../utility/isValid';
+import config from '../../config/config';
+import * as actions from '../../redux/actions';
+import * as ActionTypes from '../../redux/ActionTypes';
 
 SwiperCore.use([]);
 
 const TrendingNFT = () => {
+
+  const { nfts } = useSelector(state => {
+    return {
+      nfts: state.trading.nfts,
+    };
+  });
+
   return (
     <>
       <Swiper
@@ -25,9 +37,9 @@ const TrendingNFT = () => {
         }}
       >
         {
-          [...Array(4).keys()].map(slide => (
-            <SwiperSlide key={slide} className="pl-4">
-              <Card />
+          nfts.map((item, index) => (
+            <SwiperSlide key={index} className="pl-4">
+              <Card item={item}/>
             </SwiperSlide>
           ))
         }

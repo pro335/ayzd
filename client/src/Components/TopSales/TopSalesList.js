@@ -3,10 +3,20 @@ import SwiperCore from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
+import isValid from '../../utility/isValid';
+import config from '../../config/config';
 
 SwiperCore.use([]);
 
 const TopSalesList = () => {
+
+  const { topSales } = useSelector(state => {
+    return {
+      topSales: state.topSales,
+    };
+  });
+
   return (
     <>
       <Swiper
@@ -25,17 +35,17 @@ const TopSalesList = () => {
         }}
       >
         {
-          [...Array(4).keys()].map(slide => (
-            <SwiperSlide key={slide} className="pl-4">
-              <Link to="/" className="w-full block flex-shrink-0 bg-brand-gray-800 rounded-lg overflow-hidden">
+          topSales.topSales.map((item, index) => (
+            <SwiperSlide key={index} className="pl-4">
+              <div className="w-full block flex-shrink-0 bg-brand-gray-800 rounded-lg overflow-hidden">
                 <div>
-                  <img src="../assets/images/Avatar-01.png" alt="" />
+                  <img src={item.image} alt="" />
                 </div>
                 <div className="leading-5 p-3 pb-4">
-                  <p>CryptoPunk #9570</p>
-                  <p className="text-brand-gray-300 -mt-1">$165.19k</p>
+                  <p>{item.name}</p>
+                  <p className="text-brand-gray-300 -mt-1">{item.price}</p>
                 </div>
-              </Link>
+              </div>
             </SwiperSlide>
           ))
         }

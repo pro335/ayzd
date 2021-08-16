@@ -71,3 +71,19 @@ export const MEMBER_ERR = 'MEMBER_ERR';
 export const SET_MEMBER_ID = 'SET_MEMBER_ID';
 export const SET_MEMBER_ACTION = 'SET_MEMBER_ACTION';
 export const SET_MEMBER = 'SET_MEMBER';
+
+export const TOP_SALES = 'TOP_SALES';
+export const TOP_SALES_ERR = 'TOP_SALES_ERR';
+
+export const TOP_COLLECTIONS = 'TOP_COLLECTIONS';
+export const TOP_COLLECTIONS_ERR = 'TOP_COLLECTIONS_ERR';
+
+export const DAY_SALES = 'DAY_SALES';
+export const DAY_SALES_ERR = 'DAY_SALES_ERR';
+
+export const GAINERS_LOOSERS = 'GAINERS_LOOSERS';
+export const GAINERS_LOOSERS_ERR = 'GAINERS_LOOSERS_ERR';
+
+export const TRADING = 'TRADING';
+export const SET_CURRENT_SLUG = 'SET_CURRENT_SLUG';
+export const TRADING_ERR = 'TRADING_ERR';

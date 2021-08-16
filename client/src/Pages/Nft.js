@@ -6,16 +6,30 @@ import NFTSidebar from "../Components/NFT/NFTSidebar"
 import NotFound from "../Components/NFT/NotFound"
 import data from '../data.json'
 import SortButton from "../Components/NFT/SortButton"
+import { useSelector, useDispatch } from 'react-redux';
+import isValid from '../utility/isValid';
+import config from '../config/config';
+import * as actions from '../redux/actions';
+import * as ActionTypes from '../redux/ActionTypes';
 
 const Nft = () => {
-  const projects = data.projects;
+  
+  const { category, chain, project } = useSelector(state => {
+    return {
+      category: state.category,
+      chain: state.chain,
+      project: state.project,
+    };
+  });
+
+  const projects = project.projects;
   const [filteredProjects, setFilteredProjects] = useState(projects)
 
   const [all, setAll] = useState(false)
   const [open, setOpen] = useState(false)
 
   const handleChange = (e) => {
-    const value = e.target.value.toLowerCase();
+    const value = e.target.value;
 
     if (value === "all") {
       setFilteredProjects(projects)
@@ -23,11 +37,18 @@ const Nft = () => {
       return;
     }
 
-    const filter = projects.filter(item => item.category === value)
+    const filter = projects.filter(item => (isValid(item.category) && item.category._id === value) || (isValid(item.chain) && item.chain._id === value ));
 
     setFilteredProjects(filter)
   }
 
+  const handleSearch = (event) => {
+    let value = event.target.value.toLowerCase();
+    let result = [];
+
+    result = projects.filter((data) => data.name.toLowerCase().search(value) !== -1);
+    setFilteredProjects(result);
+  }
 
   return (
     <>
@@ -35,7 +56,8 @@ const Nft = () => {
         <div className="w-full fixed h-16 bg-brand-gray-800 z-30">
           <div className="h-full w-full relative">
             <input type="text" placeholder="Search NFT Projects"
-              className="h-full w-full bg-transparent text-sm placeholder-brand-gray-500 focus:text-gray-300  focus:outline-none px-14" />
+              className="h-full w-full bg-transparent text-sm placeholder-brand-gray-500 focus:text-gray-300  focus:outline-none px-14"
+              onChange={e => handleSearch(e)} />
 
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 absolute top-1/2 left-5 transform -translate-y-1/2"
               fill="none" viewBox="0 0 24 24" stroke="#7E7E7E">

@@ -150,8 +150,8 @@ export default function FeedModal({ open, setOpen }) {
                   <div className="px-6">
                     <ul className="divide-y divide-brand-gray-800">
                       {
-                        [...Array(8).keys()].map(item => (
-                          <li className="py-4">
+                        [...Array(8).keys()].map((item, index) => (
+                          <li className="py-4" key={index}>
                             <div className="flex space-x-3">
                               <img className="h-6 w-6 rounded-full" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=3&amp;w=256&amp;h=256&amp;q=80" alt="" />
                               <div className="flex-1 space-y-1">

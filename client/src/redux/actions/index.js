@@ -200,6 +200,23 @@ export const deleteLivefeed = (id) => {
     return axios.delete(`/api/livefeed/delete/${id}`);
 }
 
+// Scrape data
+export const fetchTopSales = () => {
+    return axios.get("/api/getData/getTopSales");
+}
+export const fetchTopCollections = () => {
+    return axios.get("/api/getData/getTopCollections");
+}
+export const fetchDaySales = () => {
+    return axios.get("/api/getData/getSalesOfDay");
+}
+export const fetchGainersLoosers = () => {
+    return axios.get("/api/getData/getGainersLoosers");
+}
+export const fetchTrading = () => {
+    return axios.get("/api/getData/trading");
+}
+
 // authorization token action(s)
 export const setAuthToken = token => {
     if(token) {

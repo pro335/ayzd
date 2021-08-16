@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { Link } from "react-router-dom";
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
@@ -6,9 +6,56 @@ import SectionHeading from "../Components/SectionHeading"
 import data from '../data.json'
 import MobileSelect from "../Components/TrandingFloor/Mobile-Select";
 import Settings from "../Components/TrandingFloor/Settings";
+import { useSelector, useDispatch } from 'react-redux';
+import isValid from '../utility/isValid';
+import config from '../config/config';
+import * as actions from '../redux/actions';
+import * as ActionTypes from '../redux/ActionTypes';
 
 const Trading = () => {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
+
+  const dispatch = useDispatch();
+
+  useEffect( () => {
+    async function fetchTrading() {
+      let resTrading = await actions.fetchTrading();
+      try {
+        let { success, dapps, nfts } = resTrading.data;
+        if(success) {
+          dispatch({
+            type: ActionTypes.TRADING,
+            dapps,
+            nfts,
+          });
+        } else {
+          dispatch({
+            type: ActionTypes.TRADING_ERR,
+            err: resTrading.data.errMessage
+          });
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    fetchTrading();
+  }, [])
+
+  const { dapps, current_nfts } = useSelector(state => {
+    return {
+      dapps: state.trading.dapps,
+      current_nfts: state.trading.current_nfts,
+    };
+  });
+
+  const handleClick = (item) => {
+    dispatch({
+      type: ActionTypes.SET_CURRENT_SLUG,
+      data: item.slug,
+    });
+  }
+
   return (
     <>
       <div className="h-full w-full grid lg:grid-cols-6 lg:overflow-hidden">
@@ -41,18 +88,19 @@ const Trading = () => {
 
             <div className="hidden lg:block px-1">
               {
-                data.trading.map((item, index) => (
-                  <Link to="/trading"
+                dapps.map((item, index) => (
+                  <div
                     className='h-10 hover:bg-brand-gray-800 flex items-center text-brand-gray-600 hover:text-gray-200 rounded-md onHover px-3 py-2'
-                    key={index}
+                    key={`dapps ${index}`}
+                    onClick={() => handleClick(item)}
                   >
                     <div className="w-6 h-6 mr-4">
-                      <img className="mx-auto h-full rounded-full" src={`../assets/logos/${item.icon}.svg`} alt="" />
+                      <img className="mx-auto h-full rounded-full" src={item.image} alt="" />
                     </div>
                     <p>
                       {item.name}
                     </p>
-                  </Link>
+                  </div>
                 ))
               }
             </div>
@@ -67,14 +115,14 @@ const Trading = () => {
               {/* Navigation */}
               <nav className="h-15 flex items-center border-b border-brand-gray-800 px-2 py-3" aria-label="Tabs">
                 {/* bg-gray-100 text-gray-700 */}
-                <a href="!#" className="font-medium text-sm rounded-md onHover hover:text-brand-gray-300 px-3 py-2"
+                {/* <a href="!#" className="font-medium text-sm rounded-md onHover hover:text-brand-gray-300 px-3 py-2"
                 >
                   Value
                 </a>
                 <a href="!#" className="font-medium text-sm rounded-md onHover hover:text-brand-gray-300 px-3 py-2"
                 >
                   Price
-                </a>
+                </a> */}
                 <a href="!#" className="font-medium text-sm rounded-md onHover hover:text-brand-gray-300 px-3 py-2"
                 >
                   Details
@@ -84,18 +132,18 @@ const Trading = () => {
 
               <div className="h-full overflow-y-scroll pb-6">
                 {
-                  [...Array(12).keys()].map(item => (
-                    <div key={item} className="w-full lg:h-15 flex flex-col md:flex-row lg:items-center border-b border-brand-gray-800 px-5 py-4 md:py-2">
+                  current_nfts.map(item => (
+                    <div key={item.id} className="w-full lg:h-15 flex flex-col md:flex-row lg:items-center border-b border-brand-gray-800 px-5 py-4 md:py-2">
                       <div className="flex items-center">
-                        <div>
+                        {/* <div>
                           <p className="text-brand-gray-300">$1,012</p>
                           <div className="relative h-1 bg-brand-gray-800 rounded-full overflow-hidden">
                             <div className="w-1/2 h-full bg-brand-green absolute left-0 rounded-full"></div>
                           </div>
-                        </div>
+                        </div> */}
 
                         <div className="px-4">
-                          <p className="text-brand-gray-300">$1,012</p>
+                          <p className="text-brand-gray-300">$ {Math.round(item.priceInDollar * 100)/100}</p>
                           <div className="relative h-1 bg-brand-gray-800 rounded-full overflow-hidden">
                             <div className="w-full h-full bg-brand-AYZD-PURPLE absolute left-0 rounded-full"></div>
                           </div>
@@ -103,33 +151,33 @@ const Trading = () => {
 
                         <div className="flex items-center space-x-3">
                           <div className="h-9 w-9">
-                            <img className="w-full h-full object-cover" src="../assets/images/play-box-image.png" alt="" />
+                            <img className="w-full h-full object-cover" src={item.image} alt="" />
                           </div>
                           <div>
-                            <h4 className="text-brand-gray-300">Nikola Jokić </h4>
+                            <h4 className="text-brand-gray-300">{item.name}</h4>
                             {/* Desktop */}
-                            <div className="hidden md:block text-xs space-x-1">
+                            {/* <div className="hidden md:block text-xs space-x-1">
                               <span>Jump Shot</span> ·
                               <span>02/09/2020</span>
                               <span>#3399</span>
-                            </div>
+                            </div> */}
                             {/* Mobile */}
-                            <div className="md:hidden text-xs">
+                            {/* <div className="md:hidden text-xs">
                               <p>
                                 <span>Jump Shot</span> ·&nbsp;
                                 <span>#3399</span>
                               </p>
                               <span>02/09/2020</span>
-                            </div>
+                            </div> */}
                           </div>
                         </div>
                       </div>
-                      <div className="flex items-center md:space-x-3 md:ml-auto mt-3.5 md:mt-0">
-                        <div className="flex flex-col text-xs pr-5 order-1 md:order-none ">
+                      <div className="flex items-center md:space-x-3 md:ml-auto mt-3.5 md:mt-0 ml-auto">
+                        {/* <div className="flex flex-col text-xs pr-5 order-1 md:order-none ">
                           <span>35m</span>
                           <span>50s ago</span>
-                        </div>
-                        <button className="h-10 bg-brand-AYZD-PURPLE text-sm text-white font-medium shadow-sm rounded-md hover:bg-purple-700 onHover px-4">
+                        </div> */}
+                        <button className="h-10 bg-brand-AYZD-PURPLE text-sm text-white font-medium shadow-sm rounded-md hover:bg-purple-700 onHover px-4" onClick={() => window.open(item.externalUrl, "_blank")}>
                           Buy
                         </button>
                         <button className="h-10 w-10 border border-brand-gray-500 hover:border-brand-gray-300 shadow-sm rounded-md onHover group mx-3 md:mx-0">

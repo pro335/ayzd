@@ -4,6 +4,7 @@ import SectionHeading from "./../SectionHeading";
 import TrendingNFT from "./../SingleProject/TrendingNFT";
 import FeedsList from "./../Feeds/FeedsList";
 import data from '../../data.json'
+import TopSalesSection from "../TopSales/TopSalesSection"
 
 const NBA = () => {
   return (
@@ -22,13 +23,14 @@ const NBA = () => {
           </div>
 
           <div>
-            <SectionHeading
+            {/* <SectionHeading
               title="Top sales of the day"
               icon="shopping-cart"
               classes="border-t"
-            />
+            /> */}
             <div className="py-5">
-              <TrendingNFT />
+              <TopSalesSection />
+              {/* <TrendingNFT /> */}
             </div>
           </div>
         </div>
