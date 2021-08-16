@@ -202,19 +202,19 @@ export const deleteLivefeed = (id) => {
 
 // Scrape data
 export const fetchTopSales = () => {
-    return axios.get("/api/getData/getTopSales");
+    return axios.post("/api/getData/getTopSales");
 }
 export const fetchTopCollections = () => {
-    return axios.get("/api/getData/getTopCollections");
+    return axios.post("/api/getData/getTopCollections");
 }
 export const fetchDaySales = () => {
-    return axios.get("/api/getData/getSalesOfDay");
+    return axios.post("/api/getData/getSalesOfDay");
 }
 export const fetchGainersLoosers = () => {
-    return axios.get("/api/getData/getGainersLoosers");
+    return axios.post("/api/getData/getGainersLoosers");
 }
 export const fetchTrading = () => {
-    return axios.get("/api/getData/trading");
+    return axios.post("/api/getData/trading");
 }
 
 // authorization token action(s)
