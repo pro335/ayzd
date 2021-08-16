@@ -17,10 +17,10 @@ function App() {
 
   useEffect( () => {
 
-    async function initializeStore() {
-      const serializedState = JSON.stringify(null)
-      localStorage.setItem('ayzd', serializedState)
-    }
+    // async function initializeStore() {
+    //   const serializedState = JSON.stringify(null)
+    //   localStorage.setItem('ayzd', serializedState)
+    // }
 
     async function fetchAllProjects() {
       let resProject = await actions.allProjects();
@@ -196,7 +196,7 @@ function App() {
       }
     }
 
-    initializeStore();
+    // initializeStore();
     fetchAllProjects();
     fetchAllLivefeeds();
     fetchTopSales();
