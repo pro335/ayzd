@@ -1,5 +1,5 @@
 const config = {
-  api_url: process.env.NODE_ENV !== "production"
+  api_url: process.env.NODE_ENV === "production"
     ? 'http://ayzd-admin.herokuapp.com'
     : 'http://localhost:8000',
   accessKeyId: "AKIARLDHYNPQSCDGLDKL",
