@@ -29,13 +29,13 @@ const navLinks = [
     // current: false,
     badge: false
   },
-  {
-    name: 'Trading floor',
-    to: '/trading',
-    icon: 'trading-floor',
-    // current: false,
-    badge: true
-  },
+  // {
+  //   name: 'Trading floor',
+  //   to: '/trading',
+  //   icon: 'trading-floor',
+  //   // current: false,
+  //   badge: true
+  // },
 ]
 
 const Header = () => {
@@ -65,17 +65,18 @@ const Header = () => {
               }
             </div>
             <div className="hidden lg:flex items-center font-medium ml-auto space-x-3">
-              <Link
+              {/* <Link
                 to="/"
                 className="text-brand-gray-400 hover:text-gray-100">
                 Sign up
-              </Link>
-              <Link
-                to="/"
+              </Link> */}
+              <a
+                href="https://ayzd.substack.com"
                 className="bg-brand-AYZD-PURPLE hover:bg-purple-700 text-white leading-7 rounded-xl px-10 py-1.5"
+                target="_blank"
               >
-                Login
-              </Link>
+                Subscribe to NFT newsletter
+              </a>
             </div>
 
             {/* Menu button */}
@@ -155,16 +156,20 @@ const Header = () => {
                       </div>
 
                       <div className="font-medium px-5 py-6 space-y-6">
-                        <Link to="/"
+                        {/* <Link to="/"
                           className="block bg-indigo-600 hover:bg-indigo-500 text-white text-center leading-7 rounded-xl px-10 py-1.5">
                           Sign Up
-                        </Link>
+                        </Link> */}
 
                         <p className="text-brand-gray-500 font-medium text-center leading-6">
-                          Existing customer?
-                          <Link to="/" className="inline-block text-indigo-600 hover:text-indigo-500 ml-1">
-                            Sign In
-                          </Link>
+                          {/* Existing customer? */}
+                          <a
+                            href="https://ayzd.substack.com"
+                            className="bg-brand-AYZD-PURPLE hover:bg-purple-700 text-white leading-7 rounded-xl px-10 py-1.5"
+                            target="_blank"
+                          >
+                            Subscribe to NFT newsletter
+                          </a>
                         </p>
 
                       </div>

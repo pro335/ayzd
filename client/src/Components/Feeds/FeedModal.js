@@ -127,10 +127,10 @@ export default function FeedModal({ open, setOpen }) {
                           <img src="assets/icons/web.svg" alt="" />
                           <span className="ml-1.5">{reduceTextLengh(livefeedData.link, 25)}</span>
                         </p>
-                        <p className="flex items-center">
+                        {/* <p className="flex items-center">
                           <img src="assets/icons/comment.svg" alt="" />
                           <span className="ml-1.5">{livefeedData.tag}</span>
-                        </p>
+                        </p> */}
                       </div>
 
                     </div>
@@ -147,7 +147,7 @@ export default function FeedModal({ open, setOpen }) {
                   </div>
 
                   {/* <!-- Modal Body --> */}
-                  <div className="px-6">
+                  {/* <div className="px-6">
                     <ul className="divide-y divide-brand-gray-800">
                       {
                         [...Array(8).keys()].map((item, index) => (
@@ -168,17 +168,17 @@ export default function FeedModal({ open, setOpen }) {
                         ))
                       }
                     </ul>
-                  </div>
+                  </div> */}
 
                   {/* <!-- Modal Message --> */}
-                  <div className="border-t border-brand-gray-800 px-6 py-3">
+                  {/* <div className="border-t border-brand-gray-800 px-6 py-3">
                     <div className="h-10 flex items-center space-x-3">
                       <input type="text" placeholder="Your comment" className="h-full flex-1 bg-transparent border border-brand-gray-800 rounded-md shadow-sm placeholder-brand-gray-500 focus:outline-none px-4" />
                       <button type="submit" className="h-full block bg-brand-AYZD-PURPLE text-sm text-white font-medium rounded-md px-5">
                         Add <span className="hidden md:inline-block">comment</span>
                       </button>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </Transition.Child>

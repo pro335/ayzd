@@ -49,10 +49,10 @@ const FeedActions = ({ feed: { tag, created_time, link, comments } }) => {
           <img src="assets/icons/web.svg" alt="" />
           <span className="ml-1.5">{reduceTextLengh(link, 15)}</span>
         </p>
-        <p className="flex items-center">
+        {/* <p className="flex items-center">
           <img src="assets/icons/comment.svg" alt="" />
           <span className="ml-1.5">{tag}</span>
-        </p>
+        </p> */}
       </div>
     </>
   )
