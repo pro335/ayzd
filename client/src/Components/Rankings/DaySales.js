@@ -3,6 +3,7 @@ import SectionHeading from "./../SectionHeading";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import isValid from '../../utility/isValid';
+import reduceTextLengh from '../../utility/reduceTextLengh';
 import config from '../../config/config';
 
 const RankingSales = ({ projects, title, icon, day, classes }) => {
@@ -35,7 +36,7 @@ const RankingSales = ({ projects, title, icon, day, classes }) => {
                   <p>
                     {index + 1}. {item.name}
                   </p>
-                  <p className="text-xs text-brand-gray-700 font-medium leading-5 -mt-1">{item.sub_name}</p>
+                  <p className="text-xs text-brand-gray-700 font-medium leading-5 -mt-1">{reduceTextLengh(item.sub_name, 70)}</p>
                 </div>
 
                 <div className="ml-auto">
