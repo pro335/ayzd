@@ -36,7 +36,7 @@ const RankingSales = ({ projects, title, icon, day, classes }) => {
                   <p>
                     {index + 1}. {item.name}
                   </p>
-                  <p className="text-xs text-brand-gray-700 font-medium leading-5 -mt-1">{reduceTextLengh(item.sub_name, 70)}</p>
+                  <p className="text-xs text-brand-gray-700 font-medium leading-5 -mt-1">{reduceTextLengh(item.sub_name, 30)}</p>
                 </div>
 
                 <div className="ml-auto">
