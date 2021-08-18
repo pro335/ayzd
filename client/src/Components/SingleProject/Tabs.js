@@ -62,7 +62,7 @@ const Tabs = () => {
             activTab === 2 ? <NFTList /> :
               activTab === 3 ? <Statistics /> :
                 activTab === 4 ? <Guides /> :
-                  activTab === 5 ? <LiveFeedSection /> :
+                  activTab === 5 ? <LiveFeedSection showDetailsPanel={false} /> :
                     activTab === 6 && <SimilarProjects />
         }
       </div>

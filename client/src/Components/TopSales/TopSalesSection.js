@@ -11,6 +11,7 @@ const TopSalesSection = () => {
           icon="top-sales"
           classes="border-t"
           buttons="view"
+          btnLink="/rankings"
         />
 
         <div className="py-5">

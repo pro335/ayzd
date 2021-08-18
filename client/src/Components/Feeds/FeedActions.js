@@ -1,10 +1,11 @@
 import React from 'react'
 import { useMediaQuery } from 'react-responsive'
 import reduceTextLengh from '../../utility/reduceTextLengh';
+import isValid from '../../utility/isValid';
 
 var moment = require('moment');
 
-const FeedActions = ({ feed: { tag, created_time, link, comments } }) => {
+const FeedActions = ({ feed: { tag, created_time, link, project, comments } }) => {
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 767px)' })
 
   let marketType, tagColor;

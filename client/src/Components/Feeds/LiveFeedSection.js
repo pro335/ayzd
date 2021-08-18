@@ -1,11 +1,27 @@
 import React from 'react'
+import { useSelector} from 'react-redux';
 import SectionHeading from "../SectionHeading"
 import FeedsList from "./FeedsList"
+import Banner from "../NBA/Banner";
 import data from '../../data.json'
+import isValid from '../../utility/isValid';
 
-const LiveFeedSection = ({ onClickHandler }) => {
+const LiveFeedSection = ({ showDetailsPanel=false, onClickHandler }) => {
+
+  const { project } = useSelector( state => {
+    return {
+      project: state.project
+    };
+  });
+
   return (
     <div className="h-full md:col-span-3 lg:overflow-hidden">
+
+      {showDetailsPanel && isValid(project.project_id) ?
+        <Banner />
+        :
+        null
+      }
 
       {/* <!-- Center Heading --> */}
       <SectionHeading

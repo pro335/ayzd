@@ -98,14 +98,18 @@ export default function FeedModal({ open, setOpen }) {
                     </div>
 
                     <div className="flex items-center flex-wrap text-xs text-brand-gray-600 font-medium md:space-x-3 mt-1">
-                      <div className="flex items-center border border-brand-gray-800 rounded-xl px-2 py-1">
-                        <div className="w-6 h-6 bg-brand-gray-900 mr-2">
-                          <img className="mx-auto h-full rounded-full" src="assets/logos/NBA-Top-shot.svg" alt="" />
+                      { isValid(livefeedData.project) ? 
+                        <div className="flex items-center border border-brand-gray-800 rounded-xl px-2 py-1">
+                          <div className="w-6 h-6 bg-brand-gray-900 mr-2">
+                            <img className="mx-auto h-full rounded-full" src={livefeedData.project.main_image} alt={livefeedData.project.name} />
+                          </div>
+                          <p className="text-sm text-gray-200">
+                            { livefeedData.project.name }
+                          </p>
                         </div>
-                        <p className="text-sm text-gray-200">
-                          NBA Top shot
-                        </p>
-                      </div>
+                        :
+                        null
+                      }
                       {tag !== 0 ?
                         <p className={`bg-brand-${tagColor} bg-opacity-20 flex items-center rounded-full px-2.5 py-1`}>
                           <img src={`../assets/icons/${marketType.toLowerCase()}.svg`} alt="" />

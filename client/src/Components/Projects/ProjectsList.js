@@ -31,6 +31,12 @@ const ProjectsList = ({ projects, isActive, activeHandler }) => {
         type: ActionTypes.SET_PROJECT,
         data: data[0],
       });
+
+      //Sort the livefeednews by the selected project
+      dispatch({
+        type: ActionTypes.SORTING_LIVE_FEED_BY_PROJECT,
+        project_id: proj._id,
+      });
     }
     activeHandler(proj.name);
   }
@@ -42,8 +48,8 @@ const ProjectsList = ({ projects, isActive, activeHandler }) => {
           const main_image = isValid(item.main_image) ? item.main_image : `${config.bucket_url}/${config.common_image}`;
 
           return (
-            <Link to={"/projects/decentraland"}
-              className={`${isActive === item.name ? 'bg-brand-gray-800 text-gray-200' : ''} h-10 hover:bg-brand-gray-800 flex items-center text-brand-gray-600 hover:text-gray-200 rounded-md onHover px-3 py-2`}
+            <div
+              className={`${isActive === item.name ? 'bg-brand-gray-800 text-gray-200' : ''} h-10 hover:bg-brand-gray-800 hover:cursor-pointer flex items-center text-brand-gray-600 hover:text-gray-200 rounded-md onHover px-3 py-2`}
               onClick={() => handleClick(item)}
               key={index}
             >
@@ -53,7 +59,7 @@ const ProjectsList = ({ projects, isActive, activeHandler }) => {
               <p>
                 {item.name}
               </p>
-            </Link>
+            </div>
           )
         })
       }

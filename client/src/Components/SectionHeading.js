@@ -2,7 +2,7 @@ import React from 'react';
 import { SortAscendingIcon, ChevronDownIcon } from '@heroicons/react/solid'
 import { Link } from "react-router-dom";
 
-const SectionHeading = ({ title, icon, buttons, classes }) => {
+const SectionHeading = ({ title, icon, buttons, classes, btnLink }) => {
   return (
     <div
       className={`h-15 flex items-center justify-between border-b ${classes} border-brand-gray-800 px-5 py-3`}>
@@ -34,7 +34,7 @@ const SectionHeading = ({ title, icon, buttons, classes }) => {
             )
             :
             (
-              <Link to="/" className="text-brand-gray-400 font-medium transition-colors duration-200 ease-out hover:text-gray-100">
+              <Link to={btnLink ? btnLink : "/"} className="text-brand-gray-400 font-medium transition-colors duration-200 ease-out hover:text-gray-100">
                 View All
               </Link>
             )

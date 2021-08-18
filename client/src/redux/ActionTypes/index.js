@@ -53,6 +53,7 @@ export const LIVE_FEED_ERR = 'LIVE_FEED_ERR';
 export const SORTING_LIVE_FEED_BY = 'SORTING_LIVE_FEED_BY';
 export const SET_LIVE_FEED_ID = 'SET_LIVE_FEED_ID';
 export const SET_LIVE_FEED = 'SET_LIVE_FEED';
+export const SORTING_LIVE_FEED_BY_PROJECT = 'SORTING_LIVE_FEED_BY_PROJECT';
 
 export const ADD_GUIDE = 'ADD_GUIDE';
 export const ALL_GUIDES = 'ALL_GUIDES';

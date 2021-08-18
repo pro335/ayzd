@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useMediaQuery } from 'react-responsive'
 import FeedActions from "./FeedActions"
 import { useSelector, useDispatch } from 'react-redux';
@@ -10,9 +10,10 @@ const FeedsList = ({ feeds, onClickHandler }) => {
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 767px)' })
   const dispatch = useDispatch();
 
-  const { livefeed } = useSelector(state => {
+  const { project, livefeed } = useSelector(state => {
     return {
       livefeed: state.livefeed,
+      project: state.project,
     };
   });
 

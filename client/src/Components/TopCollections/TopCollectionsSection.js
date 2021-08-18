@@ -21,6 +21,7 @@ const TopCollectionsSection = ({ projects }) => {
           icon="top-sales"
           buttons="view"
           classes="border-t"
+          btnLink="/rankings"
         />
 
         <div className="flex flex-col text-brand-gray-400 font-medium space-y-1 py-5 px-2">

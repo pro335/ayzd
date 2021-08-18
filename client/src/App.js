@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
@@ -10,10 +10,17 @@ import Trading from "./Pages/Trading";
 import SingleProject from "./Pages/SingleProject";
 import * as actions from './redux/actions';
 import * as ActionTypes from './redux/ActionTypes';
+import isValid from './utility/isValid';
 
 function App() {
 
   const dispatch = useDispatch();
+
+  const { project } = useSelector(state => {
+    return {
+      project: state.project,
+    };
+  });
 
   useEffect( () => {
 
@@ -206,7 +213,8 @@ function App() {
     fetchAllCategories();
     fetchAllChains();
     fetchTrading();
-  }, [])
+
+  }, []);
 
   return (
     <>

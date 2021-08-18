@@ -1,4 +1,5 @@
 import * as ActionTypes from '../ActionTypes';
+import isValid from '../../utility/isValid';
 
 const initState = {
   livefeeds: [],
@@ -85,6 +86,24 @@ const LivefeedReducer = (state = initState, action) => {
       return {
         ...state,
         livefeedData: data
+      }
+    
+    case ActionTypes.SORTING_LIVE_FEED_BY_PROJECT:
+      let project_id = action.project_id;
+      let livefeeds_include_project = [];   // livefeeds that include the project
+      let livefeeds_not_include = [];   // livefeeds that doesn't include the project
+      
+      tempData = state.livefeeds;
+      tempData = tempData.filter(function(item) {
+        isValid(item.project) && item.project._id === project_id ?
+          livefeeds_include_project.push(item)
+          :
+          livefeeds_not_include.push(item);
+      });
+
+      return {
+        ...state,
+        livefeeds: [...livefeeds_include_project, ...livefeeds_not_include],
       }
 
     default:
