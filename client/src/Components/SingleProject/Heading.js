@@ -15,7 +15,7 @@ const Heading = () => {
     };
   });
 
-  const main_image = isValid(project.projectData.main_image) ? project.projectData.main_image.url : `${config.bucket_url}/${config.common_image}`;
+  const main_image = isValid(project.projectData.main_image) ? project.projectData.main_image : `${config.bucket_url}/${config.common_image}`;
 
   return (
     <div className="flex items-center flex-wrap justify-center lg:justify-between space-y-6 lg:space-y-0 py-5 px-5 sm:px-6">

@@ -6,7 +6,7 @@ import * as actions from '../redux/actions';
 import * as ActionTypes from '../redux/ActionTypes';
 
 const Card = ({ item, type="nft" }) => {
-  const main_image = isValid(item) && isValid(item.main_image) ? item.main_image.url : `${config.bucket_url}/${config.common_image}`;
+  const main_image = isValid(item) && isValid(item.main_image) ? item.main_image : `${config.bucket_url}/${config.common_image}`;
   return (
     <>
       <div className="bg-brand-gray-800 border border-brand-gray-800 rounded-xl overflow-hidden">

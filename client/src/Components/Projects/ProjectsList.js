@@ -39,10 +39,10 @@ const ProjectsList = ({ projects, isActive, activeHandler }) => {
     <div className="h-full flex flex-col font-medium overflow-y-scroll space-y-2 py-3 px-2">
       {
         projects.map((item, index) => {
-          const main_image = isValid(item.main_image) ? item.main_image.url : `${config.bucket_url}/${config.common_image}`;
+          const main_image = isValid(item.main_image) ? item.main_image : `${config.bucket_url}/${config.common_image}`;
 
           return (
-            <Link to={"/nba-top-shot"}
+            <Link to={"/projects/decentraland"}
               className={`${isActive === item.name ? 'bg-brand-gray-800 text-gray-200' : ''} h-10 hover:bg-brand-gray-800 flex items-center text-brand-gray-600 hover:text-gray-200 rounded-md onHover px-3 py-2`}
               onClick={() => handleClick(item)}
               key={index}

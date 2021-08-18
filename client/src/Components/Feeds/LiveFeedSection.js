@@ -11,7 +11,7 @@ const LiveFeedSection = ({ onClickHandler }) => {
       <SectionHeading
         title="Live news feed"
         icon="live-feed"
-        buttons="all"
+        buttons=""
         classes="lg:border-r"
       />
       {/* <!-- End --> */}

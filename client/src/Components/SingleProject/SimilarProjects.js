@@ -23,7 +23,7 @@ const SimilarProjects = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-7 gap-3 md:gap-x-6">
           {
             project.projectData.similar_list.map((item, index) => (
-              imageUrl = isValid(item.main_image) ? item.main_image.url : `${config.bucket_url}/${config.common_image}`,
+              imageUrl = isValid(item.main_image) ? item.main_image : `${config.bucket_url}/${config.common_image}`,
 
               <div key={index} className="w-full block flex-shrink-0 bg-brand-gray-800 rounded-lg overflow-hidden">
                 <div>
