@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import AllProjects from "../Components/NFT/AllProjects"
@@ -13,6 +13,8 @@ import * as actions from '../redux/actions';
 import * as ActionTypes from '../redux/ActionTypes';
 
 const Nft = () => {
+
+  const dispatch = useDispatch();
   
   const { category, chain, project } = useSelector(state => {
     return {
@@ -25,21 +27,61 @@ const Nft = () => {
   const projects = project.projects;
   const [filteredProjects, setFilteredProjects] = useState(projects)
 
-  const [all, setAll] = useState(false)
-  const [open, setOpen] = useState(false)
+  const [all, setAll] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    dispatch({
+      type: ActionTypes.CATEGORY_CHK_LIST_INITIALIZE,
+    });
+    dispatch({
+      type: ActionTypes.CHAIN_CHK_LIST_INITIALIZE,
+    });
+  }, [category.categories, chain.chains])
 
   const handleChange = (e) => {
-    const value = e.target.value;
 
-    if (value === "all") {
-      setFilteredProjects(projects)
-      setAll(!all)
-      return;
+    /** Filter by category **/
+    let selected_category_list = [];
+    selected_category_list = category.category_checked_list.filter(item => item.checked === true);
+    let temp_projects_by_category = [];
+    if(selected_category_list.length === 0)    //if whole values of category_check_list is false, take whole projects
+      temp_projects_by_category = projects;
+    else {   // if whole value of category_check_list is true or some of them is true
+      temp_projects_by_category = projects.filter(item => {
+        for( let i = 0 ; i < category.category_checked_list.length ; i ++) {
+          if(isValid(item.category) && category.category_checked_list[i].checked === true && item.category._id === category.category_checked_list[i]._id)
+            return item;
+        }
+      });
     }
 
-    const filter = projects.filter(item => (isValid(item.category) && item.category._id === value) || (isValid(item.chain) && item.chain._id === value ));
+    /** Filter by chain **/
+    let selected_chain_list = [];
+    selected_chain_list = chain.chain_checked_list.filter(item => item.checked === true);
+    let temp_projects_by_chain = [];
+    if(selected_chain_list.length === 0)    //if whole values of chain_check_list is false, take whole projects
+      temp_projects_by_chain = projects;
+    else {   // if whole value of chain_check_list is true or some of them is true
+      temp_projects_by_chain = projects.filter(item => {
+        for( let i = 0 ; i < chain.chain_checked_list.length ; i ++) {
+          if(isValid(item.chain) && chain.chain_checked_list[i].checked === true && item.chain._id === chain.chain_checked_list[i]._id)
+            return item;
+        }
+      });
+    }
 
-    setFilteredProjects(filter)
+    /** Filter the projects by category & chain **/
+    const filter = temp_projects_by_category.filter(item => {
+      for( let i = 0 ; i < temp_projects_by_chain.length ; i ++) {
+        if(item._id === temp_projects_by_chain[i]._id)
+          return item;
+      }
+    })
+
+    // const filter = projects.filter(item => (isValid(item.category) && item.category._id === value) || (isValid(item.chain) && item.chain._id === value ));
+
+    setFilteredProjects(filter);
   }
 
   const handleSearch = (event) => {

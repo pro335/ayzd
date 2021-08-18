@@ -1,9 +1,29 @@
 import React from 'react'
 import SectionHeading from "./../SectionHeading";
 import data from '../../data.json'
-
+import { useSelector, useDispatch } from 'react-redux';
+import isValid from '../../utility/isValid';
+import config from '../../config/config';
+import * as actions from '../../redux/actions';
+import * as ActionTypes from '../../redux/ActionTypes';
 
 const CheckBoxesList = ({ data, all, handleChange, title, icon, classes }) => {
+  const dispatch = useDispatch();
+
+  const onChange = (_id) => {
+    if(title === "Categories") {
+      dispatch({
+        type: ActionTypes.CATEGORY_CHK_LIST_CHANGE,
+        data: _id,
+      });
+    } else if(title === "Chain") {
+      dispatch({
+        type: ActionTypes.CHAIN_CHK_LIST_CHANGE,
+        data: _id,
+      });
+    }
+    handleChange();
+  }
 
   return (
     <div>
@@ -22,7 +42,7 @@ const CheckBoxesList = ({ data, all, handleChange, title, icon, classes }) => {
                   name={input._id}
                   value={input._id}
                   type="checkbox"
-                  onChange={handleChange}
+                  onChange={() => onChange(input._id)}
                   // checked={all}
                   className="form-checkbox w-5 h-5 bg-brand-gray-900 border border-brand-gray-700 rounded text-brand-AYZD-PURPLE"
                 />

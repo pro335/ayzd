@@ -1,7 +1,9 @@
 import * as ActionTypes from '../ActionTypes';
+import isValid from '../../utility/isValid';
 
 const initState = {
   chains: [],
+  chain_checked_list: [],      // Array of { _id, name, checked }
   loading: false,
   error: null,
 };
@@ -13,6 +15,8 @@ const initState = {
 const ChainReducer = (state = initState, action) => {
   const { type, data, err } = action;
   let tempData = null;
+  let temp_chain_chk_list = [];
+
   switch (type) {
     case ActionTypes.ADD_CHAIN:
       return {
@@ -56,13 +60,45 @@ const ChainReducer = (state = initState, action) => {
         loading: false,
         error: null,
       };
-    // case ActionTypes.LOGOUT_SUCCESS:
-    //   return {
-    //     ...state,
-    //     chains: [],
-    //     loading: false,
-    //     error: null
-    //   };
+    case ActionTypes.CHAIN_CHK_LIST_INITIALIZE:
+      tempData = state.chains;
+      temp_chain_chk_list = [];
+      tempData.map(item => {
+        let temp_one_obj = {
+          _id: item._id, 
+          name: item.name, 
+          checked: false,
+        }
+        temp_chain_chk_list.push(temp_one_obj);
+      })
+
+      return {
+        ...state,
+        chain_checked_list: temp_chain_chk_list,
+        loading: false,
+        error: null,
+      };
+    case ActionTypes.CHAIN_CHK_LIST_CHANGE:
+      temp_chain_chk_list = state.chain_checked_list;
+      tempData = null;
+      if(isValid(temp_chain_chk_list)) {
+        let foundIndex = temp_chain_chk_list.findIndex(x => x._id === data);
+
+        // update the selected checked value.
+        if(foundIndex !== -1)
+          tempData = {
+            ...temp_chain_chk_list[foundIndex],
+            checked: !temp_chain_chk_list[foundIndex].checked
+          }
+
+        temp_chain_chk_list[foundIndex] = tempData;
+      }
+      return {
+        ...state,
+        chain_checked_list: [...temp_chain_chk_list],
+        loading: false,
+        error: null,
+      };
 
     default:
       return state;
