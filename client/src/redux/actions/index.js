@@ -183,6 +183,10 @@ export const deleteProjectMember = (id, memberId) => {
     return axios.delete(`/api/project/deleteMember/${id}/${memberId}`);
 }
 
+export const getTrendingNFTs = (params) => {
+    return axios.post(`/api/project/getTrendingNFTs`, params);
+}
+
 // livefeed action(s)
 export const addLivefeed = (data) => {
     return axios.put("/api/livefeed/create", data);

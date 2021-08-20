@@ -4,6 +4,7 @@ const initState = {
   project_id: null,
   project_action: 0, // 0: create, 1: read, 2: update, 3: delete
   projectData: null,
+  trendingNFTs: [],
   loading: false,
   error: null,
 };
@@ -94,6 +95,11 @@ const ProjectReducer = (state = initState, action) => {
       return {
         ...state,
         projectData: data
+      }
+    case ActionTypes.SET_TRENDING_NFTS:
+      return {
+        ...state,
+        trendingNFTs: data,
       }
       
     default:

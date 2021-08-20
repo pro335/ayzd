@@ -67,25 +67,25 @@ function App() {
         console.error(err);
       }
     }
-    async function fetchTopSales() {
-      let resTopSales = await actions.fetchTopSales();
-      try {
-        let { success, data } = resTopSales.data;
-        if(success) {
-          dispatch({
-            type: ActionTypes.TOP_SALES,
-            data: data
-          });
-        } else {
-          dispatch({
-            type: ActionTypes.TOP_SALES_ERR,
-            err: resTopSales.data.errMessage
-          });
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    }
+    // async function fetchTopSales() {
+    //   let resTopSales = await actions.fetchTopSales();
+    //   try {
+    //     let { success, data } = resTopSales.data;
+    //     if(success) {
+    //       dispatch({
+    //         type: ActionTypes.TOP_SALES,
+    //         data: data
+    //       });
+    //     } else {
+    //       dispatch({
+    //         type: ActionTypes.TOP_SALES_ERR,
+    //         err: resTopSales.data.errMessage
+    //       });
+    //     }
+    //   } catch (err) {
+    //     console.error(err);
+    //   }
+    // }
     async function fetchTopCollections() {
       let resTopCollections = await actions.fetchTopCollections();
       try {
@@ -206,7 +206,7 @@ function App() {
     // initializeStore();
     fetchAllProjects();
     fetchAllLivefeeds();
-    fetchTopSales();
+    // fetchTopSales();
     fetchTopCollections();
     fetchDaySales();
     fetchGainersLoosers();

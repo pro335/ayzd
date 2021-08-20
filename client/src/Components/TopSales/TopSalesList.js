@@ -11,9 +11,9 @@ SwiperCore.use([]);
 
 const TopSalesList = () => {
 
-  const { topSales } = useSelector(state => {
+  const { daySales } = useSelector(state => {
     return {
-      topSales: state.topSales,
+      daySales: state.daySales,
     };
   });
 
@@ -35,11 +35,11 @@ const TopSalesList = () => {
         }}
       >
         {
-          topSales.topSales.map((item, index) => (
+          daySales.daySales.map((item, index) => (
             <SwiperSlide key={index} className="pl-4">
               <div className="w-full block flex-shrink-0 bg-brand-gray-800 rounded-lg overflow-hidden">
                 <div>
-                  <img src={item.image} alt="" />
+                  <img src={item.image} className="w-full h-full object-cover" alt="" />
                 </div>
                 <div className="leading-5 p-3 pb-4">
                   <p>{item.name}</p>

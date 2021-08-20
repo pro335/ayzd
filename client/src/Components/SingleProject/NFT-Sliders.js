@@ -2,7 +2,7 @@ import React from 'react'
 import SectionHeading from "../SectionHeading"
 import TrendingNFT from "./TrendingNFT";
 
-const NFTSliders = ({ title, icon, classes }) => {
+const NFTSliders = ({ title, icon, classes, type }) => {
   return (
     <div>
       <div>
@@ -13,7 +13,12 @@ const NFTSliders = ({ title, icon, classes }) => {
         />
       </div>
       <div className="py-5">
-        <TrendingNFT />
+        {type === "trending-nft" ?
+          <TrendingNFT />
+          :
+          null
+          // <TrendingNFT />
+        }
       </div>
     </div>
   )

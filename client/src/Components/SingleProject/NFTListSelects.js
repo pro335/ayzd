@@ -2,13 +2,22 @@
 import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
+import { useSelector, useDispatch } from 'react-redux';
+import isValid from '../../utility/isValid';
+import config from '../../config/config';
+import * as actions from '../../redux/actions';
+import * as ActionTypes from '../../redux/ActionTypes';
 
-const people = [
-  { id: 1, name: 'Option' },
-  { id: 2, name: 'Option 1' },
-  { id: 3, name: 'Option 2' },
-  { id: 4, name: 'Option 3' },
-  { id: 5, name: 'Option 4' },
+const sortby = [
+  { id: 0, name: 'Option', key: 'sortby_option' },
+  { id: 1, name: 'Price', key: 'priceInDollar' },
+  { id: 2, name: 'Created At', key: 'createdAt' },
+]
+
+const direction = [
+  { id: 0, name: 'Option', key: 'direction_option' },
+  { id: 1, name: 'Desc', key: 'desc' },
+  { id: 2, name: 'Asc', key: 'asc' },
 ]
 
 function classNames(...classes) {
@@ -16,76 +25,216 @@ function classNames(...classes) {
 }
 
 export default function NFTListSelects() {
-  const [selected, setSelected] = useState(people[0])
+
+  const dispatch = useDispatch();
+  
+  const { project } = useSelector(state => {
+    return {
+      project: state.project,
+    };
+  });
+
+  const [sortbySelected, setSortbySelected] = useState(sortby[0]);
+  const [directionSelected, setDirectionSelected] = useState(direction[0]);
+
+  const handleSortByChanged = async (value) => {
+
+    let orderBy = null, orderDirection = null;
+    if(value.id !== 0)
+      orderBy = value.key;
+    if(directionSelected.id !== 0)
+      orderDirection = directionSelected.key;
+
+    if(isValid(orderBy)) {    // orderBy is valid
+
+      let params = {
+        dappSlug: project.projectData.slug, 
+        orderBy, 
+        orderDirection,
+      }
+
+      let res = await actions.getTrendingNFTs(params);
+      try {
+        let { success, trendingNFTs } = res.data;
+        if(success) {
+          dispatch({
+            type: ActionTypes.SET_TRENDING_NFTS,
+            data: trendingNFTs
+          });
+        } else {
+          dispatch({
+            type: ActionTypes.PROJECT_ERR,
+            err: res.data.errMessage
+          });
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    setSortbySelected(value);
+  }  
+
+  const handleDirectionChanged = async (value) => {
+
+    let orderBy = null, orderDirection = null;
+    if(value.id !== 0)
+      orderDirection = value.key;
+    if(sortbySelected.id !== 0)
+      orderBy = sortbySelected.key;
+
+    if(isValid(orderBy)) {    // orderBy is valid
+
+      let params = {
+        dappSlug: project.projectData.slug, 
+        orderBy, 
+        orderDirection,
+      }
+
+      let res = await actions.getTrendingNFTs(params);
+      try {
+        let { success, trendingNFTs } = res.data;
+        if(success) {
+          dispatch({
+            type: ActionTypes.SET_TRENDING_NFTS,
+            data: trendingNFTs
+          });
+        } else {
+          dispatch({
+            type: ActionTypes.PROJECT_ERR,
+            err: res.data.errMessage
+          });
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    setDirectionSelected(value);
+  }  
 
   return (
     <div className="h-full overflow-y-scroll p-4">
-      {
-        [...Array(12).keys()].map((item, index) =>
-          <div key={index}>
-            <Listbox value={selected} onChange={setSelected}>
-              {({ open }) => (
-                <>
-                  <Listbox.Label className="block text-sm font-medium ">Parameter</Listbox.Label>
-                  <div className="mt-1 relative">
-                    <Listbox.Button className="bg-brand-gray-800 relative w-full rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none text-sm">
-                      <span className="block truncate text-brand-gray-300">{selected.name}</span>
-                      <span className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                        <SelectorIcon className="h-5 w-5 text-brand-gray-500" aria-hidden="true" />
-                      </span>
-                    </Listbox.Button>
+      <Listbox value={sortbySelected} onChange={handleSortByChanged}>
+        {({ open }) => (
+          <>
+            <Listbox.Label className="block text-sm font-medium ">Sort By:</Listbox.Label>
+            <div className="mt-1 relative">
+              <Listbox.Button className="bg-brand-gray-800 relative w-full rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none text-sm">
+                <span className="block truncate text-brand-gray-300">{sortbySelected.name}</span>
+                <span className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <SelectorIcon className="h-5 w-5 text-brand-gray-500" aria-hidden="true" />
+                </span>
+              </Listbox.Button>
 
-                    <Transition
-                      show={open}
-                      as={Fragment}
-                      leave="transition ease-in duration-100"
-                      leaveFrom="opacity-100"
-                      leaveTo="opacity-0"
+              <Transition
+                show={open}
+                as={Fragment}
+                leave="transition ease-in duration-100"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <Listbox.Options
+                  static
+                  className="absolute z-10 mt-1 w-full bg-brand-gray-800 shadow-lg max-h-40 rounded-md py-1 overflow-auto focus:outline-none text-sm"
+                >
+                  {sortby.map((item, index) => (
+                    <Listbox.Option
+                      key={index}
+                      className={({ active }) =>
+                        classNames(
+                          active ? 'bg-brand-gray-400' : 'font-bold',
+                          'text-brand-gray-300 cursor-default select-none relative onHover py-2 pl-3 pr-9'
+                        )
+                      }
+                      value={item}
                     >
-                      <Listbox.Options
-                        static
-                        className="absolute z-10 mt-1 w-full bg-brand-gray-800 shadow-lg max-h-40 rounded-md py-1 overflow-auto focus:outline-none text-sm"
-                      >
-                        {people.map((person, index) => (
-                          <Listbox.Option
-                            key={index}
-                            className={({ active }) =>
-                              classNames(
-                                active ? 'bg-brand-gray-400' : 'font-bold',
-                                'text-brand-gray-300 cursor-default select-none relative onHover py-2 pl-3 pr-9'
-                              )
-                            }
-                            value={person}
-                          >
-                            {({ selected, active }) => (
-                              <>
-                                <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
-                                  {person.name}
-                                </span>
+                      {({ selected, active }) => (
+                        <>
+                          <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
+                            {item.name}
+                          </span>
 
-                                {selected ? (
-                                  <span
-                                    className={classNames(
-                                      active ? 'text-white' : 'text-indigo-600',
-                                      'absolute inset-y-0 right-0 flex items-center pr-4'
-                                    )}
-                                  >
-                                    <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                                  </span>
-                                ) : null}
-                              </>
-                            )}
-                          </Listbox.Option>
-                        ))}
-                      </Listbox.Options>
-                    </Transition>
-                  </div>
-                </>
-              )}
-            </Listbox>
-          </div>
-        )
-      }
+                          {selected ? (
+                            <span
+                              className={classNames(
+                                active ? 'text-white' : 'text-indigo-600',
+                                'absolute inset-y-0 right-0 flex items-center pr-4'
+                              )}
+                            >
+                              <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                            </span>
+                          ) : null}
+                        </>
+                      )}
+                    </Listbox.Option>
+                  ))}
+                </Listbox.Options>
+              </Transition>
+            </div>
+          </>
+        )}
+      </Listbox>
+      <Listbox value={directionSelected} onChange={handleDirectionChanged}>
+        {({ open }) => (
+          <>
+            <Listbox.Label className="block text-sm font-medium ">Direction:</Listbox.Label>
+            <div className="mt-1 relative">
+              <Listbox.Button className="bg-brand-gray-800 relative w-full rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none text-sm">
+                <span className="block truncate text-brand-gray-300">{directionSelected.name}</span>
+                <span className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <SelectorIcon className="h-5 w-5 text-brand-gray-500" aria-hidden="true" />
+                </span>
+              </Listbox.Button>
+
+              <Transition
+                show={open}
+                as={Fragment}
+                leave="transition ease-in duration-100"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <Listbox.Options
+                  static
+                  className="absolute z-10 mt-1 w-full bg-brand-gray-800 shadow-lg max-h-40 rounded-md py-1 overflow-auto focus:outline-none text-sm"
+                >
+                  {direction.map((item, index) => (
+                    <Listbox.Option
+                      key={index}
+                      className={({ active }) =>
+                        classNames(
+                          active ? 'bg-brand-gray-400' : 'font-bold',
+                          'text-brand-gray-300 cursor-default select-none relative onHover py-2 pl-3 pr-9'
+                        )
+                      }
+                      value={item}
+                    >
+                      {({ selected, active }) => (
+                        <>
+                          <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}>
+                            {item.name}
+                          </span>
+
+                          {selected ? (
+                            <span
+                              className={classNames(
+                                active ? 'text-white' : 'text-indigo-600',
+                                'absolute inset-y-0 right-0 flex items-center pr-4'
+                              )}
+                            >
+                              <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                            </span>
+                          ) : null}
+                        </>
+                      )}
+                    </Listbox.Option>
+                  ))}
+                </Listbox.Options>
+              </Transition>
+            </div>
+          </>
+        )}
+      </Listbox>
     </div>
   )
 }

@@ -42,11 +42,13 @@ const About = () => {
         <NFTSliders
           title="Trending nfts"
           icon="trending-nft"
+          type="trending-nft"
         />
         <NFTSliders
           title="Top sales of the day"
           icon="shopping-cart"
           classes="border-t"
+          type="top-sales"
         />
       </div>
 

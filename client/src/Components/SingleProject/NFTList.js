@@ -1,13 +1,58 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import AllProjects from "../NFT/AllProjects"
 import data from "../../data.json"
 import SectionHeading from "./../SectionHeading";
 import NFTListSelects from "./NFTListSelects";
+import { useSelector, useDispatch } from 'react-redux';
+import isValid from '../../utility/isValid';
+import config from '../../config/config';
+import * as actions from '../../redux/actions';
+import * as ActionTypes from '../../redux/ActionTypes';
 
 const NFTList = () => {
   const [open, setOpen] = useState(false)
+
+  const dispatch = useDispatch();
+  
+  const { project } = useSelector(state => {
+    return {
+      project: state.project,
+    };
+  });
+
+  useEffect(() => {
+    
+    async function fetchTrendingNFTs() {
+      
+      let params = {
+        dappSlug: project.projectData.slug, 
+        orderBy: null, 
+        orderDirection: null,
+      }
+
+      let res = await actions.getTrendingNFTs(params);
+      try {
+        let { success, trendingNFTs } = res.data;
+        if(success) {
+          dispatch({
+            type: ActionTypes.SET_TRENDING_NFTS,
+            data: trendingNFTs
+          });
+        } else {
+          dispatch({
+            type: ActionTypes.PROJECT_ERR,
+            err: res.data.errMessage
+          });
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    fetchTrendingNFTs();
+  }, [])
 
   return (
     <>
@@ -36,7 +81,7 @@ const NFTList = () => {
         </div>
 
         <div className="lg:col-span-5 overflow-y-scroll">
-          <AllProjects projects={data.projects} />
+          <AllProjects projects={project.trendingNFTs} />
         </div>
       </div>
 

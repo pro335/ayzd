@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import SwiperCore from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
@@ -12,12 +12,45 @@ import * as ActionTypes from '../../redux/ActionTypes';
 SwiperCore.use([]);
 
 const TrendingNFT = () => {
+  const dispatch = useDispatch();
 
-  const { nfts } = useSelector(state => {
+  const { project } = useSelector(state => {
     return {
-      nfts: state.trading.nfts,
+      project: state.project,
     };
   });
+
+  useEffect(() => {
+    
+    async function fetchTrendingNFTs() {
+            
+      let params = {
+        dappSlug: project.projectData.slug, 
+        orderBy: null, 
+        orderDirection: null,
+      }
+
+      let res = await actions.getTrendingNFTs(params);
+      try {
+        let { success, trendingNFTs } = res.data;
+        if(success) {
+          dispatch({
+            type: ActionTypes.SET_TRENDING_NFTS,
+            data: trendingNFTs
+          });
+        } else {
+          dispatch({
+            type: ActionTypes.PROJECT_ERR,
+            err: res.data.errMessage
+          });
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    fetchTrendingNFTs();
+  }, [])
 
   return (
     <>
@@ -37,7 +70,7 @@ const TrendingNFT = () => {
         }}
       >
         {
-          nfts.map((item, index) => (
+          project.trendingNFTs.map((item, index) => (
             <SwiperSlide key={index} className="pl-4">
               <Card item={item}/>
             </SwiperSlide>

@@ -30,11 +30,15 @@ const Heading = () => {
               {project.projectData.name}
             </h3>
             <div className="w-full lg:w-auto flex items-center justify-center lg:justify-start space-x-2 pl-3">
-              <a href={project.projectData.app_link} className="text-brand-gray-600 hover:text-brand-gray-300" target="_blank">
-                <svg className="w-4 h-4">
-                  <use href="../assets/icons/link.svg#icon-linked"></use>
-                </svg>
-              </a>
+              {isValid(project.projectData.app_link) ?
+                <a href={project.projectData.app_link} className="text-brand-gray-600 hover:text-brand-gray-300" target="_blank">
+                  <svg className="w-4 h-4">
+                    <use href="../assets/icons/link.svg#icon-linked"></use>
+                  </svg>
+                </a>
+                :
+                null
+              }
               <SocialIcons />
             </div>
           </div>

@@ -37,6 +37,8 @@ const Card = ({ item, type="nft" }) => {
       });
 
       history.push("/projects/decentraland");
+    } else {
+      // window.open(item.coinrankingUrl, "_blank")
     }
   }
 
