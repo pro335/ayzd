@@ -54,29 +54,33 @@ const TrendingNFT = () => {
 
   return (
     <>
-      <Swiper
-        slidesPerView={1.75}
-        loop={true}
-        breakpoints={{
-          640: {
-            slidesPerView: 3.5
-          },
-          768: {
-            slidesPerView: 4.5
-          },
-          1024: {
-            slidesPerView: 3.75
+      {isValid(project) && isValid(project.trendingNFTs) ?
+        <Swiper
+          slidesPerView={1.75}
+          loop={true}
+          breakpoints={{
+            640: {
+              slidesPerView: 3.5
+            },
+            768: {
+              slidesPerView: 4.5
+            },
+            1024: {
+              slidesPerView: 3.75
+            }
+          }}
+        >
+          {
+            project.trendingNFTs.map((item, index) => (
+              <SwiperSlide key={index} className="pl-4">
+                <Card item={item}/>
+              </SwiperSlide>
+            ))
           }
-        }}
-      >
-        {
-          project.trendingNFTs.map((item, index) => (
-            <SwiperSlide key={index} className="pl-4">
-              <Card item={item}/>
-            </SwiperSlide>
-          ))
-        }
-      </Swiper>
+        </Swiper>
+        :
+        null
+      }
     </>
   )
 }
