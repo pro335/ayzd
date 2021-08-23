@@ -20,7 +20,7 @@ const Banner = () => {
         </Link>
       </div>
 
-      <img className="w-full h-full absolute top-0 left-0 opacity-20 -z-1" src="../assets/images/trending-banner.png" alt="" />
+      {/* <img className="w-full h-full absolute top-0 left-0 opacity-20 -z-1" src="../assets/images/trending-banner.png" alt="" /> */}
     </div>
   )
 }

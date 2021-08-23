@@ -17,18 +17,18 @@ const buttons = [
     "id": 2,
     "title": "NFT List",
   },
+  // {
+  //   "id": 3,
+  //   "title": "Statistics",
+  // },
   {
     "id": 3,
-    "title": "Statistics",
-  },
-  {
-    "id": 4,
     "title": "Guides",
   }, {
-    "id": 5,
+    "id": 4,
     "title": "Newsfeed",
   }, {
-    "id": 6,
+    "id": 5,
     "title": "Smiliar projects",
   }
 ]
@@ -60,10 +60,10 @@ const Tabs = () => {
         {
           activTab === 1 ? <About /> :
             activTab === 2 ? <NFTList /> :
-              activTab === 3 ? <Statistics /> :
-                activTab === 4 ? <Guides /> :
-                  activTab === 5 ? <LiveFeedSection showDetailsPanel={false} /> :
-                    activTab === 6 && <SimilarProjects />
+              // activTab === 3 ? <Statistics /> :
+                activTab === 3 ? <Guides /> :
+                  activTab === 4 ? <LiveFeedSection showDetailsPanel={false} /> :
+                    activTab === 5 && <SimilarProjects />
         }
       </div>
 

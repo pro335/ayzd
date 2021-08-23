@@ -17,6 +17,10 @@ const TopSalesList = () => {
     };
   });
 
+  const addDefaultSrc = (e) => {
+    e.target.src = '../assets/images/default_image.png';
+  }
+
   return (
     <>
       <Swiper
@@ -39,7 +43,7 @@ const TopSalesList = () => {
             <SwiperSlide key={index} className="pl-4">
               <div className="w-full block flex-shrink-0 bg-brand-gray-800 rounded-lg overflow-hidden">
                 <div>
-                  <img src={item.image} className="w-full h-full object-cover" alt="" />
+                  <img src={isValid(item) && isValid(item.image) ? item.image : '../assets/images/default_image.png'} className="w-full h-full object-cover" alt="" onError={addDefaultSrc} />
                 </div>
                 <div className="leading-5 p-3 pb-4">
                   <p>{item.name}</p>

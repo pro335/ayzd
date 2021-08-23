@@ -73,7 +73,16 @@ const Card = ({ item, type="nft" }) => {
     }
   }
 
-  const main_image = isValid(item) && isValid(item.main_image) ? item.main_image : `${config.bucket_url}/${config.common_image}`;
+  const addDefaultSrc = (e) => {
+    e.target.src = '../assets/images/default_image.png';
+  }
+
+  var main_image = null;
+  if(type === "categories") {
+    main_image = isValid(item) && isValid(item.main_image) ? item.main_image : '../assets/images/default_image.png';
+  } else {
+    main_image = isValid(item) && isValid(item.image) ? item.image : '../assets/images/default_image.png';
+  }
   return (
     <div className={type === "categories" ? "hover:cursor-pointer" : ""} onClick={handleClick}>
       <div className="bg-brand-gray-800 border border-brand-gray-800 rounded-xl overflow-hidden">
@@ -84,7 +93,7 @@ const Card = ({ item, type="nft" }) => {
             type === "categories" ?
               <img className="w-full h-full object-cover" src={main_image} alt="" />
               :
-              <img className="w-full h-full object-cover" src={item.image} alt="" />
+              <img className="w-full h-full object-cover" src={main_image} alt="" onError={addDefaultSrc} />
           }
         </div>
         <div className="text-xs font-medium pl-3 py-2 pr-5">
@@ -105,10 +114,10 @@ const Card = ({ item, type="nft" }) => {
                     {item.name}
                   </p>
                   <p className="text-brand-gray-400 font-bold">
-                    $ {Math.round(item.priceInDollar * 100)/100}
+                    {item.dappName}
                   </p>
                   <p className="text-sm text-gray-300">
-                    {item.dappName}
+                    $ {Math.round(item.priceInDollar * 100)/100}
                   </p>
                 </>
               )

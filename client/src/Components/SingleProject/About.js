@@ -44,23 +44,23 @@ const About = () => {
           icon="trending-nft"
           type="trending-nft"
         />
-        <NFTSliders
+        {/* <NFTSliders
           title="Top sales of the day"
           icon="shopping-cart"
           classes="border-t"
           type="top-sales"
-        />
-      </div>
+        /> */}
 
-      <div className="border-r border-brand-gray-800">
-        <div>
-          <SectionHeading
-            title="Team behind project"
-            icon="team"
-            classes="border-t"
-          />
+        <div className="border-r border-brand-gray-800">
+          <div>
+            <SectionHeading
+              title="Team behind project"
+              icon="team"
+              classes="border-t"
+            />
 
-          <Team />
+            <Team />
+          </div>
         </div>
       </div>
     </div>
