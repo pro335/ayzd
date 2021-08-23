@@ -1,17 +1,82 @@
 import React from 'react'
 import SectionHeading from "./../SectionHeading";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import isValid from '../../utility/isValid';
 import config from '../../config/config';
+import * as actions from '../../redux/actions';
+import * as ActionTypes from '../../redux/ActionTypes';
 
 const Gainers = ({ projects, title, icon, day, classes }) => {
-
-  const { gainers } = useSelector(state => {
+  
+  const dispatch = useDispatch();
+  const history = useHistory();
+  
+  const { gainers, project, topCollections, biggestSalesAmount } = useSelector(state => {
     return {
       gainers: state.gainers,
+      project: state.project,
+      topCollections: state.topCollections,
+      biggestSalesAmount: state.biggestSalesAmount,
     };
   });
+
+  const handleClick = (collection) => {
+ 
+    let data = project.projects.filter(function(item) {
+      return item.name === collection.name;
+    });
+    if(isValid(data)) {
+      dispatch({
+        type: ActionTypes.SET_PROJECT,
+        data: data[0],
+      });
+
+      dispatch({
+        type: ActionTypes.SET_PROJECT_ID,
+        data: data[0]._id,
+      });
+   
+      //Sort the livefeednews by the selected project
+      dispatch({
+        type: ActionTypes.SORTING_LIVE_FEED_BY_PROJECT,
+        project_id: data[0]._id,
+      });
+
+      
+      // get the project data(not from db)
+      let volume = null, isBySalesVolume = false, isBySellerCount = false;
+      topCollections.topCollections.map(one_item => {
+        if(collection.name === one_item.name)
+          volume = one_item.price;
+      })
+
+      topCollections.topCollections.slice(0, 8).map(one_item => {
+        if(collection.name === one_item.name)
+          isBySalesVolume = true;
+      })
+
+      biggestSalesAmount.biggestSalesAmount.slice(0, 8).map(one_item => {
+        if(collection.name === one_item.name)
+          isBySellerCount = true;
+      })
+
+      let projectDataNotDatabase = {
+        volume,
+        isBySalesVolume,
+        isBySellerCount,
+      }
+
+      dispatch({
+        type: ActionTypes.SET_PROJECT_NOT_DB,
+        data: projectDataNotDatabase,
+      });
+
+      history.push("/projects/decentraland");
+    } else {
+      // alert("Doesn't exist")
+    }
+  }
 
   return (
     <>
@@ -27,7 +92,9 @@ const Gainers = ({ projects, title, icon, day, classes }) => {
             gainers.gainers.map((item, index) => (
               <div
                 key={index}
-                className="h-10 flex items-center hover:bg-brand-gray-800 hover:text-gray-200 rounded-md px-2  md:px-3">
+                className="h-10 flex items-center hover:bg-brand-gray-800 hover:text-gray-200 hover:cursor-pointer rounded-md px-2  md:px-3"
+                onClick={() => handleClick(item)}>
+
                 <div className="w-6 h-6 mr-4">
                   <img className={`mx-auto h-full 'rounded-full'`} src={item.icon} alt="" />
                 </div>

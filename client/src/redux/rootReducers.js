@@ -15,6 +15,7 @@ import daySalesReducer from './reducers/daySalesReducer';
 import gainersReducer from './reducers/gainersReducer';
 import loosersReducer from './reducers/loosersReducer';
 import tradingReducer from './reducers/tradingReducer';
+import biggestSalesAmountReducer from './reducers/biggestSalesAmountReducer';
 
 const appReducer = combineReducers({
   auth: authReducer,
@@ -33,6 +34,7 @@ const appReducer = combineReducers({
   gainers: gainersReducer,
   loosers: loosersReducer,
   trading: tradingReducer,
+  biggestSalesAmount: biggestSalesAmountReducer,
   
 });
 

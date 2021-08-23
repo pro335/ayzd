@@ -220,6 +220,9 @@ export const fetchGainersLoosers = () => {
 export const fetchTrading = () => {
     return axios.post("/api/getData/trading");
 }
+export const fetchBiggestSalesVolume = () => {
+    return axios.post("/api/getData/getBiggestSalesVolume");
+}
 
 // authorization token action(s)
 export const setAuthToken = token => {

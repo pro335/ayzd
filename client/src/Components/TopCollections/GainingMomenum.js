@@ -6,10 +6,10 @@ import isValid from '../../utility/isValid';
 import config from '../../config/config';
 
 const GainingMomenum = ({ projects }) => {
-  
-  const { topCollections } = useSelector(state => {
+ 
+  const { gainers } = useSelector(state => {
     return {
-      topCollections: state.topCollections,
+      gainers: state.gainers,
     };
   });
 
@@ -26,7 +26,7 @@ const GainingMomenum = ({ projects }) => {
 
         <div className="flex flex-col text-brand-gray-400 font-medium space-y-1 py-5 px-2">
           {
-            topCollections.topCollections.map((item, index) => (
+            gainers.gainers.map((item, index) => (
               <div
                 key={index}
                 className="h-10 flex items-center hover:bg-brand-gray-800 hover:text-gray-200 rounded-md px-3">
@@ -39,7 +39,8 @@ const GainingMomenum = ({ projects }) => {
                 {/* <p className={`${item.gaining > 0 ? 'text-green-400' : 'text-red-500'} ml-auto`}>
                   {item.gaining > 0 && '+'}{item.gaining} %
                 </p> */}
-                <p className="ml-auto" dangerouslySetInnerHTML={{__html: item.change}} />
+                <p className="ml-auto" dangerouslySetInnerHTML={{__html: item.price}} />
+                <p dangerouslySetInnerHTML={{__html: item.change}} />
               </div>
             ))
           }

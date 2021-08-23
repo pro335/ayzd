@@ -10,9 +10,11 @@ const ProjectsList = ({ projects, isActive, activeHandler }) => {
 
   const dispatch = useDispatch();
 
-  const { project } = useSelector(state => {
+  const { project, topCollections, biggestSalesAmount } = useSelector(state => {
     return {
       project: state.project,
+      topCollections: state.topCollections,
+      biggestSalesAmount: state.biggestSalesAmount,
     };
   });
 
@@ -37,6 +39,35 @@ const ProjectsList = ({ projects, isActive, activeHandler }) => {
         type: ActionTypes.SORTING_LIVE_FEED_BY_PROJECT,
         project_id: proj._id,
       });
+
+      // get the project data(not from db)
+      let volume = null, isBySalesVolume = false, isBySellerCount = false;
+      topCollections.topCollections.map(item => {
+        if(item.name === data[0].name)
+          volume = item.price;
+      })
+
+      topCollections.topCollections.slice(0, 8).map(item => {
+        if(item.name === data[0].name)
+          isBySalesVolume = true;
+      })
+
+      biggestSalesAmount.biggestSalesAmount.slice(0, 8).map(item => {
+        if(item.name === data[0].name)
+          isBySellerCount = true;
+      })
+
+      let projectDataNotDatabase = {
+        volume,
+        isBySalesVolume,
+        isBySellerCount,
+      }
+
+      dispatch({
+        type: ActionTypes.SET_PROJECT_NOT_DB,
+        data: projectDataNotDatabase,
+      });
+
     }
     activeHandler(proj.name);
   }

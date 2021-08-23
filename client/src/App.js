@@ -24,10 +24,10 @@ function App() {
 
   useEffect( () => {
 
-    // async function initializeStore() {
-    //   const serializedState = JSON.stringify(null)
-    //   localStorage.setItem('ayzd', serializedState)
-    // }
+    async function initializeStore() {
+      const serializedState = JSON.stringify(null)
+      localStorage.setItem('ayzd', serializedState)
+    }
 
     async function fetchAllProjects() {
       let resProject = await actions.allProjects();
@@ -93,6 +93,26 @@ function App() {
         if(success) {
           dispatch({
             type: ActionTypes.TOP_COLLECTIONS,
+            data: data
+          });
+        } else {
+          dispatch({
+            type: ActionTypes.TOP_COLLECTIONS_ERR,
+            err: resTopCollections.data.errMessage
+          });
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    async function fetchBiggestSalesVolume() {
+      let resTopCollections = await actions.fetchBiggestSalesVolume();
+      try {
+        let { success, data } = resTopCollections.data;
+        if(success) {
+          //set biggest sales amount
+          dispatch({
+            type: ActionTypes.BIGGEST_SALES_AMOUNT,
             data: data
           });
         } else {
@@ -203,16 +223,17 @@ function App() {
       }
     }
 
-    // initializeStore();
+    initializeStore();
     fetchAllProjects();
     fetchAllLivefeeds();
     // fetchTopSales();
     fetchTopCollections();
+    fetchBiggestSalesVolume();
     fetchDaySales();
     fetchGainersLoosers();
     fetchAllCategories();
     fetchAllChains();
-    fetchTrading();
+    // fetchTrading();
 
   }, []);
 

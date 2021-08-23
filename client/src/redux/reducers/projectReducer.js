@@ -4,6 +4,7 @@ const initState = {
   project_id: null,
   project_action: 0, // 0: create, 1: read, 2: update, 3: delete
   projectData: null,
+  projectDataNotDatabase: null,   //  { volume: null, isBySalesVolume: null, isBySellerCount: null }
   trendingNFTs: [],
   loading: false,
   error: null,
@@ -101,7 +102,12 @@ const ProjectReducer = (state = initState, action) => {
         ...state,
         trendingNFTs: data,
       }
-      
+    case ActionTypes.SET_PROJECT_NOT_DB:
+      return {
+        ...state,
+        projectDataNotDatabase: data,
+      }
+
     default:
       return state;
   }

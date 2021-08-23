@@ -1,13 +1,9 @@
 import React from 'react'
 import SectionHeading from "./../SectionHeading";
-import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import isValid from '../../utility/isValid';
-import reduceTextLengh from '../../utility/reduceTextLengh';
-import config from '../../config/config';
 
 const RankingSales = ({ projects, title, icon, day, classes }) => {
-
+  
   const { daySales } = useSelector(state => {
     return {
       daySales: state.daySales,
@@ -28,7 +24,8 @@ const RankingSales = ({ projects, title, icon, day, classes }) => {
             daySales.daySales.map((item, index) => (
               <div
                 key={index}
-                className="h-10 flex items-center hover:bg-brand-gray-800 hover:text-gray-200 rounded-md px-2  md:px-3">
+                className="h-10 flex items-center hover:bg-brand-gray-800 hover:text-gray-200 hover:cursor-pointer rounded-md px-2  md:px-3">
+                  
                 <div className="w-6 h-6 mr-4">
                   <img className={`mx-auto h-full`} src={item.image} alt="" />
                 </div>

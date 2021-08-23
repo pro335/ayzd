@@ -10,9 +10,11 @@ const Card = ({ item, type="nft" }) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const { project } = useSelector(state => {
+  const { project, topCollections, biggestSalesAmount } = useSelector(state => {
     return {
       project: state.project,
+      topCollections: state.topCollections,
+      biggestSalesAmount: state.biggestSalesAmount,
     };
   });
 
@@ -35,6 +37,35 @@ const Card = ({ item, type="nft" }) => {
         type: ActionTypes.SORTING_LIVE_FEED_BY_PROJECT,
         project_id: item._id,
       });
+
+      // get the project data(not from db)
+      let volume = null, isBySalesVolume = false, isBySellerCount = false;
+      topCollections.topCollections.map(one_item => {
+        if(item.name === one_item.name)
+          volume = one_item.price;
+      })
+
+      topCollections.topCollections.slice(0, 8).map(one_item => {
+        if(item.name === one_item.name)
+          isBySalesVolume = true;
+      })
+
+      biggestSalesAmount.biggestSalesAmount.slice(0, 8).map(one_item => {
+        if(item.name === one_item.name)
+          isBySellerCount = true;
+      })
+
+      let projectDataNotDatabase = {
+        volume,
+        isBySalesVolume,
+        isBySellerCount,
+      }
+
+      dispatch({
+        type: ActionTypes.SET_PROJECT_NOT_DB,
+        data: projectDataNotDatabase,
+      });
+      
 
       history.push("/projects/decentraland");
     } else {
