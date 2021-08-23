@@ -1,14 +1,20 @@
 import React from 'react'
-import { Link } from "react-router-dom"
 import SectionHeading from "../SectionHeading"
+import { Link, useHistory } from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux';
 import isValid from '../../utility/isValid';
 import config from '../../config/config';
+import * as actions from '../../redux/actions';
+import * as ActionTypes from '../../redux/ActionTypes';
 
 const GainingMomenum = ({ projects }) => {
  
-  const { gainers, topCollections, biggestSalesAmount } = useSelector(state => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  
+  const { project, gainers, topCollections, biggestSalesAmount } = useSelector(state => {
     return {
+      project: state.project,
       gainers: state.gainers,
       topCollections: state.topCollections,
       biggestSalesAmount: state.biggestSalesAmount,
