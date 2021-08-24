@@ -17,7 +17,7 @@ const LiveFeedSection = ({ showDetailsPanel=false, onClickHandler }) => {
   return (
     <div className="h-full md:col-span-3 lg:overflow-hidden">
 
-      {showDetailsPanel && isValid(project.project_id) ?
+      {showDetailsPanel && isValid(project.project_id) && project.projectData.name !== "Smart feed" ?
         <Banner />
         :
         null

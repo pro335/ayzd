@@ -7,7 +7,10 @@ const AllProjects = ({ projects, type }) => {
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-x-5 lg:gap-y-7">
         {
           projects.map((item, index) =>
-            <Card key={index} item={item} type={type} />
+            item.name !== "Smart feed" ?
+              <Card key={index} item={item} type={type} />
+              :
+              null
           )
         }
       </div>
