@@ -20,10 +20,10 @@ const BiggestSalesAmount = ({ projects, title, icon, day, classes }) => {
     };
   });
 
-  const handleClick = (collection) => {
+  const handleClick = (proj) => {
  
     let data = project.projects.filter(function(item) {
-      return item.name === collection.name;
+      return item.name === proj.name;
     });
     if(isValid(data)) {
       dispatch({
@@ -42,22 +42,27 @@ const BiggestSalesAmount = ({ projects, title, icon, day, classes }) => {
         project_id: data[0]._id,
       });
 
-      
       // get the project data(not from db)
-      let volume = null, isBySalesVolume = false, isBySellerCount = false;
-      topCollections.topCollections.map(one_item => {
-        if(collection.name === one_item.name)
-          volume = one_item.price;
+      let volume = null, isBySalesVolume = null, isBySellerCount = null;
+      topCollections.topCollections.map(item => {
+        if(item.name === data[0].name)
+          volume = item.price;
       })
 
-      topCollections.topCollections.slice(0, 8).map(one_item => {
-        if(collection.name === one_item.name)
-          isBySalesVolume = true;
+      topCollections.topCollections.slice(0, 8).map((item, index) => {
+        if(item.name === data[0].name)
+          isBySalesVolume = {
+            value: index,
+            flag: true
+          };
       })
 
-      biggestSalesAmount.biggestSalesAmount.slice(0, 8).map(one_item => {
-        if(collection.name === one_item.name)
-          isBySellerCount = true;
+      biggestSalesAmount.biggestSalesAmount.slice(0, 8).map((item, index) => {
+        if(item.name === data[0].name)
+          isBySellerCount =  {
+            value: index,
+            flag: true
+          };
       })
 
       let projectDataNotDatabase = {

@@ -4,7 +4,7 @@ const initState = {
   project_id: null,
   project_action: 0, // 0: create, 1: read, 2: update, 3: delete
   projectData: null,
-  projectDataNotDatabase: null,   //  { volume: null, isBySalesVolume: null, isBySellerCount: null }
+  projectDataNotDatabase: null,   //  { volume: null, isBySalesVolume: { value: null, flag: null }, isBySellerCount: { value: null, flag: null } }
   trendingNFTs: [],
   loading: false,
   error: null,

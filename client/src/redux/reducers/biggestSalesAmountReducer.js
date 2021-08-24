@@ -29,7 +29,6 @@ const BiggestSalesAmountReducer = (state = initState, action) => {
       //   }
       // }
 
-      console.log("tempData", tempData)
       return {
         ...state,
         biggestSalesAmount: [...tempData],

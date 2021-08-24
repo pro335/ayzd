@@ -39,20 +39,26 @@ const Card = ({ item, type="nft" }) => {
       });
 
       // get the project data(not from db)
-      let volume = null, isBySalesVolume = false, isBySellerCount = false;
+      let volume = null, isBySalesVolume = null, isBySellerCount = null;
       topCollections.topCollections.map(one_item => {
         if(item.name === one_item.name)
           volume = one_item.price;
       })
 
-      topCollections.topCollections.slice(0, 8).map(one_item => {
+      topCollections.topCollections.slice(0, 8).map((one_item, index) => {
         if(item.name === one_item.name)
-          isBySalesVolume = true;
+          isBySalesVolume = {
+            value: index,
+            flag: true
+          };
       })
 
-      biggestSalesAmount.biggestSalesAmount.slice(0, 8).map(one_item => {
+      biggestSalesAmount.biggestSalesAmount.slice(0, 8).map((one_item, index) => {
         if(item.name === one_item.name)
-          isBySellerCount = true;
+          isBySellerCount =  {
+            value: index,
+            flag: true
+          };
       })
 
       let projectDataNotDatabase = {
@@ -79,7 +85,7 @@ const Card = ({ item, type="nft" }) => {
 
   var main_image = null;
   if(type === "categories") {
-    main_image = isValid(item) && isValid(item.main_image) ? item.main_image : '../assets/images/default_image.png';
+    main_image = isValid(item) && isValid(item.main_image) && isValid(item.main_image.url) ? item.main_image.url : `${config.bucket_url}/${config.common_image}`;
   } else {
     main_image = isValid(item) && isValid(item.image) ? item.image : '../assets/images/default_image.png';
   }

@@ -25,29 +25,36 @@ const NFTList = () => {
   useEffect(() => {
     
     async function fetchTrendingNFTs() {
-      
-      let params = {
-        dappSlug: project.projectData.slug, 
-        orderBy: null, 
-        orderDirection: null,
-      }
 
-      let res = await actions.getTrendingNFTs(params);
-      try {
-        let { success, trendingNFTs } = res.data;
-        if(success) {
-          dispatch({
-            type: ActionTypes.SET_TRENDING_NFTS,
-            data: trendingNFTs
-          });
-        } else {
-          dispatch({
-            type: ActionTypes.PROJECT_ERR,
-            err: res.data.errMessage
-          });
+      if(isValid(project.projectData) && isValid(project.projectData.slug)) {
+        let params = {
+          dappSlug: project.projectData.slug, 
+          orderBy: null, 
+          orderDirection: null,
         }
-      } catch (err) {
-        console.error(err);
+
+        let res = await actions.getTrendingNFTs(params);
+        try {
+          let { success, trendingNFTs } = res.data;
+          if(success) {
+            dispatch({
+              type: ActionTypes.SET_TRENDING_NFTS,
+              data: trendingNFTs
+            });
+          } else {
+            dispatch({
+              type: ActionTypes.PROJECT_ERR,
+              err: res.data.errMessage
+            });
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      } else {
+        dispatch({
+          type: ActionTypes.SET_TRENDING_NFTS,
+          data: []
+        });
       }
     }
 

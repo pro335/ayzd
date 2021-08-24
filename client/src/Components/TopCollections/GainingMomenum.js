@@ -45,20 +45,26 @@ const GainingMomenum = ({ projects }) => {
       });
 
       // get the project data(not from db)
-      let volume = null, isBySalesVolume = false, isBySellerCount = false;
-      topCollections.topCollections.map(one_item => {
-        if(collection.name === one_item.name)
-          volume = one_item.price;
+      let volume = null, isBySalesVolume = null, isBySellerCount = null;
+      topCollections.topCollections.map(item => {
+        if(item.name === data[0].name)
+          volume = item.price;
       })
 
-      topCollections.topCollections.slice(0, 8).map(one_item => {
-        if(collection.name === one_item.name)
-          isBySalesVolume = true;
+      topCollections.topCollections.slice(0, 8).map((item, index) => {
+        if(item.name === data[0].name)
+          isBySalesVolume = {
+            value: index,
+            flag: true
+          };
       })
 
-      biggestSalesAmount.biggestSalesAmount.slice(0, 8).map(one_item => {
-        if(collection.name === one_item.name)
-          isBySellerCount = true;
+      biggestSalesAmount.biggestSalesAmount.slice(0, 8).map((item, index) => {
+        if(item.name === data[0].name)
+          isBySellerCount =  {
+            value: index,
+            flag: true
+          };
       })
 
       let projectDataNotDatabase = {
