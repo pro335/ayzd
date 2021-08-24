@@ -46,6 +46,12 @@ export default function FeedModal({ open, setOpen }) {
     tagColor = 'white'
   }
 
+  const addDefaultSrc = (e) => {
+    e.target.src = '../assets/images/default_image.png';
+  }
+
+  const main_image =  isValid(livefeedData.project) && isValid(livefeedData.project.main_image) ? livefeedData.project.main_image.url : `${config.bucket_url}/${config.common_image}`;
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" static className="fixed inset-0 overflow-hidden z-1000" open={open} onClose={setOpen}>
@@ -101,7 +107,7 @@ export default function FeedModal({ open, setOpen }) {
                       { isValid(livefeedData.project) ? 
                         <div className="flex items-center border border-brand-gray-800 rounded-xl px-2 py-1">
                           <div className="w-6 h-6 bg-brand-gray-900 mr-2">
-                            <img className="mx-auto h-full rounded-full" src={livefeedData.project.main_image} alt={livefeedData.project.name} />
+                            <img className="mx-auto h-full rounded-full" src={main_image} alt={livefeedData.project.name} />
                           </div>
                           <p className="text-sm text-gray-200">
                             { livefeedData.project.name }
@@ -142,7 +148,7 @@ export default function FeedModal({ open, setOpen }) {
 
                       {/* <!-- Image --> */}
                       <div className="h-44 rounded-md overflow-hidden py-4">
-                        <img className="w-full h-full object-cover object-center" src={livefeedData.media} alt="" />
+                        <img className="w-full h-full object-cover object-center" src={livefeedData.media} alt="" onError={addDefaultSrc} />
                       </div>
                       <p className="text-sm text-brand-gray-400">
                         {livefeedData.description}

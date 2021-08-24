@@ -37,6 +37,10 @@ const FeedsList = ({ feeds, onClickHandler }) => {
     }
   }
 
+  const addDefaultSrc = (e) => {
+    e.target.src = '../assets/images/default_image.png';
+  }
+
   return (
     <>
       <div className="h-full lg:border-r border-brand-gray-800 px-2 md:px-4 pt-2.5">
@@ -50,7 +54,7 @@ const FeedsList = ({ feeds, onClickHandler }) => {
                 onClick={() => handleClick(feed._id)}
               >
                 <div className="w-14 h-14 flex-shrink-0 rounded-md overflow-hidden">
-                  <img className="w-full h-full object-cover object-center" src={feed.media} alt="" />
+                  <img className="w-full h-full object-cover object-center" src={feed.media} alt="" onError={addDefaultSrc} />
                 </div>
                 <div className="flex-1 font-medium pl-4 pr-4 lg:pr-6">
                   <h2 className="text-sm md:text-base text-brand-gray-300 leading-4">
