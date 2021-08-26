@@ -16,6 +16,7 @@ const MediaList = () => {
     };
   });
 
+  var image = null;
   var url = null;
 
   return (
@@ -38,12 +39,13 @@ const MediaList = () => {
       >
         {
           project.projectData.media_list.map((media, index) => (
-            url = isValid(media.url) && media.type === 0 ? media.url : `${config.bucket_url}/${config.common_image}`,
+            image = isValid(media.url) && media.type === 0 ? media.url : `${config.bucket_url}/${config.common_image}`,
+            url = isValid(media.url) ? media.url : `https://www.google.com`,
 
             <SwiperSlide key={index} className="pl-4">
               <a href={url} className="block lg:flex-shrink-0 bg-brand-gray-800 rounded-lg overflow-hidden" target="_blank">
                 <div className="w-full">
-                  <img className="w-full" src={url} alt="" />
+                  <img className="w-full" src={image} alt="" />
                 </div>
               </a>
             </SwiperSlide>

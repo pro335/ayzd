@@ -41,7 +41,7 @@ const ProjectsList = ({ projects, isActive, activeHandler }) => {
       });
 
       // get the project data(not from db)
-      let volume = null, isBySalesVolume = null, isBySellerCount = null;
+      let volume = null, isBySellerCount = null, isBySalesVolume = null;
       topCollections.topCollections.map(item => {
         if(item.name === data[0].name)
           volume = item.price;
@@ -49,7 +49,7 @@ const ProjectsList = ({ projects, isActive, activeHandler }) => {
 
       topCollections.topCollections.slice(0, 8).map((item, index) => {
         if(item.name === data[0].name)
-          isBySalesVolume = {
+          isBySellerCount = {
             value: index,
             flag: true
           };
@@ -57,7 +57,7 @@ const ProjectsList = ({ projects, isActive, activeHandler }) => {
 
       biggestSalesAmount.biggestSalesAmount.slice(0, 8).map((item, index) => {
         if(item.name === data[0].name)
-          isBySellerCount =  {
+          isBySalesVolume =  {
             value: index,
             flag: true
           };
@@ -65,13 +65,18 @@ const ProjectsList = ({ projects, isActive, activeHandler }) => {
 
       let projectDataNotDatabase = {
         volume,
-        isBySalesVolume,
         isBySellerCount,
+        isBySalesVolume,
       }
 
       dispatch({
         type: ActionTypes.SET_PROJECT_NOT_DB,
         data: projectDataNotDatabase,
+      });
+      
+      dispatch({
+        type: ActionTypes.SET_ACTIVE_TAB,
+        data: 1
       });
 
     }
@@ -91,7 +96,7 @@ const ProjectsList = ({ projects, isActive, activeHandler }) => {
               key={index}
             >
               <div className="w-6 h-6 mr-4">
-                <img className="mx-auto h-full rounded-full" src={main_image} alt={item.name} />
+                <img className="mx-auto h-full" src={main_image} alt={item.name} />
               </div>
               <p>
                 {item.name}

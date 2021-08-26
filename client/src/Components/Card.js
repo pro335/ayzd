@@ -39,7 +39,7 @@ const Card = ({ item, type="nft" }) => {
       });
 
       // get the project data(not from db)
-      let volume = null, isBySalesVolume = null, isBySellerCount = null;
+      let volume = null, isBySellerCount = null, isBySalesVolume = null;
       topCollections.topCollections.map(one_item => {
         if(item.name === one_item.name)
           volume = one_item.price;
@@ -47,7 +47,7 @@ const Card = ({ item, type="nft" }) => {
 
       topCollections.topCollections.slice(0, 8).map((one_item, index) => {
         if(item.name === one_item.name)
-          isBySalesVolume = {
+          isBySellerCount = {
             value: index,
             flag: true
           };
@@ -55,7 +55,7 @@ const Card = ({ item, type="nft" }) => {
 
       biggestSalesAmount.biggestSalesAmount.slice(0, 8).map((one_item, index) => {
         if(item.name === one_item.name)
-          isBySellerCount =  {
+          isBySalesVolume =  {
             value: index,
             flag: true
           };
@@ -63,16 +63,20 @@ const Card = ({ item, type="nft" }) => {
 
       let projectDataNotDatabase = {
         volume,
-        isBySalesVolume,
         isBySellerCount,
+        isBySalesVolume,
       }
 
       dispatch({
         type: ActionTypes.SET_PROJECT_NOT_DB,
         data: projectDataNotDatabase,
       });
-      
 
+      dispatch({
+        type: ActionTypes.SET_ACTIVE_TAB,
+        data: 1
+      });
+  
       history.push("/projects/decentraland");
     } else {
       // window.open(item.coinrankingUrl, "_blank")

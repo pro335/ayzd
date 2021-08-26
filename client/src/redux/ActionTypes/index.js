@@ -50,6 +50,7 @@ export const SET_PROJECT_ACTION = 'SET_PROJECT_ACTION';
 export const SET_PROJECT = 'SET_PROJECT';
 export const SET_TRENDING_NFTS = 'SET_TRENDING_NFTS';
 export const SET_PROJECT_NOT_DB = 'SET_PROJECT_NOT_DB';
+export const SET_ACTIVE_TAB = 'SET_ACTIVE_TAB';
 
 export const ADD_LIVE_FEED = 'ADD_LIVE_FEED';
 export const ALL_LIVE_FEEDS = 'ALL_LIVE_FEEDS';

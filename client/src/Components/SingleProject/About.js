@@ -1,17 +1,60 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import SectionHeading from "./../SectionHeading";
 import MediaList from "./Media";
 import NFTSliders from "./NFT-Sliders";
 import Team from "./Team";
+import isValid from '../../utility/isValid';
+import * as actions from '../../redux/actions';
+import * as ActionTypes from '../../redux/ActionTypes';
 
 const About = () => {
+
+  const dispatch = useDispatch();
     
   const { project } = useSelector(state => {
     return {
       project: state.project,
     };
   });
+
+  useEffect(() => {
+    
+    async function fetchTrendingNFTs() {
+      if(isValid(project.projectData) && isValid(project.projectData.slug)) {
+        let params = {
+          dappSlug: project.projectData.slug, 
+          orderBy: null, 
+          orderDirection: null,
+        }
+
+        let res = await actions.getTrendingNFTs(params);
+        try {
+          let { success, trendingNFTs } = res.data;
+          if(success) {
+            dispatch({
+              type: ActionTypes.SET_TRENDING_NFTS,
+              data: trendingNFTs
+            });
+          } else {
+            dispatch({
+              type: ActionTypes.PROJECT_ERR,
+              err: res.data.errMessage
+            });
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      } else {
+        dispatch({
+          type: ActionTypes.SET_TRENDING_NFTS,
+          data: []
+        });
+      }
+    }
+
+    fetchTrendingNFTs();
+  }, []);
 
   return (
     <div className="min-w-[320px] w-full h-full grid lg:grid-cols-2 overflow-y-scroll">
@@ -39,11 +82,15 @@ const About = () => {
       </div>
 
       <div className="min-w-[320px] w-full">
-        <NFTSliders
-          title="Trending nfts"
-          icon="trending-nft"
-          type="trending-nft"
-        />
+        {isValid(project.projectData) && isValid(project.trendingNFTs) ?
+          <NFTSliders
+            title="Trending nfts"
+            icon="trending-nft"
+            type="trending-nft"
+          />
+          :
+          null
+        }
         {/* <NFTSliders
           title="Top sales of the day"
           icon="shopping-cart"
@@ -51,17 +98,20 @@ const About = () => {
           type="top-sales"
         /> */}
 
-        <div className="border-r border-brand-gray-800">
-          <div>
-            <SectionHeading
-              title="Team behind project"
-              icon="team"
-              classes="border-t"
-            />
-
-            <Team />
+        {isValid(project.projectData) && isValid(project.projectData.member_list) ?
+          <div className="border-r border-brand-gray-800">
+            <div>
+              <SectionHeading
+                title="Team behind project"
+                icon="team"
+                classes="border-t"
+              />
+              <Team />
+            </div>
           </div>
-        </div>
+          :
+          null
+        }
       </div>
     </div>
   )

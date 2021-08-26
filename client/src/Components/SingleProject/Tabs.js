@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import LiveFeedSection from "../Feeds/LiveFeedSection"
@@ -7,39 +7,103 @@ import Guides from "./Guides"
 import NFTList from "./NFTList"
 import SimilarProjects from "./SimilarProjects"
 import Statistics from "./Statistics"
-
-const buttons = [
-  {
-    "id": 1,
-    "title": "About",
-  },
-  {
-    "id": 2,
-    "title": "NFT List",
-  },
-  // {
-  //   "id": 3,
-  //   "title": "Statistics",
-  // },
-  {
-    "id": 3,
-    "title": "Guides",
-  }, {
-    "id": 4,
-    "title": "Newsfeed",
-  }, {
-    "id": 5,
-    "title": "Smiliar projects",
-  }
-]
+import { useSelector, useDispatch } from 'react-redux';
+import isValid from '../../utility/isValid';
+import * as actions from '../../redux/actions';
+import * as ActionTypes from '../../redux/ActionTypes';
 
 const Tabs = () => {
-  const [activTab, setActiveTab] = useState(1);
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
+
+  const dispatch = useDispatch();
+    
+  const { project, buttons } = useSelector(state => {
+
+    let tempButtons = [];
+    tempButtons.push({
+      "id": 1,
+      "title": "About",
+    });
+
+    if(isValid(state.project.projectData) && isValid(state.project.trendingNFTs))
+      tempButtons.push({
+        "id": 2,
+        "title": "NFT List",
+      });
+
+    // tempButtons.push({
+    //   "id": 3,
+    //   "title": "Statistics",
+    // });
+
+    if(isValid(state.project.projectData) && isValid(state.project.projectData.guide_list))
+      tempButtons.push({
+        "id": 4,
+        "title": "Guides",
+      });
+
+    tempButtons.push({
+      "id": 5,
+      "title": "Newsfeed",
+    });
+
+    if(isValid(state.project.projectData) && isValid(state.project.projectData.similar_list))
+      tempButtons.push({
+        "id": 6,
+        "title": "Similar projects",
+      });
+
+    return {
+      project: state.project,
+      buttons: tempButtons,
+    };
+  });
+  
+  useEffect(() => {
+    
+    async function fetchTrendingNFTs() {
+      if(isValid(project.projectData) && isValid(project.projectData.slug)) {
+        let params = {
+          dappSlug: project.projectData.slug, 
+          orderBy: null, 
+          orderDirection: null,
+        }
+
+        let res = await actions.getTrendingNFTs(params);
+        try {
+          let { success, trendingNFTs } = res.data;
+          if(success) {
+            dispatch({
+              type: ActionTypes.SET_TRENDING_NFTS,
+              data: trendingNFTs
+            });
+          } else {
+            dispatch({
+              type: ActionTypes.PROJECT_ERR,
+              err: res.data.errMessage
+            });
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      } else {
+        dispatch({
+          type: ActionTypes.SET_TRENDING_NFTS,
+          data: []
+        });
+      }
+    }
+
+    fetchTrendingNFTs();
+  }, []);
 
   const toggleTab = (index) => {
-    setActiveTab(index);
+    dispatch({
+      type: ActionTypes.SET_ACTIVE_TAB,
+      data: index
+    });
   };
+  
   return (
     <>
       <div className="h-15 flex-shrink-0 overflow-hidden">
@@ -47,7 +111,7 @@ const Tabs = () => {
           {
             buttons.map((button, index) => (
               <button key={index}
-                className={`${activTab === button.id && "text-brand-gray-300 border-brand-AYZD-PURPLE"} h-full text-sm font-medium border-b-2 border-transparent hover:border-brand-AYZD-PURPLE px-4`}
+                className={`${project.activeTab === button.id && "text-brand-gray-300 border-brand-AYZD-PURPLE"} h-full text-sm font-medium border-b-2 border-transparent hover:border-brand-AYZD-PURPLE px-4`}
                 onClick={() => toggleTab(button.id)}
               >
                 {button.title}
@@ -58,12 +122,12 @@ const Tabs = () => {
       </div>
       <div className="relative overflow-hidden">
         {
-          activTab === 1 ? <About /> :
-            activTab === 2 ? <NFTList /> :
-              // activTab === 3 ? <Statistics /> :
-                activTab === 3 ? <Guides /> :
-                  activTab === 4 ? <LiveFeedSection showDetailsPanel={false} /> :
-                    activTab === 5 && <SimilarProjects />
+          project.activeTab === 1 ? <About /> :
+            project.activeTab === 2 ? <NFTList /> :
+              // project.activeTab === 3 ? <Statistics /> :
+                project.activeTab === 4 ? <Guides /> :
+                  project.activeTab === 5 ? <LiveFeedSection showDetailsPanel={false} /> :
+                    project.activeTab === 6 && <SimilarProjects />
         }
       </div>
 

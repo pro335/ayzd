@@ -8,22 +8,22 @@ import * as actions from '../../redux/actions';
 import * as ActionTypes from '../../redux/ActionTypes';
 
 const BiggestSalesVolume = ({ projects, title, icon, day, classes }) => {
-
+  
   const dispatch = useDispatch();
   const history = useHistory();
   
-  const { topCollections, project, biggestSalesAmount } = useSelector(state => {
+  const { biggestSalesAmount, project, topCollections } = useSelector(state => {
     return {
-      topCollections: state.topCollections,
-      project: state.project,
       biggestSalesAmount: state.biggestSalesAmount,
+      project: state.project,
+      topCollections: state.topCollections,
     };
   });
 
-  const handleClick = (collection) => {
+  const handleClick = (proj) => {
  
     let data = project.projects.filter(function(item) {
-      return item.name === collection.name;
+      return item.name === proj.name;
     });
     if(isValid(data)) {
       dispatch({
@@ -43,7 +43,7 @@ const BiggestSalesVolume = ({ projects, title, icon, day, classes }) => {
       });
 
       // get the project data(not from db)
-      let volume = null, isBySalesVolume = null, isBySellerCount = null;
+      let volume = null, isBySellerCount = null, isBySalesVolume = null;
       topCollections.topCollections.map(item => {
         if(item.name === data[0].name)
           volume = item.price;
@@ -51,7 +51,7 @@ const BiggestSalesVolume = ({ projects, title, icon, day, classes }) => {
 
       topCollections.topCollections.slice(0, 8).map((item, index) => {
         if(item.name === data[0].name)
-          isBySalesVolume = {
+          isBySellerCount = {
             value: index,
             flag: true
           };
@@ -59,7 +59,7 @@ const BiggestSalesVolume = ({ projects, title, icon, day, classes }) => {
 
       biggestSalesAmount.biggestSalesAmount.slice(0, 8).map((item, index) => {
         if(item.name === data[0].name)
-          isBySellerCount =  {
+          isBySalesVolume =  {
             value: index,
             flag: true
           };
@@ -67,13 +67,18 @@ const BiggestSalesVolume = ({ projects, title, icon, day, classes }) => {
 
       let projectDataNotDatabase = {
         volume,
-        isBySalesVolume,
         isBySellerCount,
+        isBySalesVolume,
       }
 
       dispatch({
         type: ActionTypes.SET_PROJECT_NOT_DB,
         data: projectDataNotDatabase,
+      });
+      
+      dispatch({
+        type: ActionTypes.SET_ACTIVE_TAB,
+        data: 1
       });
 
       history.push("/projects/decentraland");
@@ -81,6 +86,7 @@ const BiggestSalesVolume = ({ projects, title, icon, day, classes }) => {
       // alert("Doesn't exist")
     }
   }
+  
   return (
     <>
       <div className="border-r border-brand-gray-800">
@@ -92,7 +98,7 @@ const BiggestSalesVolume = ({ projects, title, icon, day, classes }) => {
 
         <div className="flex flex-col text-brand-gray-400 font-medium space-y-2 py-2 md:py-5 px-2">
           {
-            topCollections.topCollections.slice(0, 8).map((item, index) => (
+            biggestSalesAmount.biggestSalesAmount.slice(0, 8).map((item, index) => (
               <div
                 key={index}
                 className="h-10 flex items-center hover:bg-brand-gray-800 hover:text-gray-200 hover:cursor-pointer rounded-md px-2  md:px-3"
@@ -106,7 +112,7 @@ const BiggestSalesVolume = ({ projects, title, icon, day, classes }) => {
                 </p>
 
                 <div className={`${item.gaining > 0 ? 'text-green-400' : 'text-red-500'} flex flex-col md:flex-row items-end md:items-center ml-auto`}>
-                  <span className="text-gray-200 order-1 md:order-none md:mr-2">{item.price}</span>
+                  <span className="text-gray-200 order-1 md:order-none md:mr-2">{item.amount}</span>
                 </div>
               </div>
             ))

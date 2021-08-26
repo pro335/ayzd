@@ -1,20 +1,92 @@
 import React from 'react'
 import SwiperCore from 'swiper';
 import "swiper/swiper.min.css";
-import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
 import isValid from '../../utility/isValid';
 import config from '../../config/config';
+import * as actions from '../../redux/actions';
+import * as ActionTypes from '../../redux/ActionTypes';
 
 SwiperCore.use([]);
 
 const SimilarProjects = () => {
-  
-  const { project } = useSelector(state => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const { project, topCollections, biggestSalesAmount } = useSelector(state => {
     return {
       project: state.project,
+      topCollections: state.topCollections,
+      biggestSalesAmount: state.biggestSalesAmount,
     };
   });
+  
+  const handleClick = (proj) => {
+
+    dispatch({
+      type: ActionTypes.SET_PROJECT_ID,
+      data: proj._id,
+    });
+  
+    let data = project.projects.filter(function(item) {
+      return item._id === proj._id;
+    });
+    if(isValid(data)) {
+      dispatch({
+        type: ActionTypes.SET_PROJECT,
+        data: data[0],
+      });
+
+      //Sort the livefeednews by the selected project
+      dispatch({
+        type: ActionTypes.SORTING_LIVE_FEED_BY_PROJECT,
+        project_id: proj._id,
+      });
+
+      // get the project data(not from db)
+      let volume = null, isBySellerCount = null, isBySalesVolume = null;
+      topCollections.topCollections.map(item => {
+        if(item.name === data[0].name)
+          volume = item.price;
+      })
+
+      topCollections.topCollections.slice(0, 8).map((item, index) => {
+        if(item.name === data[0].name)
+          isBySellerCount = {
+            value: index,
+            flag: true
+          };
+      })
+
+      biggestSalesAmount.biggestSalesAmount.slice(0, 8).map((item, index) => {
+        if(item.name === data[0].name)
+          isBySalesVolume =  {
+            value: index,
+            flag: true
+          };
+      })
+
+      let projectDataNotDatabase = {
+        volume,
+        isBySellerCount,
+        isBySalesVolume,
+      }
+
+      dispatch({
+        type: ActionTypes.SET_PROJECT_NOT_DB,
+        data: projectDataNotDatabase,
+      });
+      
+      dispatch({
+        type: ActionTypes.SET_ACTIVE_TAB,
+        data: 1
+      });
+
+    }
+
+    // history.push("/projects/decentraland");
+  }
 
   let imageUrl = null;
   return (
@@ -23,14 +95,16 @@ const SimilarProjects = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-7 gap-3 md:gap-x-6">
           {
             project.projectData.similar_list.map((item, index) => (
-              imageUrl = isValid(item.main_image) ? item.main_image : `${config.bucket_url}/${config.common_image}`,
+              imageUrl = isValid(item.main_image) && isValid(item.main_image.url) ? item.main_image.url : `${config.bucket_url}/${config.common_image}`,
 
-              <div key={index} className="w-full block flex-shrink-0 bg-brand-gray-800 rounded-lg overflow-hidden">
+              <div key={index} className="w-full block flex-shrink-0 bg-brand-gray-800 rounded-lg overflow-hidden hover:cursor-pointer" onClick={() => handleClick(item)}>
                 <div>
                   <img className="w-full h-full object-cover p-5" src={imageUrl} alt="" />
                 </div>
                 <div className="leading-5 p-3 pb-4">
-                  <p>{item.small_description}</p>
+                  {/* <p className="capitalize">
+                    {isValid(item.category) ? item.category.name : ""}
+                  </p> */}
                   <p className="text-brand-gray-300 -mt-1">{item.name}</p>
                 </div>
               </div>

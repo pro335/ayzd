@@ -46,20 +46,20 @@ const Heading = () => {
             {project.projectData.small_description}
           </p>
           <div className="flex items-center justify-center lg:justify-start space-x-2">
-            {isValid(project.projectDataNotDatabase) && isValid(project.projectDataNotDatabase.isBySalesVolume) && project.projectDataNotDatabase.isBySalesVolume.flag?
-              <div className="relative text-brand-AYZD-PURPLE rounded-full overflow-hidden whitespace-nowrap px-3 py-1.5">
+            {isValid(project.projectDataNotDatabase) && isValid(project.projectDataNotDatabase.isBySalesVolume) && project.projectDataNotDatabase.isBySalesVolume.flag ?
+              <div className="relative text-brand-green rounded-full overflow-hidden whitespace-nowrap px-3 py-1.5">
                 #{project.projectDataNotDatabase.isBySalesVolume.value + 1} by sales volume
-
-                <span className="absolute left-0 top-0 w-full h-full bg-base opacity-30"></span>
+                <span className="w-full h-full bg-secondary absolute left-0 top-0 opacity-30"></span>
               </div>
               :
               null
             }
 
-            {isValid(project.projectDataNotDatabase) && isValid(project.projectDataNotDatabase.isBySellerCount) && project.projectDataNotDatabase.isBySellerCount.flag ?
-              <div className="relative text-brand-green rounded-full overflow-hidden whitespace-nowrap px-3 py-1.5">
+            {isValid(project.projectDataNotDatabase) && isValid(project.projectDataNotDatabase.isBySellerCount) && project.projectDataNotDatabase.isBySellerCount.flag?
+              <div className="relative text-brand-AYZD-PURPLE rounded-full overflow-hidden whitespace-nowrap px-3 py-1.5">
                 #{project.projectDataNotDatabase.isBySellerCount.value + 1} by seller count
-                <span className="w-full h-full bg-secondary absolute left-0 top-0 opacity-30"></span>
+
+                <span className="absolute left-0 top-0 w-full h-full bg-base opacity-30"></span>
               </div>
               :
               null

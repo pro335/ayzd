@@ -45,7 +45,7 @@ const GainingMomenum = ({ projects }) => {
       });
 
       // get the project data(not from db)
-      let volume = null, isBySalesVolume = null, isBySellerCount = null;
+      let volume = null, isBySellerCount = null, isBySalesVolume = null;
       topCollections.topCollections.map(item => {
         if(item.name === data[0].name)
           volume = item.price;
@@ -53,7 +53,7 @@ const GainingMomenum = ({ projects }) => {
 
       topCollections.topCollections.slice(0, 8).map((item, index) => {
         if(item.name === data[0].name)
-          isBySalesVolume = {
+          isBySellerCount = {
             value: index,
             flag: true
           };
@@ -61,7 +61,7 @@ const GainingMomenum = ({ projects }) => {
 
       biggestSalesAmount.biggestSalesAmount.slice(0, 8).map((item, index) => {
         if(item.name === data[0].name)
-          isBySellerCount =  {
+          isBySalesVolume =  {
             value: index,
             flag: true
           };
@@ -69,13 +69,18 @@ const GainingMomenum = ({ projects }) => {
 
       let projectDataNotDatabase = {
         volume,
-        isBySalesVolume,
         isBySellerCount,
+        isBySalesVolume,
       }
 
       dispatch({
         type: ActionTypes.SET_PROJECT_NOT_DB,
         data: projectDataNotDatabase,
+      });
+      
+      dispatch({
+        type: ActionTypes.SET_ACTIVE_TAB,
+        data: 1
       });
 
       history.push("/projects/decentraland");

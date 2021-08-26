@@ -6,14 +6,23 @@ import { XIcon } from '@heroicons/react/outline'
 import reduceTextLengh from '../../utility/reduceTextLengh';
 import isValid from '../../utility/isValid';
 import config from '../../config/config';
+import { Link, useHistory } from "react-router-dom";
+import * as actions from '../../redux/actions';
+import * as ActionTypes from '../../redux/ActionTypes';
 
 var moment = require('moment');
 
 export default function FeedModal({ open, setOpen }) {
 
-  const { livefeed } = useSelector(state => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  
+  const { topCollections, livefeed, biggestSalesAmount, project } = useSelector(state => {
     return {
+      topCollections: state.topCollections,
       livefeed: state.livefeed,
+      biggestSalesAmount: state.biggestSalesAmount,
+      project: state.project,
     };
   });
 
@@ -45,6 +54,77 @@ export default function FeedModal({ open, setOpen }) {
     marketType = 'not-found'
     tagColor = 'white'
   }
+
+  
+  const handleClick = (proj) => {
+
+      
+    let data = project.projects.filter(function(item) {
+      return item._id === proj._id;
+    });
+    if(!isValid(data))
+      return;
+
+    const item = data[0];
+
+    dispatch({
+      type: ActionTypes.SET_PROJECT_ID,
+      data: item._id,
+    });
+  
+    dispatch({
+      type: ActionTypes.SET_PROJECT,
+      data: item,
+    });
+
+    //Sort the livefeednews by the selected project
+    dispatch({
+      type: ActionTypes.SORTING_LIVE_FEED_BY_PROJECT,
+      project_id: item._id,
+    });
+
+    // get the project data(not from db)
+    let volume = null, isBySellerCount = null, isBySalesVolume = null;
+    topCollections.topCollections.map(one_item => {
+      if(item.name === one_item.name)
+        volume = one_item.price;
+    })
+
+    topCollections.topCollections.slice(0, 8).map((one_item, index) => {
+      if(item.name === one_item.name)
+        isBySellerCount = {
+          value: index,
+          flag: true
+        };
+    })
+
+    biggestSalesAmount.biggestSalesAmount.slice(0, 8).map((one_item, index) => {
+      if(item.name === one_item.name)
+        isBySalesVolume =  {
+          value: index,
+          flag: true
+        };
+    })
+
+    let projectDataNotDatabase = {
+      volume,
+      isBySellerCount,
+      isBySalesVolume,
+    }
+
+    dispatch({
+      type: ActionTypes.SET_PROJECT_NOT_DB,
+      data: projectDataNotDatabase,
+    });
+    
+    dispatch({
+      type: ActionTypes.SET_ACTIVE_TAB,
+      data: 1
+    });
+
+    history.push("/projects/decentraland");
+  }
+
 
   const addDefaultSrc = (e) => {
     e.target.src = '../assets/images/default_image.png';
@@ -105,7 +185,7 @@ export default function FeedModal({ open, setOpen }) {
 
                     <div className="flex items-center flex-wrap text-xs text-brand-gray-600 font-medium md:space-x-3 mt-1">
                       { isValid(livefeedData.project) ? 
-                        <div className="flex items-center border border-brand-gray-800 rounded-xl px-2 py-1">
+                        <div className="flex items-center border border-brand-gray-800 rounded-xl px-2 py-1 hover:cursor-pointer" onClick={() => handleClick(livefeedData.project)}>
                           <div className="w-6 h-6 bg-brand-gray-900 mr-2">
                             <img className="mx-auto h-full rounded-full" src={main_image} alt={livefeedData.project.name} />
                           </div>

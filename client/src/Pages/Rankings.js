@@ -6,19 +6,20 @@ import BiggestSalesAmount from "../Components/Rankings/BiggestSalesAmount";
 import DaySales from "../Components/Rankings/DaySales";
 import Gainers from "../Components/Rankings/Gainers";
 import Loosers from "../Components/Rankings/Loosers";
+import Marketplaces from "../Components/Rankings/Marketplaces";
 
 const Rankings = () => {
   return (
     <div className="w-full lg:overflow-hidden">
       <div className="w-full h-full grid md:grid-cols-2 lg:grid-cols-3 overflow-y-scroll">
-        <BiggestSalesVolume
-          projects={data.projects}
-          title="Biggest sales volume"
-          icon="shopping-cart"
-        />
         <BiggestSalesAmount
           projects={data.projects}
-          title="Biggest sales amount"
+          title="Bigest all time sales amount"
+          icon="shopping-cart"
+        />
+        <BiggestSalesVolume
+          projects={data.projects}
+          title="Biggest all time sales volume"
           icon="biggest-sales"
           classes="border-t"
         />
@@ -31,17 +32,17 @@ const Rankings = () => {
         />
         <Gainers
           projects={data.projects}
-          title="Biggest gainers"
+          title="Biggest gainers this month"
           icon="biggest-gainers"
           classes="border-t"
         />
         <Loosers
           projects={data.projects}
-          title="Biggest loosers"
+          title="Biggest losers this month"
           icon="biggest-loosers"
           classes="border-t"
         />
-        <Gainers
+        <Marketplaces
           projects={data.projects}
           title="Top marketplaces"
           icon="top-marketplaces"
