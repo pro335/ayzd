@@ -82,6 +82,9 @@ export const deleteNewsfeedSource = (id) => {
     return axios.delete(`/api/newsfeedSource/delete/${id}`);
 }
 
+export const updateLivefeeds = () => {
+    return axios.post("/api/newsfeedSource/updateLivefeeds");
+}
 
 // media action(s)
 export const addMedia = (data) => {
@@ -111,34 +114,6 @@ export const addProject = (data) => {
 
 export const allProjects = () => {
     return axios.post("/api/project/all");
-    // let projects = [
-    //     {
-    //         _id: "1",
-    //         name: "1",
-    //     },
-    //     {
-    //         _id: "2",
-    //         name: "2",
-    //     },
-    //     {
-    //         _id: "3",
-    //         name: "3",
-    //     },
-    //     {
-    //         _id: "4",
-    //         name: "4",
-    //     },
-    //     {
-    //         _id: "5",
-    //         name: "5",
-    //     },
-    // ];
-    // return {
-    //     data: {
-    //         success: true,
-    //         projects: projects
-    //     }
-    // }
 }
 
 export const updateProject = (data) => {
@@ -209,6 +184,7 @@ export const updateLivefeed = (data) => {
 export const deleteLivefeed = (id) => {
     return axios.delete(`/api/livefeed/delete/${id}`);
 }
+
 
 // Scrape data
 export const fetchTopSales = () => {

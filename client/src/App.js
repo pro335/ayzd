@@ -22,7 +22,9 @@ function App() {
     };
   });
 
-  useEffect( () => {
+  const TIME_INTERVAL = 1000*60*60;
+
+  useEffect(() => {
 
     async function initializeStore() {
       const serializedState = JSON.stringify(null)
@@ -50,6 +52,25 @@ function App() {
     }
     async function fetchAllLivefeeds() {
       let resLivefeed = await actions.allLivefeeds();
+      try {
+        let { success, livefeeds } = resLivefeed.data;
+        if(success) {
+          dispatch({
+            type: ActionTypes.ALL_LIVE_FEEDS,
+            data: livefeeds
+          });
+        } else {
+          dispatch({
+            type: ActionTypes.LIVE_FEED_ERR,
+            err: resLivefeed.data.errMessage
+          });
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    async function updateLivefeeds() {
+      let resLivefeed = await actions.updateLivefeeds();
       try {
         let { success, livefeeds } = resLivefeed.data;
         if(success) {
@@ -223,19 +244,34 @@ function App() {
       }
     }
 
-    // initializeStore();
-    fetchAllProjects();
-    fetchAllLivefeeds();
-    // fetchTopSales();
-    fetchTopCollections();
-    fetchBiggestSalesVolume();
-    fetchDaySales();
-    fetchGainersLoosers();
-    fetchAllCategories();
-    fetchAllChains();
-    // fetchTrading();
+    const loadData = () => {
+      // initializeStore();
+      fetchAllProjects();
+      // fetchAllLivefeeds();
+      updateLivefeeds();
+      // fetchTopSales();
+      fetchTopCollections();
+      fetchBiggestSalesVolume();
+      fetchDaySales();
+      fetchGainersLoosers();
+      fetchAllCategories();
+      fetchAllChains();
+      // fetchTrading();
+    }
 
-  }, []);
+    loadData();
+
+    const interval = setInterval(() => {
+
+      loadData();
+
+      // var m = new Date();
+      // var dateString = m.getUTCFullYear() +"/"+ (m.getUTCMonth()+1) +"/"+ m.getUTCDate() + " " + m.getUTCHours() + ":" + m.getUTCMinutes() + ":" + m.getUTCSeconds();
+      // console.log(dateString)
+    }, TIME_INTERVAL);
+  
+    return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
+  }, [])
 
   return (
     <>

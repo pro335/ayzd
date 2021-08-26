@@ -73,7 +73,7 @@ const ProjectsList = ({ projects, isActive, activeHandler }) => {
         type: ActionTypes.SET_PROJECT_NOT_DB,
         data: projectDataNotDatabase,
       });
-      
+
       dispatch({
         type: ActionTypes.SET_ACTIVE_TAB,
         data: 1
@@ -86,7 +86,7 @@ const ProjectsList = ({ projects, isActive, activeHandler }) => {
   return (
     <div className="h-full flex flex-col font-medium overflow-y-scroll space-y-2 py-3 px-2">
       {
-        projects.map((item, index) => {
+        project.projects.map((item, index) => {
           const main_image = isValid(item.main_image) &&  isValid(item.main_image.url) ? item.main_image.url : `${config.bucket_url}/${config.common_image}`;
 
           return (
