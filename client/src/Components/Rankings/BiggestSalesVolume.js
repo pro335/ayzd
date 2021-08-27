@@ -31,57 +31,7 @@ const BiggestSalesVolume = ({ projects, title, icon, day, classes }) => {
         data: data[0],
       });
 
-      dispatch({
-        type: ActionTypes.SET_PROJECT_ID,
-        data: data[0]._id,
-      });
-   
-      //Sort the livefeednews by the selected project
-      dispatch({
-        type: ActionTypes.SORTING_LIVE_FEED_BY_PROJECT,
-        project_id: data[0]._id,
-      });
-
-      // get the project data(not from db)
-      let volume = null, isBySellerCount = null, isBySalesVolume = null;
-      topCollections.topCollections.map(item => {
-        if(item.name === data[0].name)
-          volume = item.price;
-      })
-
-      topCollections.topCollections.slice(0, 8).map((item, index) => {
-        if(item.name === data[0].name)
-          isBySellerCount = {
-            value: index,
-            flag: true
-          };
-      })
-
-      biggestSalesAmount.biggestSalesAmount.slice(0, 8).map((item, index) => {
-        if(item.name === data[0].name)
-          isBySalesVolume =  {
-            value: index,
-            flag: true
-          };
-      })
-
-      let projectDataNotDatabase = {
-        volume,
-        isBySellerCount,
-        isBySalesVolume,
-      }
-
-      dispatch({
-        type: ActionTypes.SET_PROJECT_NOT_DB,
-        data: projectDataNotDatabase,
-      });
-      
-      dispatch({
-        type: ActionTypes.SET_ACTIVE_TAB,
-        data: 1
-      });
-
-      history.push("/projects/decentraland");
+      history.push(`/projects/${data[0].unique_id}`);
     } else {
       // alert("Doesn't exist")
     }

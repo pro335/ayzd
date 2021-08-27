@@ -265,9 +265,9 @@ function App() {
 
       loadData();
 
-      // var m = new Date();
-      // var dateString = m.getUTCFullYear() +"/"+ (m.getUTCMonth()+1) +"/"+ m.getUTCDate() + " " + m.getUTCHours() + ":" + m.getUTCMinutes() + ":" + m.getUTCSeconds();
-      // console.log(dateString)
+      var m = new Date();
+      var dateString = m.getUTCFullYear() +"/"+ (m.getUTCMonth()+1) +"/"+ m.getUTCDate() + " " + m.getUTCHours() + ":" + m.getUTCMinutes() + ":" + m.getUTCSeconds();
+      console.log(dateString)
     }, TIME_INTERVAL);
   
     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
@@ -282,7 +282,7 @@ function App() {
             <Route exact path="/nft-projects" component={Nft} />
             <Route exact path="/rankings" component={Rankings} />
             <Route exact path="/trading" component={Trading} />
-            <Route exact path="/projects/decentraland" component={SingleProject} />
+            <Route exact path="/projects/:project_unique_id" component={SingleProject} />
             <Route path="/" component={Dashboard} />
           </Switch>
         </main>

@@ -1,8 +1,16 @@
 import { ArrowNarrowRightIcon } from "@heroicons/react/solid";
 import React from 'react'
+import { useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 
 const Banner = () => {
+
+  const { project } = useSelector(state => {
+    return {
+      project: state.project,
+    };
+  });
+
   return (
     <div className="relative flex flex-col md:flex-row md:items-center justify-between bg-base z-40 px-5 py-5 md:pl-9 md:pr-6 mt-5 lg:mt-0" >
       <div>
@@ -14,7 +22,7 @@ const Banner = () => {
         </p>
       </div>
       <div className="mt-2">
-        <Link to="/projects/decentraland" className="h-10 block bg-black bg-opacity-70 text-white text-opacity-60 hover:bg-opacity-100 hover:text-opacity-100 inline-flex items-center rounded-lg px-4">
+        <Link to={`/projects/${project.projectData.unique_id}`} className="h-10 block bg-black bg-opacity-70 text-white text-opacity-60 hover:bg-opacity-100 hover:text-opacity-100 inline-flex items-center rounded-lg px-4">
           <span>Project details</span>
           <ArrowNarrowRightIcon className="h-6 w-4 onHover ml-2" />
         </Link>

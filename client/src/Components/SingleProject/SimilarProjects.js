@@ -85,7 +85,7 @@ const SimilarProjects = () => {
 
     }
 
-    // history.push("/projects/decentraland");
+    // history.push(`/projects/${data[0].unique_id}`);
   }
 
   let imageUrl = null;
