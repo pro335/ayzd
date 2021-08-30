@@ -177,7 +177,6 @@ export default function FeedModal({ open, setOpen }) {
 
                     </div>
                     <div>
-
                       {/* <!-- Image --> */}
                       <div className="h-44 rounded-md overflow-hidden py-4">
                         <img className="w-full h-full object-cover object-center" src={livefeedData.media} alt="" onError={addDefaultSrc} />
@@ -186,6 +185,20 @@ export default function FeedModal({ open, setOpen }) {
                         {livefeedData.description}
                       </p>
                     </div>
+                    
+                    {isValid(livefeedData.link) ?
+                      <div className="lg:flex items-center font-medium mt-4 ml-auto space-x-3">
+                        <a
+                          href={livefeedData.link}
+                          className="bg-brand-AYZD-PURPLE hover:bg-purple-700 text-white leading-7 rounded-xl px-auto py-1.5 w-full flex flex-col justify-center items-center"
+                          target="_blank"
+                        >
+                          Open full article
+                        </a>
+                      </div>
+                      :
+                      null
+                    }
                   </div>
 
                   {/* <!-- Modal Body --> */}

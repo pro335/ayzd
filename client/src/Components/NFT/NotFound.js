@@ -9,7 +9,7 @@ const NotFound = () => {
           Whoops
         </h2>
         <p className="font-medium ">
-          No project founded. Try something different
+          No data founded. Try something different
         </p>
       </div>
     </div>

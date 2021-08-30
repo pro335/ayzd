@@ -24,7 +24,7 @@ const FeedsList = ({ feeds, onClickHandler }) => {
       data: feedId,
     });
   
-    let data = livefeed.livefeeds.filter(function(item) {
+    let data = livefeed.filtered_livefeeds.filter(function(item) {
       return item._id === feedId;
     });
     if(isValid(data)) {
@@ -48,7 +48,7 @@ const FeedsList = ({ feeds, onClickHandler }) => {
         {/* <!-- Live Feeds --> */}
         <div className="h-full lg:overflow-y-scroll space-y-2 lg:space-y-4.5">
           {
-            livefeed.livefeeds.map((feed, index) => (
+            livefeed.filtered_livefeeds.map((feed, index) => (
               <button key={index}
                 className="w-full flex flex-wrap text-left hover:bg-brand-gray-800 rounded-lg onHover px-3.5 py-2"
                 onClick={() => handleClick(feed._id)}

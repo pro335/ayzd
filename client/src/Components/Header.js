@@ -5,7 +5,11 @@ import {
   MenuIcon,
   XIcon,
 } from '@heroicons/react/outline'
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
+import * as actions from '../redux/actions';
+import * as ActionTypes from '../redux/ActionTypes';
+import isValid from '../utility/isValid';
 
 const navLinks = [
   {
@@ -39,14 +43,38 @@ const navLinks = [
 ]
 
 const Header = () => {
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const handleClick = (link = null) => {
+    if(isValid(link) && link.to !== "/")    // if user doesn't click the "Dashboard", i.e. "NFT Project", "Rankings"
+      return;
+
+    // if user click the "Logo" or "Dashboard" navbar
+    dispatch({
+      type: ActionTypes.SET_PROJECT_ID,
+      data: null,
+    });
+    dispatch({
+      type: ActionTypes.SET_PROJECT,
+      data: null,
+    });
+    dispatch({
+      type: ActionTypes.FILTERING_LIVE_FEED_BY_PROJECT,
+      projectData: null,
+    });
+    history.push(`/`);
+  }
+
   return (
     <Popover as="header" className="w-full fixed top-0 left-0 bg-brand-gray-900 border-b border-brand-gray-800 z-100 px-5">
       {({ open }) => (
         <>
           <nav className="h-16 flex items-center">
-            <Link to="/">
+            <div className="hover:cursor-pointer" onClick={() => handleClick()}>
               <img src="../assets/Logo.svg" alt="" />
-            </Link>
+            </div>
             <div className="nav-menu hidden lg:flex items-center font-medium space-x-4.5 px-4.5">
               {
                 navLinks.map((link, index) => (
@@ -55,6 +83,7 @@ const Header = () => {
                     activeClassName="active"
                     key={index}
                     className="group flex items-center border-b-2 border-transparent hover:border-brand-AYZD-PURPLE hover:text-gray-100 px-1 pt-6 pb-5"
+                    onClick={() => handleClick(link)}
                   >
                     <svg className="w-5 h-4.5 mr-2 group-hover:text-brand-AYZD-PURPLE">
                       <use href={`../assets/icons/${link.icon}.svg#icon-${link.icon}`}></use>

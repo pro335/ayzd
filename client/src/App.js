@@ -25,9 +25,19 @@ function App() {
 
   useEffect(() => {
 
-    async function initializeStore() {
-      const serializedState = JSON.stringify(null)
-      localStorage.setItem('ayzd', serializedState)
+    async function initializeProjects() {
+      // dispatch({
+      //   type: ActionTypes.SET_PROJECT_ID,
+      //   data: null,
+      // });
+      // dispatch({
+      //   type: ActionTypes.SET_PROJECT,
+      //   data: null,
+      // });
+      // dispatch({
+      //   type: ActionTypes.FILTERING_LIVE_FEED_BY_PROJECT,
+      //   projectData: null,
+      // });
     }
 
     async function fetchAllProjects() {
@@ -58,6 +68,10 @@ function App() {
             type: ActionTypes.ALL_LIVE_FEEDS,
             data: livefeeds
           });
+          dispatch({
+            type: ActionTypes.SET_FILTERED_LIVE_FEEDS,
+            data: livefeeds
+          });
         } else {
           dispatch({
             type: ActionTypes.LIVE_FEED_ERR,
@@ -75,6 +89,10 @@ function App() {
         if(success) {
           dispatch({
             type: ActionTypes.ALL_LIVE_FEEDS,
+            data: livefeeds
+          });
+          dispatch({
+            type: ActionTypes.SET_FILTERED_LIVE_FEEDS,
             data: livefeeds
           });
         } else {
@@ -244,7 +262,7 @@ function App() {
     }
 
     const loadData = () => {
-      // initializeStore();
+      initializeProjects();
       fetchAllProjects();
       fetchAllLivefeeds();
       updateLivefeeds();

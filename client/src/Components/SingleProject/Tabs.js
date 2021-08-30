@@ -44,10 +44,11 @@ const Tabs = () => {
         "title": "Guides",
       });
 
-    tempButtons.push({
-      "id": 5,
-      "title": "Newsfeed",
-    });
+    if(isValid(state.livefeed) && isValid(state.livefeed.filtered_livefeeds))
+      tempButtons.push({
+        "id": 5,
+        "title": "Newsfeed",
+      });
 
     if(isValid(state.project.projectData) && isValid(state.project.projectData.similar_list))
       tempButtons.push({

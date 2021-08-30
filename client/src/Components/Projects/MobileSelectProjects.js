@@ -44,8 +44,8 @@ export default function MobileSelectProjects({ projects }) {
 
       //Sort the livefeednews by the selected project
       dispatch({
-        type: ActionTypes.SORTING_LIVE_FEED_BY_PROJECT,
-        project_id: proj._id,
+        type: ActionTypes.FILTERING_LIVE_FEED_BY_PROJECT,
+        projectData: data[0],
       });
 
       // get the project data(not from db)
