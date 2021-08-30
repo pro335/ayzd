@@ -72,6 +72,8 @@ export default function FeedModal({ open, setOpen }) {
       data: item,
     });
 
+    setOpen(false);
+
     history.push(`/projects/${item.unique_id}`);
   }
 
@@ -134,7 +136,7 @@ export default function FeedModal({ open, setOpen }) {
                     </div>
 
                     <div className="flex items-center flex-wrap text-xs text-brand-gray-600 font-medium md:space-x-3 mt-1">
-                      { isValid(livefeedData.project) ? 
+                      { isValid(livefeedData.project) && livefeedData.project.name !== "Smart feed" ? 
                         <div className="flex items-center border border-brand-gray-800 rounded-xl px-2 py-1 hover:cursor-pointer" onClick={() => handleClick(livefeedData.project)}>
                           <div className="w-6 h-6 bg-brand-gray-900 mr-2">
                             <img className="mx-auto h-full rounded-full" src={main_image} alt={livefeedData.project.name} />

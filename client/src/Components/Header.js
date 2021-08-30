@@ -72,7 +72,7 @@ const Header = () => {
               </Link> */}
               <a
                 href="https://ayzd.substack.com"
-                className="bg-brand-AYZD-PURPLE hover:bg-purple-700 text-white leading-7 rounded-xl px-10 py-1.5"
+                className="bg-brand-AYZD-PURPLE hover:bg-purple-700 text-white leading-7 rounded-xl px-4 py-1.5"
                 target="_blank"
               >
                 Subscribe to NFT newsletter

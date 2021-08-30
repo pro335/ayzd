@@ -127,7 +127,6 @@ const Nft = () => {
                 filteredProjects.length > 0 ? (
                   <AllProjects projects={filteredProjects} type="categories" />
                 ) : (
-
                   <NotFound />
                 )
               }

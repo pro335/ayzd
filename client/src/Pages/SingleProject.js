@@ -92,7 +92,7 @@ const SingleProject = () => {
         history.push(`/`);
       }
     }
-  }, []);
+  }, [project.projectData.unique_id]);
 
   return (
     <>

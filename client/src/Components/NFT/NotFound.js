@@ -9,7 +9,7 @@ const NotFound = () => {
           Whoops
         </h2>
         <p className="font-medium ">
-          No project found with these parameters. Try something different
+          No project founded. Try something different
         </p>
       </div>
     </div>

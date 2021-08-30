@@ -14,7 +14,7 @@ const Rankings = () => {
       <div className="w-full h-full grid md:grid-cols-2 lg:grid-cols-3 overflow-y-scroll">
         <BiggestSalesAmount
           projects={data.projects}
-          title="Bigest all time sales amount"
+          title="Biggest all time sales amount"
           icon="shopping-cart"
         />
         <BiggestSalesVolume

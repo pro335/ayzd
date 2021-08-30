@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import LiveFeedSection from "../Feeds/LiveFeedSection"
+import FeedModal from "../Feeds/FeedModal"
 import About from "./About"
 import Guides from "./Guides"
 import NFTList from "./NFTList"
@@ -14,6 +15,7 @@ import * as ActionTypes from '../../redux/ActionTypes';
 
 const Tabs = () => {
   const [open, setOpen] = useState(false);
+  const [openFeedModal, setOpenFeedModal] = useState(false);
 
   const dispatch = useDispatch();
     
@@ -104,6 +106,10 @@ const Tabs = () => {
     });
   };
   
+  const onClickHandler = () => {
+    setOpenFeedModal(!openFeedModal)
+  }
+
   return (
     <>
       <div className="h-15 flex-shrink-0 overflow-hidden">
@@ -126,7 +132,7 @@ const Tabs = () => {
             project.activeTab === 2 ? <NFTList /> :
               // project.activeTab === 3 ? <Statistics /> :
                 project.activeTab === 4 ? <Guides /> :
-                  project.activeTab === 5 ? <LiveFeedSection showDetailsPanel={false} /> :
+                  project.activeTab === 5 ? <LiveFeedSection showDetailsPanel={false} onClickHandler={onClickHandler} /> :
                     project.activeTab === 6 && <SimilarProjects />
         }
       </div>
@@ -216,6 +222,10 @@ const Tabs = () => {
           </div>
         </Dialog>
       </Transition.Root>
+      
+      {/** Feed Modal */}
+      <FeedModal open={openFeedModal} setOpen={setOpenFeedModal} />
+
     </>
   )
 }

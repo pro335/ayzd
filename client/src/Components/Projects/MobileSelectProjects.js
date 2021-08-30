@@ -16,9 +16,11 @@ export default function MobileSelectProjects({ projects }) {
 
   const dispatch = useDispatch();
 
-  const { project } = useSelector(state => {
+  const { project, topCollections, biggestSalesAmount } = useSelector(state => {
     return {
       project: state.project,
+      topCollections: state.topCollections,
+      biggestSalesAmount: state.biggestSalesAmount,
     };
   });
 
@@ -39,6 +41,52 @@ export default function MobileSelectProjects({ projects }) {
         type: ActionTypes.SET_PROJECT,
         data: data[0],
       });
+
+      //Sort the livefeednews by the selected project
+      dispatch({
+        type: ActionTypes.SORTING_LIVE_FEED_BY_PROJECT,
+        project_id: proj._id,
+      });
+
+      // get the project data(not from db)
+      let volume = null, isBySellerCount = null, isBySalesVolume = null;
+      topCollections.topCollections.map(item => {
+        if(item.name === data[0].name)
+          volume = item.price;
+      })
+
+      topCollections.topCollections.slice(0, 8).map((item, index) => {
+        if(item.name === data[0].name)
+          isBySellerCount = {
+            value: index,
+            flag: true
+          };
+      })
+
+      biggestSalesAmount.biggestSalesAmount.slice(0, 8).map((item, index) => {
+        if(item.name === data[0].name)
+          isBySalesVolume =  {
+            value: index,
+            flag: true
+          };
+      })
+
+      let projectDataNotDatabase = {
+        volume,
+        isBySellerCount,
+        isBySalesVolume,
+      }
+
+      dispatch({
+        type: ActionTypes.SET_PROJECT_NOT_DB,
+        data: projectDataNotDatabase,
+      });
+
+      dispatch({
+        type: ActionTypes.SET_ACTIVE_TAB,
+        data: 1
+      });
+
     }
   }
 
@@ -52,7 +100,7 @@ export default function MobileSelectProjects({ projects }) {
 
             <Listbox.Button className="relative w-full bg-brand-gray-800 rounded-md shadow-sm pl-3 pr-10 py-2 text-left focus:outline-none">
               <span className="flex items-center">
-                <img src={isValid(selected.main_image) ? selected.main_image : `${config.bucket_url}/${config.common_image}`} className="flex-shrink-0 h-6 w-6 rounded-full" />
+                <img src={isValid(selected.main_image) ? selected.main_image.url : `${config.bucket_url}/${config.common_image}`} className="flex-shrink-0 h-6 w-6 rounded-full" />
 
                 <span className="block text-sm font-medium text-gray-200 ml-3">
                   {selected.name}
@@ -77,7 +125,7 @@ export default function MobileSelectProjects({ projects }) {
               >
                 {
                   projects.map((person, index) => {
-                    const main_image = isValid(person.main_image) ? person.main_image : `${config.bucket_url}/${config.common_image}`;
+                    const main_image = isValid(person.main_image) ? person.main_image.url : `${config.bucket_url}/${config.common_image}`;
 
                     return (
                       <Listbox.Option
@@ -92,14 +140,14 @@ export default function MobileSelectProjects({ projects }) {
                       >
                         {({ selected }) => (
                           <>
-                            <Link to={"/nba-top-shot"} className="flex items-center" onClick={() => handleClick(person)}>
+                            <div className="flex items-center hover:cursor-pointer" onClick={() => handleClick(person)}>
                               <img src={main_image} alt="" className="flex-shrink-0 h-6 w-6 rounded-full" />
                               <span
                                 className={classNames(selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}
                               >
                                 {person.name}
                               </span>
-                            </Link>
+                            </div>
                           </>
                         )}
                       </Listbox.Option>

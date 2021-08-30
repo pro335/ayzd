@@ -16,23 +16,6 @@ const SmartFeed = () => {
     }
   });
 
-  useEffect(() => {
-
-    // set the project_id to null
-    dispatch({
-      type: ActionTypes.SET_PROJECT_ID,
-      data: null,
-    });
-
-    // //Sort the livefeednews by the selected project
-    // if(isValid(project.projects)) {
-    //   dispatch({
-    //     type: ActionTypes.SORTING_LIVE_FEED_BY_PROJECT,
-    //     project_id: project.project_id,
-    //   });
-    // }
-  }, []);
-
   const [open, setOpen] = useState(false)
 
   const onClickHandler = () => {

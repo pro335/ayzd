@@ -11,6 +11,7 @@ import SingleProject from "./Pages/SingleProject";
 import * as actions from './redux/actions';
 import * as ActionTypes from './redux/ActionTypes';
 import isValid from './utility/isValid';
+import config from './config/config';
 
 function App() {
 
@@ -21,8 +22,6 @@ function App() {
       project: state.project,
     };
   });
-
-  const TIME_INTERVAL = 1000*60*60;
 
   useEffect(() => {
 
@@ -247,7 +246,7 @@ function App() {
     const loadData = () => {
       // initializeStore();
       fetchAllProjects();
-      // fetchAllLivefeeds();
+      fetchAllLivefeeds();
       updateLivefeeds();
       // fetchTopSales();
       fetchTopCollections();
@@ -268,7 +267,7 @@ function App() {
       var m = new Date();
       var dateString = m.getUTCFullYear() +"/"+ (m.getUTCMonth()+1) +"/"+ m.getUTCDate() + " " + m.getUTCHours() + ":" + m.getUTCMinutes() + ":" + m.getUTCSeconds();
       console.log(dateString)
-    }, TIME_INTERVAL);
+    }, config.TIME_INTERVAL);
   
     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
   }, [])
