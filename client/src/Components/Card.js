@@ -26,14 +26,14 @@ const Card = ({ item, type="nft" }) => {
   }
 
   const addDefaultSrc = (e) => {
-    e.target.src = '../assets/images/default_image.png';
+    e.target.src = '../assets/images/default_image.svg';
   }
 
   var main_image = null;
   if(type === "categories") {
     main_image = isValid(item) && isValid(item.main_image) && isValid(item.main_image.url) ? item.main_image.url : `${config.bucket_url}/${config.common_image}`;
   } else {
-    main_image = isValid(item) && isValid(item.image) ? item.image : '../assets/images/default_image.png';
+    main_image = isValid(item) && isValid(item.image) ? item.image : '../assets/images/default_image.svg';
   }
   return (
     <div className={type === "categories" ? "hover:cursor-pointer" : ""} onClick={handleClick}>

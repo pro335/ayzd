@@ -38,7 +38,7 @@ const FeedsList = ({ feeds, onClickHandler }) => {
   }
 
   const addDefaultSrc = (e) => {
-    e.target.src = '../assets/images/default_image.png';
+    e.target.src = '../assets/images/default_image.svg';
   }
 
   return (

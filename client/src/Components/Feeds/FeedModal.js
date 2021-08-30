@@ -77,7 +77,7 @@ export default function FeedModal({ open, setOpen }) {
 
 
   const addDefaultSrc = (e) => {
-    e.target.src = '../assets/images/default_image.png';
+    e.target.src = '../assets/images/default_image.svg';
   }
 
   const main_image =  isValid(livefeedData.project) && isValid(livefeedData.project.main_image) ? livefeedData.project.main_image.url : `${config.bucket_url}/${config.common_image}`;

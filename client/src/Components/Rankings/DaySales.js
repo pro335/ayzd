@@ -12,7 +12,7 @@ const RankingSales = ({ projects, title, icon, day, classes }) => {
   });
 
   const addDefaultSrc = (e) => {
-    e.target.src = '../assets/images/default_image.png';
+    e.target.src = '../assets/images/default_image.svg';
   }
 
 
@@ -33,7 +33,7 @@ const RankingSales = ({ projects, title, icon, day, classes }) => {
                 className="h-10 flex items-center hover:bg-brand-gray-800 hover:text-gray-200 hover:cursor-pointer rounded-md px-2  md:px-3">
                   
                 <div className="w-6 h-6 mr-4">
-                  <img className={`mx-auto h-full`} src={isValid(item) && isValid(item.image) ? item.image : '../assets/images/default_image.png'} alt="" onError={addDefaultSrc} />
+                  <img className={`mx-auto h-full`} src={isValid(item) && isValid(item.image) ? item.image : '../assets/images/default_image.svg'} alt="" onError={addDefaultSrc} />
                 </div>
                 <div>
                   <p>
