@@ -83,7 +83,7 @@ const About = () => {
           </div>
 
           <div className="min-w-[320px] w-full">
-            {isValid(project.projectData) && isValid(project.projectData.member_list) ?
+            {isValid(project.projectDataNotDatabase) && (isValid(project.projectDataNotDatabase.discord_members) || isValid(project.projectDataNotDatabase.twitter_members) ) ?
               <div className="border-r border-b border-brand-gray-800">
                 <div>
                   <SectionHeading
@@ -92,8 +92,16 @@ const About = () => {
                     classes="border-t"
                   />
                   <div className="w-full lg:w-auto lg:flex items-center justify-center lg:justify-start pl-3">
-                    <CommunityActivityComponent icon="twitter_community" title="Twitter" amount={"34,991"} />
-                    <CommunityActivityComponent icon="discord_community" title="Discord" amount={"34,991"} />
+                    {isValid(project.projectDataNotDatabase.twitter_members) ?
+                      <CommunityActivityComponent icon="twitter_community" title="Twitter" amount={project.projectDataNotDatabase.twitter_members} />
+                      :
+                      null
+                    }
+                    {isValid(project.projectDataNotDatabase.discord_members) ?
+                      <CommunityActivityComponent icon="discord_community" title="Discord" amount={project.projectDataNotDatabase.discord_members} />
+                      :
+                      null
+                    }
                   </div>
                 </div>
               </div>

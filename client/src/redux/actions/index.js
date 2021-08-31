@@ -205,6 +205,12 @@ export const fetchTrading = () => {
 export const fetchBiggestSalesVolume = () => {
     return axios.post("/api/getData/getBiggestSalesVolume");
 }
+export const fetchDiscordMembersForOneProject = (data) => {
+    return axios.post("/api/getData/getDiscordMembersForOneProject", data);
+}
+export const fetchTwitterMembersForOneProject = (data) => {
+    return axios.post("/api/getData/getTwitterMembersForOneProject", data);
+}
 
 // authorization token action(s)
 export const setAuthToken = token => {

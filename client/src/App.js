@@ -26,10 +26,10 @@ function App() {
   useEffect(() => {
 
     async function initializeProjects() {
-      // dispatch({
-      //   type: ActionTypes.SET_PROJECT_ID,
-      //   data: null,
-      // });
+      dispatch({
+        type: ActionTypes.SET_PROJECT_ID,
+        data: null,
+      });
       // dispatch({
       //   type: ActionTypes.SET_PROJECT,
       //   data: null,

@@ -4,7 +4,7 @@ const initState = {
   project_id: null,
   project_action: 0, // 0: create, 1: read, 2: update, 3: delete
   projectData: null,
-  projectDataNotDatabase: null,   //  { volume: null, isBySellerCount: { value: null, flag: null }, isBySalesVolume: { value: null, flag: null } }
+  projectDataNotDatabase: null,   //  { volume: null, isBySellerCount: { value: null, flag: null }, isBySalesVolume: { value: null, flag: null }, twitter_members: null, discord_members: null }
   trendingNFTs: [],
   activeTab: 1,     //  1: About, 2: NFT List, 3: Statistics, 3: Guides, 4: Guides, 5: Newsfeed, 6: Similar projects,
   loading: false,
