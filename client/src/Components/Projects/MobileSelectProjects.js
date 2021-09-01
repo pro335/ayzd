@@ -72,6 +72,7 @@ export default function MobileSelectProjects({ projects }) {
       })
 
       let projectDataNotDatabase = {
+        ...project.projectDataNotDatabase,
         volume,
         isBySellerCount,
         isBySalesVolume,
@@ -100,7 +101,7 @@ export default function MobileSelectProjects({ projects }) {
 
             <Listbox.Button className="relative w-full bg-brand-gray-800 rounded-md shadow-sm pl-3 pr-10 py-2 text-left focus:outline-none">
               <span className="flex items-center">
-                <img src={isValid(selected.main_image) ? selected.main_image.url : `${config.bucket_url}/${config.common_image}`} className="flex-shrink-0 h-6 w-6 rounded-full" />
+                <img src={isValid(selected.main_image) ? selected.main_image.url : `${config.bucket_url}/${config.common_image}`} className={`${selected.name === "Smart feed" ? '' : 'rounded-full'} flex-shrink-0 h-6 w-6`} />
 
                 <span className="block text-sm font-medium text-gray-200 ml-3">
                   {selected.name}

@@ -64,6 +64,7 @@ const ProjectsList = ({ projects, isActive, activeHandler }) => {
       })
 
       let projectDataNotDatabase = {
+        ...project.projectDataNotDatabase,
         volume,
         isBySellerCount,
         isBySalesVolume,
@@ -91,12 +92,12 @@ const ProjectsList = ({ projects, isActive, activeHandler }) => {
 
           return (
             <div
-              className={`${isActive === item.name ? 'bg-brand-gray-800 text-gray-200' : ''} h-10 hover:bg-brand-gray-800 hover:cursor-pointer hover:rounded-2xl flex items-center text-brand-gray-600 hover:text-gray-200 rounded-md onHover px-3 py-2`}
+              className={`${isActive === item.name ? 'bg-brand-gray-800 text-gray-200' : ''} h-10 hover:bg-brand-gray-800 hover:cursor-pointer flex items-center text-brand-gray-600 hover:text-gray-200 onHover px-3 py-2`}
               onClick={() => handleClick(item)}
               key={index}
             >
               <div className="w-6 h-6 mr-4">
-                <img className="mx-auto h-full" src={main_image} alt={item.name} />
+                <img className={`${item.name === "Smart feed" ? '' : 'rounded-full'} mx-auto h-full`} src={main_image} alt={item.name} />
               </div>
               <p>
                 {item.name}

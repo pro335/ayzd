@@ -23,7 +23,7 @@ const Heading = () => {
       {isValid(project.projectData) ? 
         <div className="flex flex-wrap justify-center">
           <div className="w-16 h-16">
-            <img className="w-full h-full" src={main_image} alt="" />
+            <img className={`${project.projectData.name === "Smart feed" ? '' : 'rounded-full'} w-full h-full`} src={main_image} alt="" />
           </div>
           <div className="w-full lg:w-auto text-center lg:pl-5">
             <div className="flex items-center flex-wrap justify-center lg:justify-start">

@@ -68,6 +68,7 @@ const SimilarProjects = () => {
       })
 
       let projectDataNotDatabase = {
+        ...project.projectDataNotDatabase,
         volume,
         isBySellerCount,
         isBySalesVolume,
