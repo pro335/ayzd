@@ -17,8 +17,8 @@ const Heading = () => {
 
   const main_image = isValid(project.projectData) && isValid(project.projectData.main_image) && isValid(project.projectData.main_image.url) ? project.projectData.main_image.url : `${config.bucket_url}/${config.common_image}`;
 
-  return (
-    <div className="flex items-center flex-wrap justify-center lg:justify-between space-y-6 lg:space-y-0 py-5 px-5 sm:px-6">
+  return ( 
+    <div className="flex items-center flex-wrap justify-center justify-between space-y-6 lg:space-y-0 py-5 px-5 sm:px-6">
       {/* Left */}
       {isValid(project.projectData) ? 
         <div className="flex flex-wrap justify-center">
@@ -43,7 +43,7 @@ const Heading = () => {
                 <SocialIcons />
               </div>
             </div>
-            <p className="text-sm text-brand-gray-400 font-medium pb-1.5 text-left">
+            <p className="text-sm text-brand-gray-400 font-medium pb-1.5 text-center md:text-left">
               {project.projectData.small_description}
             </p>
             <div className="flex items-center justify-center lg:justify-start space-x-2">
@@ -74,14 +74,14 @@ const Heading = () => {
 
       {/* Right */}
       {isValid(project.projectDataNotDatabase) && isValid(project.projectDataNotDatabase.volume) ?
-        <div>
+        <div className="mx-auto md:mx-0">
           <div className="flex items-center border border-brand-gray-800 rounded-lg space-x-5 px-4 py-3">
             <div>
               <p className="text-xs text-brand-gray-400 leading-4">Sales volume</p>
               <p className="text-lg text-brand-gray-300 font-semibold">{project.projectDataNotDatabase.volume}</p>
             </div>
-            <div className="py-1">
-              <img className="w-full h-full object-cover object-center" src="/assets/icons/sales_volume.svg" alt="" />
+            <div className="w-12 h-12 py-1">
+              <img className="w-12 h-12 object-cover object-center" src="/assets/icons/sales_volume.svg" alt="" />
             </div>
           </div>
         </div>

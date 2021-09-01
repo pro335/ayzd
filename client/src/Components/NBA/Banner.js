@@ -22,7 +22,7 @@ const Banner = () => {
         </p>
       </div>
       <div className="mt-2">
-        <Link to={`/projects/${project.projectData.unique_id}`} className="h-10 block bg-black bg-opacity-70 text-white text-opacity-60 hover:bg-opacity-100 hover:text-opacity-100 inline-flex items-center rounded-lg px-4">
+        <Link to={`/projects/${project.projectData.unique_id}`} className="h-10 lg:w-35 md:w-40 block bg-black bg-opacity-70 text-white text-opacity-60 hover:bg-opacity-100 hover:text-opacity-100 inline-flex items-center rounded-lg px-4">
           <span>Project details</span>
           <ArrowNarrowRightIcon className="h-6 w-4 onHover ml-2" />
         </Link>

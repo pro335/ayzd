@@ -99,7 +99,7 @@ export default function MobileSelectProjects({ projects }) {
 
           <div className="pt-4 relative">
 
-            <Listbox.Button className="relative w-full bg-brand-gray-800 rounded-md shadow-sm pl-3 pr-10 py-2 text-left focus:outline-none">
+            <Listbox.Button className={`${selected.name === "Smart feed" ? '' : 'rounded-md'} relative w-full bg-brand-gray-800 shadow-sm pl-3 pr-10 py-2 text-left focus:outline-none`}>
               <span className="flex items-center">
                 <img src={isValid(selected.main_image) ? selected.main_image.url : `${config.bucket_url}/${config.common_image}`} className={`${selected.name === "Smart feed" ? '' : 'rounded-full'} flex-shrink-0 h-6 w-6`} />
 
@@ -122,7 +122,7 @@ export default function MobileSelectProjects({ projects }) {
             >
               <Listbox.Options
                 static
-                className="absolute z-50 mt-1 w-full bg-brand-gray-800 shadow-lg max-h-60 rounded-md py-1 ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
+                className={`${selected.name === "Smart feed" ? '' : 'rounded-md'} absolute z-50 mt-1 w-full bg-brand-gray-800 shadow-lg max-h-60 py-1 ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm`}
               >
                 {
                   projects.map((person, index) => {
@@ -142,7 +142,7 @@ export default function MobileSelectProjects({ projects }) {
                         {({ selected }) => (
                           <>
                             <div className="flex items-center hover:cursor-pointer" onClick={() => handleClick(person)}>
-                              <img src={main_image} alt="" className="flex-shrink-0 h-6 w-6 rounded-full" />
+                              <img src={main_image} alt="" className={`${person.name === "Smart feed" ? '' : 'rounded-full'} flex-shrink-0 h-6 w-6`} />
                               <span
                                 className={classNames(selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}
                               >

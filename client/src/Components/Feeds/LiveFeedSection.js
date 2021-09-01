@@ -51,7 +51,9 @@ const LiveFeedSection = ({ showDetailsPanel=false, onClickHandler }) => {
               <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
             </div>
             :
-            <NotFound />
+            <div className="h-full pb-52">
+              <NotFound />
+            </div>
           )
         }
       </div>
