@@ -24,45 +24,6 @@ const SingleProject = () => {
   useEffect(() => {
     let unmounted = false;
     if (!unmounted) {
-      const getDiscordMembersForOneProject = async (urlData) => {
-        let resData = await actions.fetchDiscordMembersForOneProject(urlData);
-        let { success, data } = resData.data;
-        if(success) {
-          dispatch({
-            type: ActionTypes.SET_PROJECT_NOT_DB,
-            data: {...project.projectDataNotDatabase, discord_members: data}
-          });
-        } else {
-          dispatch({
-            type: ActionTypes.PROJECT_ERR,
-            err: resData.data.errMessage
-          });
-          dispatch({
-            type: ActionTypes.SET_PROJECT_NOT_DB,
-            data: {...project.projectDataNotDatabase, discord_members: null}
-          });
-        }
-      }
-  
-      const getTwitterMembersForOneProject = async (urlData) => {
-        let resData = await actions.fetchTwitterMembersForOneProject(urlData);
-        let { success, data } = resData.data;
-        if(success) {
-          dispatch({
-            type: ActionTypes.SET_PROJECT_NOT_DB,
-            data: {...project.projectDataNotDatabase, twitter_members: data}
-          });
-        } else {
-          dispatch({
-            type: ActionTypes.PROJECT_ERR,
-            err: resData.data.errMessage
-          });
-          dispatch({
-            type: ActionTypes.SET_PROJECT_NOT_DB,
-            data: {...project.projectDataNotDatabase, twitter_members: null}
-          });
-        }
-      }
   
       const getProjectFromUrl = async () => {
         let arrLocation = window.location.pathname.split('/');
@@ -94,7 +55,7 @@ const SingleProject = () => {
             });
     
             // get the project data(not from db)
-            let volume = null, isBySellerCount = null, isBySalesVolume = null;
+            let volume = null, isBySellerCount = null, isBySalesVolume = null, discord_members = null, twitter_members = null;
             topCollections.topCollections.map(one_item => {
               if(item.name === one_item.name)
                 volume = one_item.price;
@@ -108,14 +69,6 @@ const SingleProject = () => {
                 };
             })
     
-            // get the twitter numbers & discord numbers
-            if(isValid(item.discord_link)) {
-              await getDiscordMembersForOneProject({url: item.discord_link});
-            }
-            if(isValid(item.twitter_link)) {
-              await getTwitterMembersForOneProject({url: item.twitter_link});
-            }
-    
             biggestSalesAmount.biggestSalesAmount.slice(0, 8).map((one_item, index) => {
               if(item.name === one_item.name)
                 isBySalesVolume =  {
@@ -124,11 +77,30 @@ const SingleProject = () => {
                 };
             })
     
+            // get the twitter numbers & discord numbers
+            if(isValid(item.discord_link)) {
+              let resData = await actions.fetchDiscordMembersForOneProject({url: item.discord_link});
+              let { success, data } = resData.data;
+              if(success) {
+                discord_members = data;
+              }
+            }
+
+            if(isValid(item.twitter_link)) {
+              let resData = await actions.fetchTwitterMembersForOneProject({url: item.twitter_link});
+              let { success, data } = resData.data;
+              if(success) {
+                twitter_members = data;
+              }
+            }
+    
             let projectDataNotDatabase = {
               ...project.projectDataNotDatabase,
               volume,
               isBySellerCount,
               isBySalesVolume,
+              discord_members,
+              twitter_members,
             }
     
             dispatch({
