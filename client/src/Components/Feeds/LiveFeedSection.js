@@ -47,11 +47,11 @@ const LiveFeedSection = ({ showDetailsPanel=false, onClickHandler }) => {
           <FeedsList feeds={data.livenews} onClickHandler={onClickHandler} />
           :
           ( !isLoaded ?
-            <div className="h-full flex flex-col justify-center items-center">
+            <div className="h-full flex flex-col justify-center items-center pb-15">
               <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
             </div>
             :
-            <div className="h-full pb-52">
+            <div className="h-full pb-15 lg:pb-42">
               <NotFound />
             </div>
           )
