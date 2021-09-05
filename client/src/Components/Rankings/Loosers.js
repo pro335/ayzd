@@ -74,10 +74,12 @@ const Loosers = ({ projects, title, icon, day, classes }) => {
 
                   <div className="flex flex-col md:flex-row items-end md:items-center text-red-500 ml-auto">
                     <span className="text-gray-200 order-1 md:order-none md:mr-2">{item.price}</span>
-                    <p className="ml-auto" dangerouslySetInnerHTML={{__html: item.change}} />
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l2.293-2.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
+                    <div className="flex flex-row">
+                      <p className="ml-auto" dangerouslySetInnerHTML={{__html: item.change}} />
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l2.293-2.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </div>
                   </div>
                 </div>
               ))

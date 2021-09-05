@@ -87,7 +87,7 @@ const ProjectsList = ({ projects, isActive, activeHandler }) => {
   return (
     <div className="h-full flex flex-col font-medium overflow-y-scroll space-y-2 py-3 px-2">
       {
-        project.projects.map((item, index) => {
+        projects.map((item, index) => {
           const main_image = isValid(item.main_image) &&  isValid(item.main_image.url) ? item.main_image.url : `${config.bucket_url}/${config.common_image}`;
 
           return (
