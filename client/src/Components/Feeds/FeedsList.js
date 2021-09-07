@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import * as actions from '../../redux/actions';
 import * as ActionTypes from '../../redux/ActionTypes';
 import isValid from '../../utility/isValid';
+import reduceTextLengh from '../../utility/reduceTextLengh';
 
 const FeedsList = ({ feeds, onClickHandler }) => {
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 767px)' })
@@ -58,10 +59,10 @@ const FeedsList = ({ feeds, onClickHandler }) => {
                 </div>
                 <div className="flex-1 font-medium pl-4 pr-4 lg:pr-6">
                   <h2 className="text-sm md:text-base text-brand-gray-300 leading-4">
-                    {feed.title}
+                    {reduceTextLengh(feed.title, 100)}
                   </h2>
                   <p className="text-sm text-brand-gray-500 leading-4 line-clamp-2 md:line-clamp-1">
-                    {feed.description}
+                    {reduceTextLengh(feed.description, 100)}
                   </p>
                   {
                     !isTabletOrMobile && <FeedActions feed={feed} />
