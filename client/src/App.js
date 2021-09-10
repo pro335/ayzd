@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import Dashboard from "./Pages/Dashboard";
+import Upcoming from "./Pages/Upcoming";
 import Nft from "./Pages/Nft";
 import Rankings from "./Pages/Rankings";
 import Trading from "./Pages/Trading";
@@ -302,6 +303,7 @@ function App() {
             <Route exact path="/rankings" component={Rankings} />
             <Route exact path="/trading" component={Trading} />
             <Route exact path="/projects/:project_unique_id" component={SingleProject} />
+            <Route exact path="/upcoming" component={Upcoming} />
             <Route path="/" component={Dashboard} />
           </Switch>
         </main>

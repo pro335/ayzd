@@ -42,7 +42,7 @@ const navLinks = [
   // },
   {
     name: 'Drop calendar',
-    to: '/calendar',
+    to: '/upcoming',
     icon: 'calendar',
     // current: false,
     badge: false
