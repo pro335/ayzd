@@ -12,6 +12,8 @@ import * as actions from './redux/actions';
 import * as ActionTypes from './redux/ActionTypes';
 import isValid from './utility/isValid';
 import config from './config/config';
+import moment from 'moment-timezone';
+moment.tz.setDefault("Europe/Riga");
 
 function App() {
 
