@@ -40,13 +40,13 @@ const navLinks = [
   //   // current: false,
   //   badge: true
   // },
-  {
-    name: 'Drop calendar',
-    to: '/upcoming',
-    icon: 'calendar',
-    // current: false,
-    badge: false
-  },
+  // {
+  //   name: 'Drop calendar',
+  //   to: '/upcoming',
+  //   icon: 'calendar',
+  //   // current: false,
+  //   badge: false
+  // },
 ]
 
 const Header = () => {

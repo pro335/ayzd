@@ -268,7 +268,7 @@ function App() {
       initializeProjects();
       fetchAllProjects();
       fetchAllLivefeeds();
-      updateLivefeeds();
+      // updateLivefeeds();
       // fetchTopSales();
       fetchTopCollections();
       fetchBiggestSalesVolume();
