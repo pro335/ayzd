@@ -20,9 +20,10 @@ function App() {
 
   const dispatch = useDispatch();
 
-  const { project } = useSelector(state => {
+  const { project, livefeed } = useSelector(state => {
     return {
       project: state.project,
+      livefeed: state.livefeed,
     };
   });
 
@@ -263,6 +264,29 @@ function App() {
         console.error(err);
       }
     }
+    const getProjectsHasNews = async () => {
+      let temp_projects_has_news = [], temp_projects_has_news_id_list = [];
+      livefeed.livefeeds.map((one_livefeed) => {
+        if(isValid(one_livefeed) && isValid(one_livefeed.project) && isValid(one_livefeed.project._id)) {
+          let foundIndex = temp_projects_has_news_id_list.findIndex(x => one_livefeed.project._id === x);
+          if(foundIndex === -1)
+            temp_projects_has_news_id_list.push(one_livefeed.project._id);
+        }
+      });
+      project.projects.map((one_project, index) => {
+        if(index === 0) {
+          temp_projects_has_news.push(one_project);
+        } else {
+          let foundIndex = temp_projects_has_news_id_list.findIndex(x => one_project._id === x);
+          if(foundIndex !== -1)
+            temp_projects_has_news.push(one_project);
+        }
+      })
+      dispatch({
+        type: ActionTypes.SET_PROJECTS_HAS_NEWS,
+        data: temp_projects_has_news
+      })
+    }
 
     const loadData = () => {
       initializeProjects();
@@ -277,6 +301,7 @@ function App() {
       fetchAllCategories();
       fetchAllChains();
       // fetchTrading();
+      getProjectsHasNews();
     }
 
     loadData();

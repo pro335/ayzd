@@ -16,7 +16,7 @@ const Sidebar = () => {
     };
   });
 
-  const projects = project.projects;
+  const projects = project.projects_has_news;
   const [filterProject, setFilterProject] = useState(projects);
   const [isActive, setIsActive] = useState(isValid(projects) ? projects[0].name : "");
 

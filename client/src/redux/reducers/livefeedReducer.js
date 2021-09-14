@@ -109,8 +109,8 @@ const LivefeedReducer = (state = initState, action) => {
       let filtered_livefeeds = [];   // livefeeds that include the project
       
       tempData = state.livefeeds;
-      tempData = tempData.filter(function(item) {
-        if(isValid(item.project) && item.project._id === projectData._id)
+      tempData = tempData.map(function(item) {
+        if(isValid(item.project) && (item.project._id === projectData._id))
           filtered_livefeeds.push(item);
       });
 

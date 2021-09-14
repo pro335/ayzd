@@ -1,6 +1,7 @@
 import * as ActionTypes from '../ActionTypes';
 const initState = {
   projects: [],
+  projects_has_news: [],    // project list in the dashboard page(only projects that has the live news) 
   project_id: null,
   project_action: 0, // 0: create, 1: read, 2: update, 3: delete
   projectData: null,
@@ -39,6 +40,11 @@ const ProjectReducer = (state = initState, action) => {
         loading: false,
         error: null
       };
+    case ActionTypes.SET_PROJECTS_HAS_NEWS:
+      return {
+        ...state,
+        projects_has_news: data,
+      }
     case ActionTypes.UPDATE_PROJECT:
       tempData = state.projects;
       let foundIndex = state.projects.findIndex(x => x._id === data._id);
