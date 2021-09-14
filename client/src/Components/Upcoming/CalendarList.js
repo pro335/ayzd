@@ -40,11 +40,7 @@ const CalendarList = ({ calendar_list, all, handleChange, title, icon, classes }
         icon={icon}
         classes={classes}
       />
-      <div className="border-r border-brand-gray-800 lg:overflow-hidden">
-        <div className="lg:hidden px-4 z-100">
-          <MobileSelectProjects projects={calendar_list} />
-        </div>
-
+      <div className="border-brand-gray-800 lg:overflow-hidden">
         <div className="h-full hidden lg:flex flex-col">
           {/* Projects List */}
           <ProjectsList calendar_list={calendar_list} isActive={isActive} activeHandler={activeHandler} />

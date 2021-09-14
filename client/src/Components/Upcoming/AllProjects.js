@@ -1,14 +1,16 @@
 import React from 'react'
-import Card from "../Card"
+import Card from "./Card"
 
-const AllProjects = ({ projects, type }) => {
+const AllProjects = ({ projects }) => {
   return (
-    <div className="px-4 md:px-8 lg:px-20 py-3 lg:py-12">
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-x-5 lg:gap-y-7">
+    <div className="px-4 md:px-8 lg:px-20 py-3 lg:py-6">
+      <p className="text-lg text-gray-300">4 NFT drops on 12 September</p>
+      <p className="text-sm font-medium">All drop dates are displayed in GMT+3 time zone</p>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 md:gap-x-5 lg:gap-y-7 pt-4">
         {
           projects.map((item, index) =>
             item.name !== "Smart feed" ?
-              <Card key={index} item={item} type={type} />
+              <Card key={index} item={item} />
               :
               null
           )

@@ -1,16 +1,122 @@
 import { Fragment, useState, useEffect } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
-import { XIcon } from '@heroicons/react/outline'
 import AllProjects from "../Components/Upcoming/AllProjects"
 import NFTSidebar from "../Components/Upcoming/NFTSidebar"
 import NotFound from "../Components/Upcoming/NotFound"
 import data from '../data.json'
 import SortButton from "../Components/Upcoming/SortButton"
+import MobileSelectProjects from "../Components/Upcoming/MobileSelectProjects"
 import { useSelector, useDispatch } from 'react-redux';
 import isValid from '../utility/isValid';
 import config from '../config/config';
 import * as actions from '../redux/actions';
 import * as ActionTypes from '../redux/ActionTypes';
+
+const dump_data = [
+  {
+    key: 0,
+    label: "September 12",
+    count: 4,
+  },
+  {
+    key: 0,
+    label: "September 14",
+    count: 12345,
+  },
+  {
+    key: 0,
+    label: "September 17",
+    count: 0,
+  },
+  {
+    key: 0,
+    label: "September 18",
+    count: 5,
+  },
+];
+
+const dump_projects = [
+  {
+    main_image: { url: "https://cdn.coinranking.com/dapp/cryptokitties.svg"},
+    price: 0.05,
+    name: "CryptoKitties",
+    upcoming_date: "Aug 31, 2021 12:00 AM",
+    mint_size: 10100,
+    twitter_members: 10200,
+    discord_members: 9099,
+  },
+  {
+    main_image: { url: "https://cdn.coinranking.com/dapp/cryptokitties.svg"},
+    price: 0.05,
+    name: "CryptoKitties",
+    upcoming_date: "Aug 31, 2021 12:00 AM",
+    mint_size: 10100,
+    twitter_members: 10200,
+    discord_members: 9099,
+  },
+  {
+    main_image: { url: "https://cdn.coinranking.com/dapp/cryptokitties.svg"},
+    price: 0.05,
+    name: "CryptoKitties",
+    upcoming_date: "Aug 31, 2021 12:00 AM",
+    mint_size: 10100,
+    twitter_members: 10200,
+    discord_members: 9099,
+  },
+  {
+    main_image: { url: "https://cdn.coinranking.com/dapp/cryptokitties.svg"},
+    price: 0.05,
+    name: "CryptoKitties",
+    upcoming_date: "Aug 31, 2021 12:00 AM",
+    mint_size: 10100,
+    twitter_members: 10200,
+    discord_members: 9099,
+  },
+  {
+    main_image: { url: "https://cdn.coinranking.com/dapp/cryptokitties.svg"},
+    price: 0.05,
+    name: "CryptoKitties",
+    upcoming_date: "Aug 31, 2021 12:00 AM",
+    mint_size: 10100,
+    twitter_members: 10200,
+    discord_members: 9099,
+  },
+  {
+    main_image: { url: "https://cdn.coinranking.com/dapp/cryptokitties.svg"},
+    price: 0.05,
+    name: "CryptoKitties",
+    upcoming_date: "Aug 31, 2021 12:00 AM",
+    mint_size: 10100,
+    twitter_members: 10200,
+    discord_members: 9099,
+  },
+  {
+    main_image: { url: "https://cdn.coinranking.com/dapp/cryptokitties.svg"},
+    price: 0.05,
+    name: "CryptoKitties",
+    upcoming_date: "Aug 31, 2021 12:00 AM",
+    mint_size: 10100,
+    twitter_members: 10200,
+    discord_members: 9099,
+  },
+  {
+    main_image: { url: "https://cdn.coinranking.com/dapp/cryptokitties.svg"},
+    price: 0.05,
+    name: "CryptoKitties",
+    upcoming_date: "Aug 31, 2021 12:00 AM",
+    mint_size: 10100,
+    twitter_members: 10200,
+    discord_members: 9099,
+  },
+  {
+    main_image: { url: "https://cdn.coinranking.com/dapp/cryptokitties.svg"},
+    price: 0.05,
+    name: "CryptoKitties",
+    upcoming_date: "Aug 31, 2021 12:00 AM",
+    mint_size: 10100,
+    twitter_members: 10200,
+    discord_members: 9099,
+  },
+]
 
 const Upcoming = () => {
 
@@ -25,10 +131,9 @@ const Upcoming = () => {
   });
 
   const projects = project.projects;
-  const [filteredProjects, setFilteredProjects] = useState(projects)
+  const [filteredProjects, setFilteredProjects] = useState(dump_projects)
 
   const [all, setAll] = useState(false);
-  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     dispatch({
@@ -111,21 +216,18 @@ const Upcoming = () => {
 
         {/* Content */}
         <div className="h-full w-full grid lg:grid-cols-6 lg:overflow-hidden pt-16">
+          <div className="lg:hidden px-4 mt-2">
+            <MobileSelectProjects projects={dump_data} />
+          </div>
           <div className="hidden lg:block border-r border-brand-gray-800 overflow-y-scroll pb-4">
             <NFTSidebar projects={data} handleChange={handleChange} all={all} />
           </div>
-
-          {/* Sorting */}
-          <SortButton
-            open={open}
-            setOpen={setOpen}
-          />
-
-          <div className="h-full pb-5 lg:col-span-5 mt-16 lg:mt-0 overflow-hidden">
+          
+          <div className="h-full pb-5 lg:col-span-5 mt-2 lg:mt-0 overflow-hidden">
             <div className="h-full overflow-y-scroll">
               {
                 filteredProjects.length > 0 ? (
-                  <AllProjects projects={filteredProjects} type="categories" />
+                  <AllProjects projects={filteredProjects} />
                 ) : (
                   <NotFound />
                 )
@@ -136,81 +238,6 @@ const Upcoming = () => {
         {/* End */}
 
       </div>
-
-      <Transition.Root show={open} as={Fragment}>
-        <Dialog
-          as="div"
-          static
-          className="fixed inset-0 overflow-hidden z-1000"
-          open={open}
-          onClose={setOpen}>
-          <div className="absolute inset-0 overflow-hidden">
-
-            <Transition.Child
-              as={Fragment}
-              enter="ease-in-out duration-500"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="ease-in-out duration-500"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <Dialog.Overlay className="absolute inset-0 bg-brand-gray-800 bg-opacity-50 transition-opacity" />
-            </Transition.Child>
-
-            <div className="fixed inset-y-0 left-0 pr-10 max-w-full flex">
-              <Transition.Child
-                as={Fragment}
-                enter="transform transition ease-in-out duration-500 sm:duration-700"
-                enterFrom="-translate-x-full"
-                enterTo="translate-x-0"
-                leave="transform transition ease-in-out duration-500 sm:duration-700"
-                leaveFrom="translate-x-0"
-                leaveTo="-translate-x-full"
-              >
-                <div className="relative w-screen max-w-md border-r border-brand-gray-500">
-
-                  <Transition.Child
-                    as={Fragment}
-                    enter="ease-in-out duration-500"
-                    enterFrom="opacity-0"
-                    enterTo="opacity-100"
-                    leave="ease-in-out duration-500"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                  >
-                    <div className="absolute top-0 right-0 -mr-8 pt-4 pl-2 flex sm:-mr-10 sm:pl-4">
-                      <button
-                        className="rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
-                        onClick={() => setOpen(false)}
-                      >
-                        <span className="sr-only">Close panel</span>
-                        <XIcon className="h-6 w-6" aria-hidden="true" />
-                      </button>
-                    </div>
-                  </Transition.Child>
-
-                  <div className="h-full flex flex-col py-4 bg-brand-gray-900 shadow-xl overflow-y-scroll">
-                    <button
-                      type="button"
-                      aria-label="Sort Menu"
-                      className="inline-flex items-center text-sm text-white font-medium  px-4 py-2"
-                      onClick={() => setOpen(!open)}
-                    >
-                      <img className="mr-3" src="assets/icons/sort-adjustment.svg" alt="" />
-                      <span>Sort</span>
-                    </button>
-                    <div className="relative flex-1 mt-2">
-                      <NFTSidebar projects={data} handleChange={handleChange} all={all} />
-                    </div>
-                  </div>
-
-                </div>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition.Root>
     </>
   )
 }

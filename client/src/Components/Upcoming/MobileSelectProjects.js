@@ -100,13 +100,16 @@ export default function MobileSelectProjects({ projects }) {
           <div className="pt-4 relative">
 
             <Listbox.Button className={`${selected.name === "Smart feed" ? '' : 'rounded-md'} relative w-full bg-brand-gray-800 shadow-sm pl-3 pr-10 py-2 text-left focus:outline-none`}>
-              <span className="flex items-center">
-                <img src={isValid(selected.main_image) ? selected.main_image.url : `${config.bucket_url}/${config.common_image}`} className={`${selected.name === "Smart feed" ? '' : 'rounded-full'} flex-shrink-0 h-6 w-6`} />
-
-                <span className="block text-sm font-medium text-gray-200 ml-3">
-                  {selected.name}
-                </span>
-              </span>
+              <div
+                className={`h-8 hover:bg-brand-gray-800 hover:cursor-pointer rounded-lg flex items-center hover:text-gray-200 onHover px-3 py-1`}
+                // onClick={() => handleClick(item)}
+                // key={index}
+              >
+                <p>
+                  {/* {item.label} */}September 12
+                </p>
+                <span class="ml-auto inline-flex items-center justify-center px-3 py-1 text-xs font-bold leading-none text-red-100 bg-black" style={{ border: '1px solid #1D1D1D', borderRadius: '6px' }}>4</span>
+              </div>
 
               <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                 <ChevronDownIcon className={`h-5 w-5 text-brand-gray-400 transition-transform duration-300 ease-out transform  ${open ? '-rotate-180' : ''}`} aria-hidden="true" />
@@ -134,20 +137,24 @@ export default function MobileSelectProjects({ projects }) {
                         className={({ active }) =>
                           classNames(
                             active ? 'text-white bg-indigo-600' : '',
-                            'cursor-default select-none relative py-2 pl-3 pr-9'
+                            'cursor-default select-none relative pl-3 pr-9'
                           )
                         }
                         value={person}
                       >
                         {({ selected }) => (
                           <>
-                            <div className="flex items-center hover:cursor-pointer" onClick={() => handleClick(person)}>
-                              <img src={main_image} alt="" className={`${person.name === "Smart feed" ? '' : 'rounded-full'} flex-shrink-0 h-6 w-6`} />
-                              <span
-                                className={classNames(selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}
+                            <div className="relative w-full shadow-sm pl-3 py-2 text-left" onClick={() => handleClick(person)}>
+                              <div
+                                className={`hover:bg-brand-gray-800 hover:cursor-pointer rounded-lg flex items-center hover:text-gray-200 onHover px-3 py-1`}
+                                // onClick={() => handleClick(item)}
+                                // key={index}
                               >
-                                {person.name}
-                              </span>
+                                <p>
+                                  {/* {item.label} */}September 12
+                                </p>
+                                <span class="ml-auto inline-flex items-center justify-center px-3 py-1 text-xs font-bold leading-none text-red-100 bg-black" style={{ border: '1px solid #1D1D1D', borderRadius: '6px' }}>4</span>
+                              </div>
                             </div>
                           </>
                         )}
