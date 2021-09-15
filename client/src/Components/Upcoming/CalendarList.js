@@ -17,9 +17,9 @@ const CalendarList = ({ calendar_list, all, handleChange, title, icon, classes }
     };
   });
 
-  const projects = project.projects;
+  const projects = project.upcoming_date_show_list;
   const [filterProject, setFilterProject] = useState(projects);
-  const [isActive, setIsActive] = useState(isValid(calendar_list) ? calendar_list[0].label : "");
+  const [isActive, setIsActive] = useState(isValid(project.upcoming_date_show_list) ? project.upcoming_date_show_list[0].date : "");
 
   const activeHandler = text => {
     setIsActive(text)

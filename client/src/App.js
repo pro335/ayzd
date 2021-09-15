@@ -287,6 +287,53 @@ function App() {
         data: temp_projects_has_news
       })
     }
+    const getUpcomingProjects = async () => {
+
+      let temp_upcomings = [];
+
+      //fetch only upcoming projects
+      project.projects.filter(function(item, index) {
+        if((index !== 0) && isValid(item) && isValid(item.isUpcoming) && item.isUpcoming)
+          temp_upcomings.push(item);
+      });
+
+      //sort by the upcoming date
+      temp_upcomings = temp_upcomings.sort((a, b) => {
+        return new Date(a['upcoming_date']) - new Date(b['upcoming_date']);
+      });
+
+      // format the upcoming date from UTC to "Aug 31, 2021 12:00 AM"
+      let temp_upcoming_date_list = [];
+      temp_upcomings.map((item) => {
+        let new_date = moment(item.upcoming_date).format("MMMM D");
+        let foundIndex = temp_upcoming_date_list.findIndex(x => x.date === new_date);
+        if(foundIndex !== -1) {
+          let temp_data = temp_upcoming_date_list[foundIndex];
+          console.log("before temp_upcoming_date_list", temp_upcoming_date_list)
+          console.log("index", foundIndex, "data", temp_data)
+          temp_upcoming_date_list[foundIndex] = {
+            ...temp_data,
+            count: temp_data.count + 1
+          };
+          console.log("after temp_upcoming_date_list", temp_upcoming_date_list)
+        } else {
+          temp_upcoming_date_list.push({
+            date: new_date,
+            count: 1
+          });
+        }
+      });
+      
+      dispatch({
+        type: ActionTypes.SET_UPCOMING_PROJECTS,
+        upcomings: temp_upcomings,
+        upcoming_date_list: temp_upcoming_date_list
+      });
+      dispatch({
+        type: ActionTypes.SET_UPCOMING_PROJECTS_SHOWING_LIST,
+        data: temp_upcomings
+      });      
+    }
 
     const loadData = () => {
       initializeProjects();
@@ -302,6 +349,7 @@ function App() {
       fetchAllChains();
       // fetchTrading();
       getProjectsHasNews();
+      getUpcomingProjects();
     }
 
     loadData();

@@ -5,6 +5,7 @@ import isValid from '../../utility/isValid';
 import config from '../../config/config';
 import * as actions from '../../redux/actions';
 import * as ActionTypes from '../../redux/ActionTypes';
+import moment from 'moment-timezone';
 
 const ProjectsList = ({ calendar_list, isActive, activeHandler }) => {
 
@@ -83,26 +84,35 @@ const ProjectsList = ({ calendar_list, isActive, activeHandler }) => {
     // }
     // activeHandler(proj.name);
 
-    let data = calendar_list.filter(function(item) {
-      return item.label === proj.label;
+    let data = project.upcoming_date_show_list.filter(function(item) {
+      return item.date === proj.date;
     });
     if(isValid(data)) {
-      activeHandler(proj.label);
+      activeHandler(proj.date);
     }
+
+    // get the upcoming_show_list
+    let temp_upcoming_show_list = project.upcoming_date_show_list.filter(function(item) {
+      return moment(item.upcoming_date).format("MMMM D") === proj.date;
+    });
+    dispatch({
+      type: ActionTypes.SET_UPCOMING_PROJECTS_SHOWING_LIST,
+      data: temp_upcoming_show_list
+    });  
   }
 
   return (
     <div className="h-full flex flex-col font-medium overflow-y-scroll space-y-2 py-3 px-2">
       {
-        calendar_list.map((item, index) => {
+        project.upcoming_date_list.map((item, index) => {
           return (
             <div
-              className={`${isActive === item.label ? 'bg-brand-gray-800 text-gray-200' : ''} h-10 hover:bg-brand-gray-800 hover:cursor-pointer rounded-lg flex items-center text-brand-gray-600 hover:text-gray-200 onHover px-3 py-2`}
+              className={`${isActive === item.date ? 'bg-brand-gray-800 text-gray-200' : ''} h-10 hover:bg-brand-gray-800 hover:cursor-pointer rounded-lg flex items-center text-brand-gray-600 hover:text-gray-200 onHover px-3 py-2`}
               onClick={() => handleClick(item)}
               key={index}
             >
               <p>
-                {item.label}
+                {item.date}
               </p>
               <span class="ml-auto inline-flex items-center justify-center px-3 py-1 text-xs font-bold leading-none text-red-100 bg-black" style={{ border: '1px solid #1D1D1D', borderRadius: '6px' }}>{item.count}</span>
             </div>
@@ -110,7 +120,7 @@ const ProjectsList = ({ calendar_list, isActive, activeHandler }) => {
         })
       }
       {
-        calendar_list.length <= 0 && <p>No Data found</p>
+        project.upcoming_date_list.length <= 0 && <p>No Data found</p>
       }
     </div>
   )

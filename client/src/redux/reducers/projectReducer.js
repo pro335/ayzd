@@ -2,6 +2,9 @@ import * as ActionTypes from '../ActionTypes';
 const initState = {
   projects: [],
   projects_has_news: [],    // project list in the dashboard page(only projects that has the live news) 
+  upcomings: [],    // whole upcoming projects
+  upcoming_show_list: [],   // upcoming projects to show
+  upcoming_date_list: [],   // data for left side bar in Drop Calendar menu
   project_id: null,
   project_action: 0, // 0: create, 1: read, 2: update, 3: delete
   projectData: null,
@@ -40,11 +43,6 @@ const ProjectReducer = (state = initState, action) => {
         loading: false,
         error: null
       };
-    case ActionTypes.SET_PROJECTS_HAS_NEWS:
-      return {
-        ...state,
-        projects_has_news: data,
-      }
     case ActionTypes.UPDATE_PROJECT:
       tempData = state.projects;
       let foundIndex = state.projects.findIndex(x => x._id === data._id);
@@ -126,6 +124,22 @@ const ProjectReducer = (state = initState, action) => {
       return {
         ...state,
         activeTab: data,
+      }      
+    case ActionTypes.SET_PROJECTS_HAS_NEWS:
+      return {
+        ...state,
+        projects_has_news: data,
+      }
+    case ActionTypes.SET_UPCOMING_PROJECTS: 
+      return {
+        ...state,
+        upcomings: action.upcomings,
+        upcoming_date_list: action.upcoming_date_list,
+      }
+    case ActionTypes.SET_UPCOMING_PROJECTS_SHOWING_LIST: 
+      return {
+        ...state,
+        upcoming_show_list: data,
       }      
 
     default:

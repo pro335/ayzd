@@ -130,18 +130,18 @@ const Upcoming = () => {
     };
   });
 
-  const projects = project.projects;
-  const [filteredProjects, setFilteredProjects] = useState(dump_projects)
+  const projects = project.upcoming_show_list;
+  const [filteredProjects, setFilteredProjects] = useState(projects)
 
   const [all, setAll] = useState(false);
 
   useEffect(() => {
-    dispatch({
-      type: ActionTypes.CATEGORY_CHK_LIST_INITIALIZE,
-    });
-    dispatch({
-      type: ActionTypes.CHAIN_CHK_LIST_INITIALIZE,
-    });
+    // dispatch({
+    //   type: ActionTypes.CATEGORY_CHK_LIST_INITIALIZE,
+    // });
+    // dispatch({
+    //   type: ActionTypes.CHAIN_CHK_LIST_INITIALIZE,
+    // });
   }, [category.categories, chain.chains])
 
   const handleChange = (e) => {
