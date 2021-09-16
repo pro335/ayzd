@@ -1,36 +1,34 @@
 import React, { useState } from 'react'
 import SectionHeading from "./../SectionHeading";
-import ProjectsList from "./ProjectsList"
+import LeftDateList from "./LeftDateList"
 import MobileSelectProjects from "./MobileSelectProjects";
 import { useSelector, useDispatch } from 'react-redux';
 import * as actions from '../../redux/actions';
 import * as ActionTypes from '../../redux/ActionTypes';
-import isValid from '../../utility/reduceTextLengh';
+import isValid from '../../utility/isValid';
 
 import data from '../../data.json'
 
-const CalendarList = ({ calendar_list, all, handleChange, title, icon, classes }) => {
+const CalendarList = ({ all, title, icon, classes }) => {
 
-  const { project } = useSelector(state => {
+  const { project, isActive } = useSelector(state => {
+    let temp_isActive = "";
+    // get current_date_label
+    let month_label = "", day_label = "";
+    if(state.project && state.project.current_date_label) {
+      day_label = state.project.current_date_label.split(" ")[0];
+      month_label= state.project.current_date_label.split(" ")[1];
+    }
+    temp_isActive = `${month_label} ${day_label}`;
+    
     return {
       project: state.project,
+      isActive: temp_isActive,
     };
   });
 
-  const projects = project.upcoming_date_show_list;
-  const [filterProject, setFilterProject] = useState(projects);
-  const [isActive, setIsActive] = useState(isValid(project.upcoming_date_show_list) ? project.upcoming_date_show_list[0].date : "");
-
   const activeHandler = text => {
-    setIsActive(text)
-  }
-
-  const handleSearch = (event) => {
-    let value = event.target.value.toLowerCase();
-    let result = [];
-
-    result = projects.filter((data) => data.name.toLowerCase().search(value) !== -1);
-    setFilterProject(result);
+    // setIsActive(text)
   }
 
   return (
@@ -43,7 +41,7 @@ const CalendarList = ({ calendar_list, all, handleChange, title, icon, classes }
       <div className="border-brand-gray-800 lg:overflow-hidden">
         <div className="h-full hidden lg:flex flex-col">
           {/* Projects List */}
-          <ProjectsList calendar_list={calendar_list} isActive={isActive} activeHandler={activeHandler} />
+          <LeftDateList isActive={isActive} activeHandler={activeHandler} />
         </div>
       </div>
     </>

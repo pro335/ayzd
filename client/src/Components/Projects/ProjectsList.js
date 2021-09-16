@@ -6,7 +6,7 @@ import config from '../../config/config';
 import * as actions from '../../redux/actions';
 import * as ActionTypes from '../../redux/ActionTypes';
 
-const ProjectsList = ({ projects, isActive, activeHandler }) => {
+const ProjectsList = ({ isActive, activeHandler }) => {
 
   const dispatch = useDispatch();
 
@@ -87,7 +87,7 @@ const ProjectsList = ({ projects, isActive, activeHandler }) => {
   return (
     <div className="h-full flex flex-col font-medium overflow-y-scroll space-y-2 py-3 px-2">
       {
-        projects.map((item, index) => {
+        project.projects_has_news_show_list.map((item, index) => {
           const main_image = isValid(item.main_image) &&  isValid(item.main_image.url) ? item.main_image.url : `${config.bucket_url}/${config.common_image}`;
 
           return (
@@ -107,7 +107,7 @@ const ProjectsList = ({ projects, isActive, activeHandler }) => {
         })
       }
       {
-        projects.length <= 0 && <p>No Projects</p>
+        project.projects_has_news_show_list.length <= 0 && <p>No Projects</p>
       }
     </div>
   )

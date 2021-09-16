@@ -44,10 +44,14 @@ function App() {
       // });
     }
 
-    async function fetchAllProjects() {
+    async function fetchData1() {
+
+      //get all projects
       let resProject = await actions.allProjects();
+      let projects = [], success = false;
       try {
-        let { success, projects } = resProject.data;
+        success = resProject.data.success;
+        projects = resProject.data.projects;
         if(success) {
           dispatch({
             type: ActionTypes.ALL_PROJECTS,
@@ -62,11 +66,13 @@ function App() {
       } catch (err) {
         console.error(err);
       }
-    }
-    async function fetchAllLivefeeds() {
+
+      //get all livefeeds
       let resLivefeed = await actions.allLivefeeds();
+      let livefeeds = [];
       try {
-        let { success, livefeeds } = resLivefeed.data;
+        success = resLivefeed.data.success;
+        livefeeds = resLivefeed.data.livefeeds;
         if(success) {
           dispatch({
             type: ActionTypes.ALL_LIVE_FEEDS,
@@ -85,7 +91,121 @@ function App() {
       } catch (err) {
         console.error(err);
       }
+
+      // get the projects that has news
+      let temp_projects_has_news = [], temp_projects_has_news_id_list = [];
+      livefeeds.map((one_livefeed) => {
+        if(isValid(one_livefeed) && isValid(one_livefeed.project) && isValid(one_livefeed.project._id)) {
+          let foundIndex = temp_projects_has_news_id_list.findIndex(x => one_livefeed.project._id === x);
+          if(foundIndex === -1)
+            temp_projects_has_news_id_list.push(one_livefeed.project._id);
+        }
+      });
+      projects.map((one_project, index) => {
+        if(index === 0) {
+          temp_projects_has_news.push(one_project);
+        } else {
+          let foundIndex = temp_projects_has_news_id_list.findIndex(x => one_project._id === x);
+          if(foundIndex !== -1)
+            temp_projects_has_news.push(one_project);
+        }
+      })
+      dispatch({
+        type: ActionTypes.SET_PROJECTS_HAS_NEWS,
+        data: temp_projects_has_news
+      })
+
+
+      /** Start of get upcoming projects */
+      let temp_upcomings = [];
+      //fetch only upcoming projects
+      projects.filter(function(item, index) {
+        if((index !== 0) && isValid(item) && isValid(item.isUpcoming) && item.isUpcoming)
+          temp_upcomings.push(item);
+      });
+
+      // //add twitter_members & discord_members to upcoming projects.
+      // let temp_upcomings_include_members = [];
+      // await Promise.all(temp_upcomings.map(async(item) => {
+      //   let discord_members = null, twitter_members = null, temp_item = item;
+      //   if(isValid(item.twitter_link)) {
+      //     let resData = await actions.fetchTwitterMembersForOneProject({url: item.twitter_link});
+      //     let { success, data } = resData.data;
+      //     if(success) {
+      //       twitter_members = data;
+      //       temp_item = {
+      //         ...temp_item,
+      //         twitter_members
+      //       }
+      //     }
+      //   }
+      //   if(isValid(item.discord_link)) {
+      //     let resData = await actions.fetchDiscordMembersForOneProject({url: item.discord_link});
+      //     let { success, data } = resData.data;
+      //     if(success) {
+      //       discord_members = data;
+      //       temp_item = {
+      //         ...temp_item,
+      //         discord_members
+      //       }
+      //     }
+      //   }
+      //   temp_upcomings_include_members.push(temp_item);
+      // }));
+      // temp_upcomings = temp_upcomings_include_members;
+
+      //sort by the upcoming date
+      temp_upcomings = temp_upcomings.sort((a, b) => {
+        return new Date(a['upcoming_date']) - new Date(b['upcoming_date']);
+      });
+
+      // format the upcoming date from UTC to "Aug 31, 2021 12:00 AM"
+      let temp_upcoming_date_list = [];
+      temp_upcomings.map((item) => {
+        let new_date = moment(item.upcoming_date).format("MMMM D");
+        let foundIndex = temp_upcoming_date_list.findIndex(x => x.date === new_date);
+        if(foundIndex !== -1) {
+          let temp_data = temp_upcoming_date_list[foundIndex];
+          temp_upcoming_date_list[foundIndex] = {
+            ...temp_data,
+            count: temp_data.count + 1
+          };
+        } else {
+          temp_upcoming_date_list.push({
+            date: new_date,
+            count: 1
+          });
+        }
+      });
+
+      // get upcoming_show_list, current_date_label
+      let temp_upcoming_show_list = [], temp_current_date_label = "";
+      if(isValid(temp_upcoming_date_list)) {
+        temp_upcoming_show_list = temp_upcomings.filter(function(item) {
+          return moment(item.upcoming_date).format("MMMM D") === temp_upcoming_date_list[0].date;
+        });
+        
+        // get current_date_label
+        let month_label = "", day_label = "";
+        month_label = temp_upcoming_date_list[0].date.split(" ")[0];
+        day_label = temp_upcoming_date_list[0].date.split(" ")[1];
+        temp_current_date_label = `${day_label} ${month_label}`;
+      }
+      
+      dispatch({
+        type: ActionTypes.SET_UPCOMING_PROJECTS,
+        upcomings: temp_upcomings,
+        upcoming_date_list: temp_upcoming_date_list
+      });
+      dispatch({
+        type: ActionTypes.SET_UPCOMING_PROJECTS_SHOWING_LIST,
+        upcoming_show_list: temp_upcoming_show_list,
+        current_date_label: temp_current_date_label,
+      });     
+      /** The End of get upcoming projects */
+
     }
+
     async function updateLivefeeds() {
       let resLivefeed = await actions.updateLivefeeds();
       try {
@@ -264,81 +384,10 @@ function App() {
         console.error(err);
       }
     }
-    const getProjectsHasNews = async () => {
-      let temp_projects_has_news = [], temp_projects_has_news_id_list = [];
-      livefeed.livefeeds.map((one_livefeed) => {
-        if(isValid(one_livefeed) && isValid(one_livefeed.project) && isValid(one_livefeed.project._id)) {
-          let foundIndex = temp_projects_has_news_id_list.findIndex(x => one_livefeed.project._id === x);
-          if(foundIndex === -1)
-            temp_projects_has_news_id_list.push(one_livefeed.project._id);
-        }
-      });
-      project.projects.map((one_project, index) => {
-        if(index === 0) {
-          temp_projects_has_news.push(one_project);
-        } else {
-          let foundIndex = temp_projects_has_news_id_list.findIndex(x => one_project._id === x);
-          if(foundIndex !== -1)
-            temp_projects_has_news.push(one_project);
-        }
-      })
-      dispatch({
-        type: ActionTypes.SET_PROJECTS_HAS_NEWS,
-        data: temp_projects_has_news
-      })
-    }
-    const getUpcomingProjects = async () => {
-
-      let temp_upcomings = [];
-
-      //fetch only upcoming projects
-      project.projects.filter(function(item, index) {
-        if((index !== 0) && isValid(item) && isValid(item.isUpcoming) && item.isUpcoming)
-          temp_upcomings.push(item);
-      });
-
-      //sort by the upcoming date
-      temp_upcomings = temp_upcomings.sort((a, b) => {
-        return new Date(a['upcoming_date']) - new Date(b['upcoming_date']);
-      });
-
-      // format the upcoming date from UTC to "Aug 31, 2021 12:00 AM"
-      let temp_upcoming_date_list = [];
-      temp_upcomings.map((item) => {
-        let new_date = moment(item.upcoming_date).format("MMMM D");
-        let foundIndex = temp_upcoming_date_list.findIndex(x => x.date === new_date);
-        if(foundIndex !== -1) {
-          let temp_data = temp_upcoming_date_list[foundIndex];
-          console.log("before temp_upcoming_date_list", temp_upcoming_date_list)
-          console.log("index", foundIndex, "data", temp_data)
-          temp_upcoming_date_list[foundIndex] = {
-            ...temp_data,
-            count: temp_data.count + 1
-          };
-          console.log("after temp_upcoming_date_list", temp_upcoming_date_list)
-        } else {
-          temp_upcoming_date_list.push({
-            date: new_date,
-            count: 1
-          });
-        }
-      });
-      
-      dispatch({
-        type: ActionTypes.SET_UPCOMING_PROJECTS,
-        upcomings: temp_upcomings,
-        upcoming_date_list: temp_upcoming_date_list
-      });
-      dispatch({
-        type: ActionTypes.SET_UPCOMING_PROJECTS_SHOWING_LIST,
-        data: temp_upcomings
-      });      
-    }
 
     const loadData = () => {
       initializeProjects();
-      fetchAllProjects();
-      fetchAllLivefeeds();
+      fetchData1();
       // updateLivefeeds();
       // fetchTopSales();
       fetchTopCollections();
@@ -348,8 +397,6 @@ function App() {
       fetchAllCategories();
       fetchAllChains();
       // fetchTrading();
-      getProjectsHasNews();
-      getUpcomingProjects();
     }
 
     loadData();
@@ -370,7 +417,7 @@ function App() {
     <>
       <Router>
         <Header />
-        <main className="relative w-full flex flex-col pb-8 lg:pb-0 pt-16">
+        <main className="relative w-full flex pb-8 lg:pb-0 pt-16">
           <Switch>
             <Route exact path="/nft-projects" component={Nft} />
             <Route exact path="/rankings" component={Rankings} />

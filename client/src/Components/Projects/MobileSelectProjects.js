@@ -24,7 +24,7 @@ export default function MobileSelectProjects({ projects }) {
     };
   });
 
-  const [selected, setSelected] = useState(isValid(projects) ? projects[0] : "");
+  const [selected, setSelected] = useState(isValid(project.projects_has_news_show_list) ? project.projects_has_news_show_list[0] : "");
 
   const handleClick = (proj) => {
 
@@ -33,7 +33,7 @@ export default function MobileSelectProjects({ projects }) {
       data: proj._id,
     });
   
-    let data = project.projects.filter(function(item) {
+    let data = project.projects_has_news_show_list.filter(function(item) {
       return item._id === proj._id;
     });
     if(isValid(data)) {
@@ -125,7 +125,7 @@ export default function MobileSelectProjects({ projects }) {
                 className={`${selected.name === "Smart feed" ? '' : 'rounded-md'} absolute z-50 mt-1 w-full bg-brand-gray-800 shadow-lg max-h-60 py-1 ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm`}
               >
                 {
-                  projects.map((person, index) => {
+                  project.projects_has_news_show_list.map((person, index) => {
                     const main_image = isValid(person.main_image) ? person.main_image.url : `${config.bucket_url}/${config.common_image}`;
 
                     return (

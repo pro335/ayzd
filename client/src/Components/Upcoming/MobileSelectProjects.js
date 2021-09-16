@@ -7,12 +7,13 @@ import isValid from '../../utility/isValid';
 import config from '../../config/config';
 import * as actions from '../../redux/actions';
 import * as ActionTypes from '../../redux/ActionTypes';
+import moment from 'moment-timezone';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function MobileSelectProjects({ projects }) {
+export default function MobileSelectProjects({ }) {
 
   const dispatch = useDispatch();
 
@@ -24,71 +25,38 @@ export default function MobileSelectProjects({ projects }) {
     };
   });
 
-  const [selected, setSelected] = useState(isValid(projects) ? projects[0] : "");
+  const [selected, setSelected] = useState(isValid(project.upcoming_date_list) ? project.upcoming_date_list[0] : "");
+
 
   const handleClick = (proj) => {
+    let data = project.upcoming_date_list.filter(function(item) {
+      return item.date === proj.date;
+    });
+
+    // get upcoming_show_list, current_date_label
+    let temp_upcoming_show_list = [], temp_current_date_label = "";
+    if(isValid(project.upcomings)) {
+      temp_upcoming_show_list = project.upcomings.filter(function(item) {
+        return moment(item.upcoming_date).format("MMMM D") === proj.date;
+      });
+
+      // get current_date_label
+      let month_label = "", day_label = "";
+      month_label = proj.date.split(" ")[0];
+      day_label = proj.date.split(" ")[1];
+      temp_current_date_label = `${day_label} ${month_label}`;
+    }
+
+    // get the upcoming_show_list
+    temp_upcoming_show_list = project.upcomings.filter(function(item) {
+      return moment(item.upcoming_date).format("MMMM D") === proj.date;
+    });
 
     dispatch({
-      type: ActionTypes.SET_PROJECT_ID,
-      data: proj._id,
-    });
-  
-    let data = project.projects.filter(function(item) {
-      return item._id === proj._id;
-    });
-    if(isValid(data)) {
-      dispatch({
-        type: ActionTypes.SET_PROJECT,
-        data: data[0],
-      });
-
-      //Sort the livefeednews by the selected project
-      dispatch({
-        type: ActionTypes.FILTERING_LIVE_FEED_BY_PROJECT,
-        projectData: data[0],
-      });
-
-      // get the project data(not from db)
-      let volume = null, isBySellerCount = null, isBySalesVolume = null;
-      topCollections.topCollections.map(item => {
-        if(item.name === data[0].name)
-          volume = item.price;
-      })
-
-      topCollections.topCollections.slice(0, 8).map((item, index) => {
-        if(item.name === data[0].name)
-          isBySellerCount = {
-            value: index,
-            flag: true
-          };
-      })
-
-      biggestSalesAmount.biggestSalesAmount.slice(0, 8).map((item, index) => {
-        if(item.name === data[0].name)
-          isBySalesVolume =  {
-            value: index,
-            flag: true
-          };
-      })
-
-      let projectDataNotDatabase = {
-        ...project.projectDataNotDatabase,
-        volume,
-        isBySellerCount,
-        isBySalesVolume,
-      }
-
-      dispatch({
-        type: ActionTypes.SET_PROJECT_NOT_DB,
-        data: projectDataNotDatabase,
-      });
-
-      dispatch({
-        type: ActionTypes.SET_ACTIVE_TAB,
-        data: 1
-      });
-
-    }
+      type: ActionTypes.SET_UPCOMING_PROJECTS_SHOWING_LIST,
+      upcoming_show_list: temp_upcoming_show_list,
+      current_date_label: temp_current_date_label,
+    });  
   }
 
   return (
@@ -102,13 +70,13 @@ export default function MobileSelectProjects({ projects }) {
             <Listbox.Button className={`${selected.name === "Smart feed" ? '' : 'rounded-md'} relative w-full bg-brand-gray-800 shadow-sm pl-3 pr-10 py-2 text-left focus:outline-none`}>
               <div
                 className={`h-8 hover:bg-brand-gray-800 hover:cursor-pointer rounded-lg flex items-center hover:text-gray-200 onHover px-3 py-1`}
-                // onClick={() => handleClick(item)}
+                onClick={() => handleClick(selected)}
                 // key={index}
               >
-                <p>
-                  {/* {item.label} */}September 12
+                <p class="text-white">
+                  {selected.date}
                 </p>
-                <span class="ml-auto inline-flex items-center justify-center px-3 py-1 text-xs font-bold leading-none text-red-100 bg-black" style={{ border: '1px solid #1D1D1D', borderRadius: '6px' }}>4</span>
+                <span class="ml-auto inline-flex items-center justify-center px-3 py-1 text-xs font-bold leading-none text-red-100 bg-black" style={{ border: '1px solid #1D1D1D', borderRadius: '6px' }}>{selected.count}</span>
               </div>
 
               <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
@@ -128,9 +96,7 @@ export default function MobileSelectProjects({ projects }) {
                 className={`${selected.name === "Smart feed" ? '' : 'rounded-md'} absolute z-50 mt-1 w-full bg-brand-gray-800 shadow-lg max-h-60 py-1 ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm`}
               >
                 {
-                  projects.map((person, index) => {
-                    const main_image = isValid(person.main_image) ? person.main_image.url : `${config.bucket_url}/${config.common_image}`;
-
+                  project.upcoming_date_list.map((one_date, index) => {
                     return (
                       <Listbox.Option
                         key={index}
@@ -140,20 +106,20 @@ export default function MobileSelectProjects({ projects }) {
                             'cursor-default select-none relative pl-3 pr-9'
                           )
                         }
-                        value={person}
+                        value={one_date}
                       >
                         {({ selected }) => (
                           <>
-                            <div className="relative w-full shadow-sm pl-3 py-2 text-left" onClick={() => handleClick(person)}>
+                            <div className="relative w-full shadow-sm pl-3 py-2 text-left" onClick={() => handleClick(one_date)}>
                               <div
-                                className={`hover:bg-brand-gray-800 hover:cursor-pointer rounded-lg flex items-center hover:text-gray-200 onHover px-3 py-1`}
+                                className={`hover:cursor-pointer rounded-lg flex items-center hover:text-gray-200 onHover px-3 py-1`}
                                 // onClick={() => handleClick(item)}
                                 // key={index}
                               >
                                 <p>
-                                  {/* {item.label} */}September 12
+                                  {one_date.date}
                                 </p>
-                                <span class="ml-auto inline-flex items-center justify-center px-3 py-1 text-xs font-bold leading-none text-red-100 bg-black" style={{ border: '1px solid #1D1D1D', borderRadius: '6px' }}>4</span>
+                                <span class="ml-auto inline-flex items-center justify-center px-3 py-1 text-xs font-bold leading-none text-red-100 bg-black" style={{ border: '1px solid #1D1D1D', borderRadius: '6px' }}>{one_date.count}</span>
                               </div>
                             </div>
                           </>

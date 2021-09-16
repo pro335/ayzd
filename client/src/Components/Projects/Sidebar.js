@@ -9,6 +9,7 @@ import isValid from '../../utility/reduceTextLengh';
 import data from '../../data.json'
 
 const Sidebar = () => {
+  const dispatch = useDispatch();
 
   const { project } = useSelector(state => {
     return {
@@ -16,9 +17,7 @@ const Sidebar = () => {
     };
   });
 
-  const projects = project.projects_has_news;
-  const [filterProject, setFilterProject] = useState(projects);
-  const [isActive, setIsActive] = useState(isValid(projects) ? projects[0].name : "");
+  const [isActive, setIsActive] = useState(isValid(project.projects_has_news_show_list) ? project.projects_has_news_show_list[0].name : "");
 
   const activeHandler = text => {
     setIsActive(text)
@@ -26,17 +25,26 @@ const Sidebar = () => {
 
   const handleSearch = (event) => {
     let value = event.target.value.toLowerCase();
-    let result = [];
-
-    result = projects.filter((data) => data.name.toLowerCase().search(value) !== -1);
-    setFilterProject(result);
+    if(!isValid(value)) {
+      dispatch({
+        type: ActionTypes.SET_PROJECTS_HAS_NEWS_SHOW_LIST,
+        data: project.projects_has_news,
+      });
+    } else {
+      let result = [];
+      result = project.projects_has_news.filter((data) => data.name.toLowerCase().search(value) !== -1);
+      dispatch({
+        type: ActionTypes.SET_PROJECTS_HAS_NEWS_SHOW_LIST,
+        data: result,
+      });
+    }
   }
 
   return (
     <>
       <div className="border-r border-brand-gray-800 lg:overflow-hidden">
         <div className="lg:hidden px-4 z-100">
-          <MobileSelectProjects projects={projects} />
+          <MobileSelectProjects projects={project.projects_has_news_show_list} />
         </div>
 
         <div className="h-full hidden lg:flex flex-col">
@@ -55,7 +63,7 @@ const Sidebar = () => {
           {/* end */}
 
           {/* Projects List */}
-          <ProjectsList projects={filterProject} isActive={isActive} activeHandler={activeHandler} />
+          <ProjectsList isActive={isActive} activeHandler={activeHandler} />
         </div>
       </div>
     </>

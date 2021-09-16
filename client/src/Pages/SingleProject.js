@@ -128,10 +128,10 @@ const SingleProject = () => {
   }, []);
 
   return (
-    <>
+    <div className="flex flex-col">
       <Heading />
       <Tabs />
-    </>
+    </div>
   )
 }
 

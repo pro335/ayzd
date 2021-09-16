@@ -6,6 +6,7 @@ import isValid from '../../utility/isValid';
 import config from '../../config/config';
 import * as actions from '../../redux/actions';
 import * as ActionTypes from '../../redux/ActionTypes';
+import moment from 'moment';
 
 const Heading = () => {
   
@@ -73,7 +74,7 @@ const Heading = () => {
       }
 
       {/* Right */}
-      {isValid(project.projectDataNotDatabase) && isValid(project.projectDataNotDatabase.volume) ?
+      { isValid(project.projectData) && (!isValid(project.projectData.isUpcoming) || ( isValid(project.projectData.isUpcoming) && !project.projectData.isUpcoming )) && isValid(project.projectDataNotDatabase) && isValid(project.projectDataNotDatabase.volume) ?
         <div className="mx-auto md:mx-0">
           <div className="flex items-center border border-brand-gray-800 rounded-lg space-x-5 px-4 py-3">
             <div>
@@ -88,7 +89,23 @@ const Heading = () => {
         :
         null
       }
-    </div>
+      { isValid(project.projectData) && isValid(project.projectData.isUpcoming) && project.projectData.isUpcoming && isValid(project.projectData.upcoming_date) ?
+        <div className="mx-auto md:mx-0">
+        <div className="flex items-center border border-brand-gray-800 rounded-lg space-x-5 px-4 py-3">
+          <div>
+            <p className="text-xs text-brand-gray-400 leading-4">Drop date (GMT +3)</p>
+            <p className="text-lg text-brand-gray-300 font-semibold">{moment(project.projectData.upcoming_date).format("MMM D, YYYY hh:mm A")}</p>
+          </div>
+          <div className="w-12 h-12 py-1">
+            <img className="w-12 h-12 object-cover object-center" src="/assets/icons/calendar1.svg" alt="" />
+          </div>
+        </div>
+      </div>
+      :
+      null
+    }
+
+  </div>
   )
 }
 

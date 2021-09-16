@@ -5,6 +5,7 @@ import isValid from '../../utility/isValid';
 import config from '../../config/config';
 import * as actions from '../../redux/actions';
 import * as ActionTypes from '../../redux/ActionTypes';
+import moment from 'moment';
 
 const Card = ({ item }) => {
   const history = useHistory();
@@ -35,7 +36,7 @@ const Card = ({ item }) => {
         </div>
         <div className="border-b text-xs font-medium px-3 py-2" style={{borderColor: "rgba(255, 255, 255, 0.1)"}}>
           <p>
-            {isValid(item.upcoming_date) ? item.upcoming_date : null}
+            {isValid(item.upcoming_date) ? moment(item.upcoming_date).format("MMM D, YYYY hh:mm A") : null}
           </p>
           <p className="text-sm text-gray-300">
             {item.name}

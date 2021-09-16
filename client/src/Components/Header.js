@@ -92,7 +92,7 @@ const Header = () => {
                     className="group flex items-center border-b-2 border-transparent hover:border-brand-AYZD-PURPLE hover:text-gray-100 px-1 pt-6 pb-5"
                     onClick={() => handleClick(link)}
                   >
-                    <svg className="w-5 h-4.5 mr-2 group-hover:text-brand-AYZD-PURPLE">
+                    <svg className="w-5 h-5 mr-2 group-hover:text-brand-AYZD-PURPLE">
                       <use href={`../assets/icons/${link.icon}.svg#icon-${link.icon}`}></use>
                     </svg>
                     {link.name}
@@ -182,7 +182,7 @@ const Header = () => {
                               key={index}
                               className="group flex items-center hover:text-gray-100 px-2 py-3"
                             >
-                              <svg className="w-5 h-4.5 group-hover:text-brand-AYZD-PURPLE mr-4">
+                              <svg className="w-5 h-5 group-hover:text-brand-AYZD-PURPLE mr-4">
                                 <use href={`../assets/icons/${link.icon}.svg#icon-${link.icon}`}></use>
                               </svg>
                               {link.name}
