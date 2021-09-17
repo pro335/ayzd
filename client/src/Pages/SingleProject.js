@@ -78,20 +78,24 @@ const SingleProject = () => {
             })
     
             // get the twitter numbers & discord numbers
-            if(isValid(item.discord_link)) {
-              let resData = await actions.fetchDiscordMembersForOneProject({url: item.discord_link});
+            try {
+              let resData = await actions.updateDiscordMembersForOneProject(item);
               let { success, data } = resData.data;
               if(success) {
                 discord_members = data;
               }
+            } catch(err) {
+              console.log("discord data getting error!", err);
             }
 
-            if(isValid(item.twitter_link)) {
-              let resData = await actions.fetchTwitterMembersForOneProject({url: item.twitter_link});
+            try {
+              let resData = await actions.updateTwitterMembersForOneProject(item);
               let { success, data } = resData.data;
               if(success) {
                 twitter_members = data;
               }
+            } catch( err ) {
+              console.log("twitter data getting error!", err);
             }
     
             let projectDataNotDatabase = {

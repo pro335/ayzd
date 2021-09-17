@@ -168,6 +168,14 @@ export const getTrendingNFTs = (params) => {
     return axios.post(`/api/project/getTrendingNFTs`, params);
 }
 
+export const updateDiscordMembersForOneProject = (data) => {
+    return axios.post("/api/project/updateDiscordMembersForOneProject", data);
+}
+
+export const updateTwitterMembersForOneProject = (data) => {
+    return axios.post("/api/project/updateTwitterMembersForOneProject", data);
+}
+
 // livefeed action(s)
 export const addLivefeed = (data) => {
     return axios.put("/api/livefeed/create", data);
@@ -204,12 +212,6 @@ export const fetchTrading = () => {
 }
 export const fetchBiggestSalesVolume = () => {
     return axios.post("/api/getData/getBiggestSalesVolume");
-}
-export const fetchDiscordMembersForOneProject = (data) => {
-    return axios.post("/api/getData/getDiscordMembersForOneProject", data);
-}
-export const fetchTwitterMembersForOneProject = (data) => {
-    return axios.post("/api/getData/getTwitterMembersForOneProject", data);
 }
 
 // authorization token action(s)
