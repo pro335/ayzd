@@ -161,6 +161,10 @@ function App() {
 
       // format the upcoming date from UTC to "Aug 31, 2021 12:00 AM"
       let temp_upcoming_date_list = [];
+      // let date_current = moment(new Date()).format("MMMM D");
+      // let year_current = moment(new Date()).get('year');
+      // let date_after_a_month = moment(new Date()).add(1, 'months').format("MMMM D");
+
       temp_upcomings.map((item) => {
         let new_date = moment(item.upcoming_date).format("MMMM D");
         let foundIndex = temp_upcoming_date_list.findIndex(x => x.date === new_date);
@@ -417,13 +421,13 @@ function App() {
     <>
       <Router>
         <Header />
-        <main className="relative w-full flex pb-8 lg:pb-0 pt-16">
+        <main className="relative w-full flex flex-col pb-8 lg:pb-0 pt-16">
           <Switch>
             <Route exact path="/nft-projects" component={Nft} />
             <Route exact path="/rankings" component={Rankings} />
             <Route exact path="/trading" component={Trading} />
             <Route exact path="/projects/:project_unique_id" component={SingleProject} />
-            <Route exact path="/upcoming" component={Upcoming} />
+            <Route exact path="/drops" component={Upcoming} />
             <Route path="/" component={Dashboard} />
           </Switch>
         </main>

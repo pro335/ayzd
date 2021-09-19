@@ -32,7 +32,7 @@ const Card = ({ item }) => {
           className="block h-41 xl:h-52 relative"
         >
           <img className="w-full h-full object-cover" src={main_image} alt="" onError={addDefaultSrc} />
-          <div class="h-7 absolute inset-y-0 top-0 right-0 text-white bg-base px-2 py-1 mt-2 mr-2 rounded-md">{isValid(item.price) ? `${item.price}Ξ` : null}</div>
+          <div class="h-7 absolute inset-y-0 top-0 right-0 text-white bg-base px-2 py-1 mt-2 mr-2 rounded-md">{isValid(item.price) ? `${item.price}` : null}</div>
         </div>
         <div className="text-xs font-medium px-3 py-2">
           <p>

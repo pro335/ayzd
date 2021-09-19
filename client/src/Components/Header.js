@@ -42,7 +42,7 @@ const navLinks = [
   // },
   {
     name: 'Drop calendar',
-    to: '/upcoming',
+    to: '/drops',
     icon: 'calendar',
     // current: false,
     badge: false
@@ -53,9 +53,15 @@ const Header = () => {
 
   const dispatch = useDispatch();
   const history = useHistory();
+  
+  const { project } = useSelector(state => {
+    return {
+      project: state.project,
+    };
+  });
 
   const handleClick = (link = null) => {
-    if(isValid(link) && link.to !== "/")    // if user doesn't click the "Dashboard", i.e. "NFT Project", "Rankings"
+    if(isValid(link) && link.to !== "/")    // if user doesn't click the "Dashboard", i.e. user click "NFT Project", "Rankings"
       return;
 
     // if user click the "Logo" or "Dashboard" navbar
@@ -85,18 +91,21 @@ const Header = () => {
             <div className="nav-menu hidden lg:flex items-center font-medium space-x-4.5 px-4.5">
               {
                 navLinks.map((link, index) => (
-                  <NavLink exact
-                    to={`${link.to}`}
-                    activeClassName="active"
-                    key={index}
-                    className="group flex items-center border-b-2 border-transparent hover:border-brand-AYZD-PURPLE hover:text-gray-100 px-1 pt-6 pb-5"
-                    onClick={() => handleClick(link)}
-                  >
-                    <svg className="w-5 h-5 mr-2 group-hover:text-brand-AYZD-PURPLE">
-                      <use href={`../assets/icons/${link.icon}.svg#icon-${link.icon}`}></use>
-                    </svg>
-                    {link.name}
-                  </NavLink>
+                  (link.name !== "Drop calendar") || (link.name === "Drop calendar" && isValid(project.upcomings) && project.upcomings.length > 0 ) ?
+                    <NavLink exact
+                      to={`${link.to}`}
+                      activeClassName="active"
+                      key={index}
+                      className="group flex items-center border-b-2 border-transparent hover:border-brand-AYZD-PURPLE hover:text-gray-100 px-1 pt-6 pb-5"
+                      onClick={() => handleClick(link)}
+                    >
+                      <svg className="w-5 h-5 mr-2 group-hover:text-brand-AYZD-PURPLE">
+                        <use href={`../assets/icons/${link.icon}.svg#icon-${link.icon}`}></use>
+                      </svg>
+                      {link.name}
+                    </NavLink>
+                    :
+                    null
                 ))
               }
             </div>
