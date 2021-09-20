@@ -93,12 +93,12 @@ const About = () => {
                   />
                   <div className="w-full lg:w-auto lg:flex items-center justify-center lg:justify-start pl-3">
                     {isValid(project.projectDataNotDatabase.twitter_members) ?
-                      <CommunityActivityComponent icon="twitter_community" title="Twitter" amount={project.projectDataNotDatabase.twitter_members} />
+                      <CommunityActivityComponent icon="twitter_community" title="Twitter" amount={project.projectDataNotDatabase.twitter_members} url={project.projectData.twitter_link} />
                       :
                       null
                     }
                     {isValid(project.projectDataNotDatabase.discord_members) ?
-                      <CommunityActivityComponent icon="discord_community" title="Discord" amount={project.projectDataNotDatabase.discord_members} />
+                      <CommunityActivityComponent icon="discord_community" title="Discord" amount={project.projectDataNotDatabase.discord_members} url={project.projectData.discord_link} />
                       :
                       null
                     }
