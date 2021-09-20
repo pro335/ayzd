@@ -9,7 +9,7 @@ import * as ActionTypes from '../../redux/ActionTypes';
 import LottieAnimation from '../Lottie/Lottie';
 import LOTTIE_DATA from '../Lottie/data.json';
 
-const TopCollectionsSection = ({ projects }) => {
+const TopCollectionsSection = ({ }) => {
 
   const dispatch = useDispatch();
   const history = useHistory();
