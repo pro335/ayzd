@@ -1,10 +1,12 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from "react-router-dom";
 import isValid from '../../utility/isValid';
 import config from '../../config/config';
 import * as actions from '../../redux/actions';
 import * as ActionTypes from '../../redux/ActionTypes';
+import LottieAnimation from '../Lottie/Lottie';
+import LOTTIE_DATA from '../Lottie/data.json';
 
 const ProjectsList = ({ isActive, activeHandler }) => {
 
@@ -17,6 +19,14 @@ const ProjectsList = ({ isActive, activeHandler }) => {
       biggestSalesAmount: state.biggestSalesAmount,
     };
   });
+
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoaded(true);
+    }, 10000);
+  }, []); // here
 
   const handleClick = (proj) => {
 
@@ -86,7 +96,7 @@ const ProjectsList = ({ isActive, activeHandler }) => {
 
   return (
     <div className="h-full flex flex-col font-medium overflow-y-scroll space-y-2 py-3 px-2">
-      {
+      { isValid(project.projects_has_news_show_list) ?
         project.projects_has_news_show_list.map((item, index) => {
           const main_image = isValid(item.main_image) &&  isValid(item.main_image.url) ? item.main_image.url : `${config.bucket_url}/${config.common_image}`;
 
@@ -105,9 +115,14 @@ const ProjectsList = ({ isActive, activeHandler }) => {
             </div>
           )
         })
-      }
-      {
-        project.projects_has_news_show_list.length <= 0 && <p>No Projects</p>
+        :
+        ( !isLoaded ?
+          <div className="h-full flex flex-col justify-center items-center pb-15">
+            <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
+          </div>
+          :
+          project.projects_has_news_show_list.length <= 0 && <p>No Projects</p>
+        )
       }
     </div>
   )
