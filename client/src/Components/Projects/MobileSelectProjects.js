@@ -99,7 +99,7 @@ export default function MobileSelectProjects({ projects }) {
 
           <div className="pt-4 relative">
 
-            <Listbox.Button className={`${selected.name === "Smart feed" ? '' : 'rounded-md'} relative w-full bg-brand-gray-800 shadow-sm pl-3 pr-10 py-2 text-left focus:outline-none`}>
+            <Listbox.Button className={`rounded-lg relative w-full bg-brand-gray-800 shadow-sm pl-3 pr-10 py-2 text-left focus:outline-none`}>
               <span className="flex items-center">
                 <img src={isValid(selected.main_image) ? selected.main_image.url : `${config.bucket_url}/${config.common_image}`} className={`${selected.name === "Smart feed" ? '' : 'rounded-full'} flex-shrink-0 h-6 w-6`} />
 
@@ -122,7 +122,7 @@ export default function MobileSelectProjects({ projects }) {
             >
               <Listbox.Options
                 static
-                className={`${selected.name === "Smart feed" ? '' : 'rounded-md'} absolute z-50 mt-1 w-full bg-brand-gray-800 shadow-lg max-h-60 py-1 ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm`}
+                className={`rounded-lg absolute z-50 mt-1 w-full bg-brand-gray-800 shadow-lg max-h-60 py-1 ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm`}
               >
                 {
                   project.projects_has_news_show_list.map((person, index) => {
@@ -133,8 +133,8 @@ export default function MobileSelectProjects({ projects }) {
                         key={index}
                         className={({ active }) =>
                           classNames(
-                            active ? 'text-white bg-indigo-600' : '',
-                            'cursor-default select-none relative py-2 pl-3 pr-9'
+                            active ? 'text-white bg-indigo-600' : 'rounded-lg',
+                            'cursor-default select-none relative py-2 pl-3 pr-9 rounded-lg'
                           )
                         }
                         value={person}
