@@ -20,7 +20,7 @@ const navLinks = [
     badge: false
   },
   {
-    name: 'NFT Project',
+    name: 'NFT Projects',
     to: '/nft-projects',
     icon: 'nft',
     // current: false,
