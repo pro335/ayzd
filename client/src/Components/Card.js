@@ -29,11 +29,20 @@ const Card = ({ item, type="nft" }) => {
     e.target.src = '../assets/images/default_image.svg';
   }
 
-  var main_image = null;
+  var media = null;
   if(type === "categories") {
-    main_image = isValid(item) && isValid(item.main_image) && isValid(item.main_image.url) ? item.main_image.url : `${config.bucket_url}/${config.common_image}`;
+    if(!isValid(item)) {
+      media = `${config.bucket_url}/${config.common_image}`;
+    } else {
+      if(isValid(item.secondary_image) && isValid(item.secondary_image.url) )
+        media = item.secondary_image.url;
+      else if(isValid(item.main_image) && isValid(item.main_image.url))
+        media = item.main_image.url;
+      else
+        media = `${config.bucket_url}/${config.common_image}`;
+    }
   } else {
-    main_image = isValid(item) && isValid(item.image) ? item.image : '../assets/images/default_image.svg';
+    media = isValid(item) && isValid(item.image) ? item.image : '../assets/images/default_image.svg';
   }
   return (
     <div className={type === "categories" ? "hover:cursor-pointer" : ""} onClick={handleClick}>
@@ -43,9 +52,9 @@ const Card = ({ item, type="nft" }) => {
         >
           {
             type === "categories" ?
-              <img className="w-full h-full object-cover" src={main_image} alt="" />
+              <img className="w-full h-full object-cover" src={media} alt="" />
               :
-              <img className="w-full h-full object-cover" src={main_image} alt="" onError={addDefaultSrc} />
+              <img className="w-full h-full object-cover" src={media} alt="" onError={addDefaultSrc} />
           }
         </div>
         <div className="text-xs font-medium pl-3 py-2 pr-5">

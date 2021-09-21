@@ -89,18 +89,30 @@ const SimilarProjects = () => {
     // history.push(`/projects/${data[0].unique_id}`);
   }
 
-  let imageUrl = null;
+  const getImage = (item) => {
+    let media = null;
+    if(!isValid(item)) {
+      media = `${config.bucket_url}/${config.common_image}`;
+    } else {
+      if(isValid(item.secondary_image) && isValid(item.secondary_image.url) )
+        media = item.secondary_image.url;
+      else if(isValid(item.main_image) && isValid(item.main_image.url))
+        media = item.main_image.url;
+      else
+        media = `${config.bucket_url}/${config.common_image}`;
+    }
+    return media;
+}
+
   return (
     <>
       <div className="p-4 sm:p-5">
         <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-7 gap-3 md:gap-x-6">
           {
             project.projectData.similar_list.map((item, index) => (
-              imageUrl = isValid(item.main_image) && isValid(item.main_image.url) ? item.main_image.url : `${config.bucket_url}/${config.common_image}`,
-
               <div key={index} className="w-full block flex-shrink-0 bg-brand-gray-800 rounded-lg overflow-hidden hover:cursor-pointer" onClick={() => handleClick(item)}>
                 <div>
-                  <img className="w-full h-full object-cover p-5" src={imageUrl} alt="" />
+                  <img className="w-full h-full object-cover p-5" src={getImage(item)} alt="" />
                 </div>
                 <div className="leading-5 p-3 pb-4">
                   {/* <p className="capitalize">

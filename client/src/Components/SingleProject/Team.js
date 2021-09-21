@@ -66,7 +66,7 @@ export default function Team() {
                 null
               }
               {isValid(person.dribbble_link) ?
-                <a href={person.dribbble_link} className="text-brand-gray-600 hover:text-brand-gray-300">
+                <a href={person.dribbble_link} className="text-brand-gray-600 hover:text-brand-gray-300" target="_blank">
                   <span className="sr-only">LinkedIn</span>
                   <svg className="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                     <path
@@ -80,7 +80,7 @@ export default function Team() {
                 null
               }
               {isValid(person.instagram_link) ?
-                <a href={person.instagram_link} className="text-brand-gray-600 hover:text-brand-gray-300">
+                <a href={person.instagram_link} className="text-brand-gray-600 hover:text-brand-gray-300" target="_blank">
                   <span className="sr-only">Instagram</span>
                   <svg className="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
                     <path
@@ -94,7 +94,7 @@ export default function Team() {
                 null
               }
               {isValid(person.medium_link) ?
-                <a href={person.medium_link} className="text-brand-gray-600 hover:text-brand-gray-300">
+                <a href={person.medium_link} className="text-brand-gray-600 hover:text-brand-gray-300" target="_blank">
                   <span className="sr-only">Medium</span>
                   <svg className="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
                     <path
