@@ -4,6 +4,7 @@ import SectionHeading from "./../SectionHeading";
 import MediaList from "./Media";
 import NFTSliders from "./NFT-Sliders";
 import Team from "./Team";
+import Score from "./Score";
 import isValid from '../../utility/isValid';
 import * as actions from '../../redux/actions';
 import * as ActionTypes from '../../redux/ActionTypes';
@@ -149,12 +150,20 @@ const About = () => {
               :
               null
             }
-            {/* <NFTSliders
-              title="Top sales of the day"
-              icon="shopping-cart"
-              classes="border-t"
-              type="top-sales"
-            /> */}
+            {isValid(project.projectData) ?
+              <div className="border-brand-gray-800 mb-1 lg:mb-8">
+                <div>
+                  <SectionHeading
+                    title="Ayzd project score"
+                    icon="score"
+                    classes="border-t"
+                  />
+                  <Score />
+                </div>
+              </div>
+              :
+              null
+            }
           </div>
         </div>
         :
