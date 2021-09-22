@@ -124,36 +124,6 @@ function App() {
           temp_upcomings.push(item);
       });
 
-      // //add twitter_members & discord_members to upcoming projects.
-      // let temp_upcomings_include_members = [];
-      // await Promise.all(temp_upcomings.map(async(item) => {
-      //   let discord_members = null, twitter_members = null, temp_item = item;
-      //   if(isValid(item.twitter_link)) {
-      //     let resData = await actions.fetchTwitterMembersForOneProject({url: item.twitter_link});
-      //     let { success, data } = resData.data;
-      //     if(success) {
-      //       twitter_members = data;
-      //       temp_item = {
-      //         ...temp_item,
-      //         twitter_members
-      //       }
-      //     }
-      //   }
-      //   if(isValid(item.discord_link)) {
-      //     let resData = await actions.fetchDiscordMembersForOneProject({url: item.discord_link});
-      //     let { success, data } = resData.data;
-      //     if(success) {
-      //       discord_members = data;
-      //       temp_item = {
-      //         ...temp_item,
-      //         discord_members
-      //       }
-      //     }
-      //   }
-      //   temp_upcomings_include_members.push(temp_item);
-      // }));
-      // temp_upcomings = temp_upcomings_include_members;
-
       //sort by the upcoming date
       temp_upcomings = temp_upcomings.sort((a, b) => {
         return new Date(a['upcoming_date']) - new Date(b['upcoming_date']);
@@ -161,12 +131,25 @@ function App() {
 
       // format the upcoming date from UTC to "Aug 31, 2021 12:00 AM"
       let temp_upcoming_date_list = [];
-      // let date_current = moment(new Date()).format("MMMM D");
       // let year_current = moment(new Date()).get('year');
-      // let date_after_a_month = moment(new Date()).add(1, 'months').format("MMMM D");
+      for(let i = 0; i < 30; i ++) {
+        // let year_after_some_days = moment(new Date()).add(i, 'days').get('year');
+        let date_after_some_days = moment(new Date()).add(i, 'days').format("MMMM D");
+        // if(year_current !== year_after_some_days)
+        //   date_after_some_days = moment(new Date()).add(i, 'days').format("MMMM D, YYYY");
+
+        temp_upcoming_date_list.push({
+          date: date_after_some_days,
+          count: 0
+        });
+      }
 
       temp_upcomings.map((item) => {
+        // let year_of_specific_date = moment(item.upcoming_date).get('year');
         let new_date = moment(item.upcoming_date).format("MMMM D");
+        // if(year_current !== year_of_specific_date)
+        //   new_date = moment(item.upcoming_date).format("MMMM D, YYYY");
+
         let foundIndex = temp_upcoming_date_list.findIndex(x => x.date === new_date);
         if(foundIndex !== -1) {
           let temp_data = temp_upcoming_date_list[foundIndex];
