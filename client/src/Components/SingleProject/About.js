@@ -82,6 +82,21 @@ const About = () => {
                 <MediaList />
               </div>
             </div>
+            
+            {isValid(project.projectData) && isValid(project.projectData.member_list) ?
+              <div className="border-r border-brand-gray-800 mb-1 lg:mb-8">
+                <div>
+                  <SectionHeading
+                    title="Team behind project"
+                    icon="team"
+                    classes="border-t"
+                  />
+                  <Team />
+                </div>
+              </div>
+              :
+              null
+            }
           </div>
 
           <div className="min-w-[320px] w-full">
@@ -106,7 +121,7 @@ const About = () => {
                         null
                       }
                     </div>
-                    <div className="w-full lg:w-auto lg:flex items-center justify-center lg:justify-start">
+                    <div className="w-full lg:w-auto lg:flex items-center justify-center lg:justify-start mb-5">
                       {isValid(project.projectDataNotDatabase.twitter_members) ?
                         <CommunityActivityComponent icon="twitter_community" title="Twitter" amount={project.projectDataNotDatabase.twitter_members} url={project.projectData.twitter_link} />
                         :
@@ -140,21 +155,6 @@ const About = () => {
               classes="border-t"
               type="top-sales"
             /> */}
-
-            {isValid(project.projectData) && isValid(project.projectData.member_list) ?
-              <div className="border-r border-brand-gray-800">
-                <div>
-                  <SectionHeading
-                    title="Team behind project"
-                    icon="team"
-                    classes="border-t"
-                  />
-                  <Team />
-                </div>
-              </div>
-              :
-              null
-            }
           </div>
         </div>
         :

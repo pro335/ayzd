@@ -73,7 +73,19 @@ const Heading = () => {
       }
 
       {/* Right */}
-
+      {isValid(project.projectData.btn_label) && isValid(project.projectData.btn_url) ?
+        <div className="flex items-center font-medium ml-auto space-x-3">
+          <a
+            href={project.projectData.btn_url}
+            className="bg-brand-AYZD-PURPLE hover:bg-purple-700 text-white leading-7 rounded-xl px-4 py-1.5"
+            target="_blank"
+          >
+            {project.projectData.btn_label}
+          </a>
+        </div>
+        :
+        null
+      }
   </div>
   )
 }
