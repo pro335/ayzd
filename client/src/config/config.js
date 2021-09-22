@@ -8,6 +8,7 @@ const config = {
   general_avatar: "general_avatar.png",
   common_image: "common_image.png",
   TIME_INTERVAL: 1000*60*60,    // 1 hour,
+  GOOGLE_ANALYTICS_TRACKING_ID: "G-R10EF983PR",
 };
 
 export default config;
