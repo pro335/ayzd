@@ -11,13 +11,13 @@ import * as ActionTypes from '../../redux/ActionTypes';
 const sortby = [
   { id: 0, name: 'Option', key: 'sortby_option' },
   { id: 1, name: 'Price', key: 'priceInDollar' },
-  { id: 2, name: 'Created At', key: 'createdAt' },
+  { id: 2, name: 'Minted time', key: 'createdAt' },
 ]
 
 const direction = [
   { id: 0, name: 'Option', key: 'direction_option' },
-  { id: 1, name: 'Desc', key: 'desc' },
-  { id: 2, name: 'Asc', key: 'asc' },
+  { id: 1, name: 'Descending', key: 'desc' },
+  { id: 2, name: 'Ascending', key: 'asc' },
 ]
 
 function classNames(...classes) {
