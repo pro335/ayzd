@@ -150,7 +150,7 @@ const About = () => {
               :
               null
             }
-            {/* {isValid(project.projectData) ?
+            {isValid(project.projectData) ?
               <div className="border-brand-gray-800 mb-1 lg:mb-8">
                 <div>
                   <SectionHeading
@@ -163,7 +163,7 @@ const About = () => {
               </div>
               :
               null
-            } */}
+            }
           </div>
         </div>
         :

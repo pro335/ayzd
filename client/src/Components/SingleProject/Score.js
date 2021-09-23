@@ -14,7 +14,7 @@ export default function Score() {
 
   return (
     <div className="p-4 sm:p-5 space-y-4">
-      {/* <Radar data={data} options={options} />       */}
+      
     </div>
   )
 }
