@@ -10,16 +10,74 @@ const Card = ({ item, type="nft" }) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  const { project, topCollections, biggestSalesAmount } = useSelector(state => {
+    return {
+      project: state.project,
+      topCollections: state.topCollections,
+      biggestSalesAmount: state.biggestSalesAmount,
+    };
+  });
+  
   const handleClick = () => {
 
     if(type === "categories") {
     
-      dispatch({
-        type: ActionTypes.SET_PROJECT,
-        data: item,
+      let data = project.projects.filter(function(proj) {
+        return item._id === proj._id;
       });
+      if(isValid(data)) {
+        dispatch({
+          type: ActionTypes.SET_PROJECT,
+          data: data[0],
+        });
+        //Sort the livefeednews by the selected project
+        dispatch({
+          type: ActionTypes.FILTERING_LIVE_FEED_BY_PROJECT,
+          projectData: data[0],
+        });
   
-      history.push(`/projects/${item.unique_id}`);
+        // get the project data(not from db)
+        let volume = null, isBySellerCount = null, isBySalesVolume = null;
+        topCollections.topCollections.map(item => {
+          if(item.name === data[0].name)
+            volume = item.price;
+        })
+  
+        topCollections.topCollections.slice(0, 8).map((item, index) => {
+          if(item.name === data[0].name)
+            isBySellerCount = {
+              value: index,
+              flag: true
+            };
+        })
+  
+        biggestSalesAmount.biggestSalesAmount.slice(0, 8).map((item, index) => {
+          if(item.name === data[0].name)
+            isBySalesVolume =  {
+              value: index,
+              flag: true
+            };
+        })
+  
+        let projectDataNotDatabase = {
+          ...project.projectDataNotDatabase,
+          volume,
+          isBySellerCount,
+          isBySalesVolume,
+        }
+  
+        dispatch({
+          type: ActionTypes.SET_PROJECT_NOT_DB,
+          data: projectDataNotDatabase,
+        });
+        
+        dispatch({
+          type: ActionTypes.SET_ACTIVE_TAB,
+          data: 1
+        });
+  
+        history.push(`/projects/${item.unique_id}`);
+      }
     } else {
       // window.open(item.coinrankingUrl, "_blank")
     }
