@@ -48,7 +48,7 @@ const FeedActions = ({ feed: { tag, created_time, link, project, comments } }) =
         {tag !== 0 ?
           <p className={`bg-opacity-20 flex items-center rounded-full px-2.5 py-1`} style={{backgroundColor: bgColor}}>
             <img src={`../assets/icons/${marketType.toLowerCase()}.svg`} alt="" />
-            <span className={`text-xxs font-semibold ml-1`} style={{color: tagColor}}>
+            <span className={`font-semibold ml-1`} style={{color: tagColor, fontSize: "10px"}}>
               {marketType}
             </span>
           </p>
