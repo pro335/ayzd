@@ -150,16 +150,14 @@ const About = () => {
               :
               null
             }
-            {isValid(project.projectData) ?
+            { ( isValid(project.projectData) && ( (isValid(project.projectData.score_team) && Number(project.projectData.score_team) > 0 ) || (isValid(project.projectData.score_uniqueness) && Number(project.projectData.score_uniqueness) > 0) || (isValid(project.projectData.score_community) && Number(project.projectData.score_community) > 0) || (isValid(project.projectData.score_v_quality) && Number(project.projectData.score_v_quality) > 0) || (isValid(project.projectData.score_v_potential) && Number(project.projectData.score_v_potential) > 0) || (isValid(project.projectData.score_utility) && Number(project.projectData.score_utility) > 0) ) ) ?
               <div className="border-brand-gray-800 mb-1 lg:mb-8">
-                <div>
-                  <SectionHeading
-                    title="Ayzd project score"
-                    icon="score"
-                    classes="border-t"
-                  />
-                  <Score />
-                </div>
+                <SectionHeading
+                  title="Ayzd project score"
+                  icon="score"
+                  classes="border-t"
+                />
+                <Score />
               </div>
               :
               null
