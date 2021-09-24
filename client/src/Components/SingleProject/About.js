@@ -109,7 +109,7 @@ const About = () => {
                     icon="community_activity"
                     classes="border-t"
                   />
-                  <div className="w-full lg:w-auto lg:flex lg:flex-col lg:justify-start">
+                  <div className="w-full lg:w-auto lg:flex lg:flex-col lg:justify-start pr-5">
                     <div className="w-full lg:w-auto lg:flex items-center justify-center lg:justify-start">
                       { isValid(project.projectData) && (!isValid(project.projectData.isUpcoming) || ( isValid(project.projectData.isUpcoming) && !project.projectData.isUpcoming )) && isValid(project.projectDataNotDatabase) && isValid(project.projectDataNotDatabase.volume) ?
                         <StatsTopComponent icon="sales_volume" title="Sales volume" amount={project.projectDataNotDatabase.volume} />

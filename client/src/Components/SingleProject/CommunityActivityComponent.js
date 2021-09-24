@@ -12,7 +12,7 @@ const CommunityActivityComponent = ( {icon, title, amount, url} ) => {
 
   return (
     isValid(icon) && isValid(title) && isValid(amount) && isValid(url) ?
-      <a href={url} className="flex items-center flex-wrap justify-center lg:justify-between space-y-6 lg:space-y-0 pt-5 px-5 sm:px-6 lg:w-1/2 sm:w-full" target="_blank">
+      <a href={url} className="flex items-center flex-wrap justify-center lg:justify-between space-y-6 lg:space-y-0 pt-5 pl-5 sm:pl-5 lg:w-1/2 sm:w-full" target="_blank">
         <div className="flex items-center border border-brand-gray-800 rounded-lg space-x-5 pl-4 pr-auto py-3 w-full">
           <div className="py-1">
             <img className="w-full h-full object-cover object-center" src={`../assets/icons/${icon}.svg`} alt="" />
