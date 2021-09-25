@@ -39,25 +39,39 @@ export default function FeedModal({ open, setOpen }) {
     };
 
   let tag = isValid(livefeedData) ? livefeedData.tag : 0;
-  let marketType, tagColor;
+
+  let marketType, tagColor, bgColor = 'rgba(123, 97, 255, 0.2)';
 
   if (tag === 1) {
-    marketType = 'Bearish'
-    tagColor = 'dark-red'
+    marketType = 'Bearish';
+    tagColor = '#BD2150';
+    bgColor = 'rgba(189, 33, 80, 0.2)';
   } else if (tag === 2) {
-    marketType = 'Bullish'
-    tagColor = 'green'
+    marketType = 'Bullish';
+    tagColor = '#20E77B';
+    bgColor = 'rgba(32, 231, 123, 0.13)';
   } else if (tag === 3) {
-    marketType = 'LMAO'
-    tagColor = 'yellow'
+    marketType = 'LMAO';
+    tagColor = '#D3B23D';
+    bgColor = 'rgba(211, 178, 61, 0.1)';
+  } else if (tag === 4) {
+    marketType = 'Investment';
+    tagColor = '#7B61FF';
+    bgColor = 'rgba(123, 97, 255, 0.2)';
+  } else if (tag === 5) {
+    marketType = 'Interesting';
+    tagColor = '#05FCED';
+    bgColor = 'rgba(5, 252, 237, 0.13)';
+  } else if (tag === 6) {
+    marketType = 'Hot';
+    tagColor = '#FF772B';
+    bgColor = 'rgba(211, 88, 61, 0.1)';
   } else {
     marketType = 'not-found'
     tagColor = 'white'
   }
 
-  
   const handleClick = (proj) => {
-
       
     let data = project.projects.filter(function(item) {
       return item._id === proj._id;
@@ -149,9 +163,9 @@ export default function FeedModal({ open, setOpen }) {
                         null
                       }
                       {tag !== 0 ?
-                        <p className={`bg-brand-${tagColor} bg-opacity-20 flex items-center rounded-full px-2.5 py-1`}>
+                        <p className={`bg-opacity-20 flex items-center rounded-full px-2.5 py-1`} style={{backgroundColor: bgColor}}>
                           <img src={`../assets/icons/${marketType.toLowerCase()}.svg`} alt="" />
-                          <span className={`text-xxs text-brand-${tagColor}  font-semibold ml-1`}>
+                          <span className={`font-semibold ml-1`} style={{color: tagColor, fontSize: "10px"}}>
                             {marketType}
                           </span>
                         </p>
