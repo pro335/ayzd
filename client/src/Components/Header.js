@@ -10,6 +10,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import * as actions from '../redux/actions';
 import * as ActionTypes from '../redux/ActionTypes';
 import isValid from '../utility/isValid';
+import LottieAnimation from './Lottie/Lottie';
+import LOTTIE_DATA from './Lottie/data.json';
 
 const navLinks = [
   {
@@ -86,7 +88,8 @@ const Header = () => {
         <>
           <nav className="h-16 flex items-center">
             <div className="hover:cursor-pointer" onClick={() => handleClick()}>
-              <img src="../assets/Logo.svg" alt="" />
+              {/* <img src="../assets/Logo.svg" alt="" /> */}
+              <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
             </div>
             <div className="nav-menu hidden lg:flex items-center font-medium space-x-4.5 px-4.5">
               {
