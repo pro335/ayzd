@@ -1,7 +1,7 @@
 import { Fragment, useState, useEffect } from 'react'
 import AllProjects from "../Components/Upcoming/AllProjects"
 import CalendarSidebar from "../Components/Upcoming/CalendarSidebar"
-import NotFound from "../Components/Upcoming/NotFound"
+import NotFound from "../Components/NFT/NotFound"
 import data from '../data.json'
 import SortButton from "../Components/Upcoming/SortButton"
 import MobileSelectProjects from "../Components/Upcoming/MobileSelectProjects"
@@ -11,29 +11,6 @@ import config from '../config/config';
 import * as actions from '../redux/actions';
 import * as ActionTypes from '../redux/ActionTypes';
 import moment from 'moment-timezone';
-
-const dump_data = [
-  {
-    key: 0,
-    label: "September 12",
-    count: 4,
-  },
-  {
-    key: 0,
-    label: "September 14",
-    count: 12345,
-  },
-  {
-    key: 0,
-    label: "September 17",
-    count: 0,
-  },
-  {
-    key: 0,
-    label: "September 18",
-    count: 5,
-  },
-];
 
 const Upcoming = () => {
 
@@ -110,7 +87,7 @@ const Upcoming = () => {
         {/* Content */}
         <div className="h-full w-full grid lg:grid-cols-6 lg:overflow-hidden pt-16">
           <div className="lg:hidden px-4 mt-2">
-            <MobileSelectProjects projects={dump_data} />
+            <MobileSelectProjects />
           </div>
           <div className="hidden lg:block border-r border-brand-gray-800 overflow-y-scroll pb-4">
             <CalendarSidebar all={all} />
