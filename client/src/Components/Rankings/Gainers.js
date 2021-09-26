@@ -63,7 +63,7 @@ const Gainers = ({ projects, title, icon, day, classes }) => {
                   onClick={() => handleClick(item)}>
 
                   <div className="w-6 h-6 mr-4">
-                    <img className={`mx-auto h-full 'rounded-full'`} src={item.icon} alt="" />
+                    <img className={`mx-auto h-full rounded-xl`} src={item.icon} alt="" />
                   </div>
                   <div>
                     <p>
