@@ -39,7 +39,7 @@ const TopSalesList = () => {
         }}
       >
         {
-          daySales.daySales.map((item, index) => (
+          daySales.daySales.slice(0, 5).map((item, index) => (
             <SwiperSlide key={index} className="pl-4">
               <div className="w-full block flex-shrink-0 bg-brand-gray-800 rounded-lg overflow-hidden">
                 <div>

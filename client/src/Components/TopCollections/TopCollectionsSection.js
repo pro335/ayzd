@@ -56,7 +56,7 @@ const TopCollectionsSection = ({ }) => {
           :
           <div className="flex flex-col text-brand-gray-400 font-medium space-y-1 py-5 px-2">
             {
-              topCollections.topCollections.slice(0, 8).map((item, index) => (
+              topCollections.topCollections.slice(0, 5).map((item, index) => (
                 <div
                   key={index}
                   className="h-10 flex items-center hover:bg-brand-gray-800 hover:text-gray-200 hover:cursor-pointer rounded-md onHover px-3"
