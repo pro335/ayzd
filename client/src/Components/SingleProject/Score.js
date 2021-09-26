@@ -23,7 +23,7 @@ export default function Score() {
   const [score_utility, setScore_utility] = useState( isValid(project.projectData) && isValid(project.projectData.score_utility) ? Number(project.projectData.score_utility) : 0 );
 
   return (
-    <div className="p-0 lg:p-5">
+    <div className="p-0 lg:p-5" style={{maxWidth: "550px", marginLeft: "auto", marginRight: "auto"}}>
       <Radar
         data={{
           labels: [
