@@ -88,8 +88,8 @@ const Header = () => {
         <>
           <nav className="h-16 flex items-center">
             <div className="hover:cursor-pointer" onClick={() => handleClick()}>
-              {/* <img src="../assets/Logo.svg" alt="" /> */}
-              <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
+              <img src="../assets/Logo.svg" alt="" />
+              {/* <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} /> */}
             </div>
             <div className="nav-menu hidden lg:flex items-center font-medium space-x-4.5 px-4.5">
               {
