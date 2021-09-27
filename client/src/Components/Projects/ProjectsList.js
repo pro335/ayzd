@@ -12,11 +12,10 @@ const ProjectsList = ({ isActive, activeHandler }) => {
 
   const dispatch = useDispatch();
 
-  const { project, topCollections, biggestSalesAmount } = useSelector(state => {
+  const { project, rankings } = useSelector(state => {
     return {
       project: state.project,
-      topCollections: state.topCollections,
-      biggestSalesAmount: state.biggestSalesAmount,
+      rankings: state.rankings,
     };
   });
 
@@ -52,12 +51,12 @@ const ProjectsList = ({ isActive, activeHandler }) => {
 
       // get the project data(not from db)
       let volume = null, isBySellerCount = null, isBySalesVolume = null;
-      topCollections.topCollections.map(item => {
+      rankings.topCollections.map(item => {
         if(item.name === data[0].name)
           volume = item.price;
       })
 
-      topCollections.topCollections.slice(0, 8).map((item, index) => {
+      rankings.topCollections.slice(0, 8).map((item, index) => {
         if(item.name === data[0].name)
           isBySellerCount = {
             value: index,
@@ -65,7 +64,7 @@ const ProjectsList = ({ isActive, activeHandler }) => {
           };
       })
 
-      biggestSalesAmount.biggestSalesAmount.slice(0, 8).map((item, index) => {
+      rankings.biggestSalesAmount.slice(0, 8).map((item, index) => {
         if(item.name === data[0].name)
           isBySalesVolume =  {
             value: index,
