@@ -107,7 +107,7 @@ const About = () => {
                   <SectionHeading
                     title="Stats"
                     icon="community_activity"
-                    classes=""
+                    classes="border-t lg:border-t-0"
                   />
                   <div className="w-full lg:w-auto lg:flex lg:flex-col lg:justify-start pr-5">
                     <div className="w-full lg:w-auto lg:flex items-center justify-center lg:justify-start">

@@ -113,8 +113,8 @@ const Tabs = () => {
 
   return (
     <>
-      <div className="h-15 flex-shrink-0 overflow-hidden">
-        <div className="w-full h-full flex items-center border-t border-b border-brand-gray-800 space-x-4 overflow-x-scroll whitespace-nowrap px-4 sm:px-5">
+      <div className="h-15 flex-shrink-0 overflow-hidden border-b border-brand-gray-800">
+        <div className="w-full h-full flex items-center border-t border-brand-gray-800 space-x-4 overflow-x-scroll whitespace-nowrap px-4 sm:px-5">
           {
             buttons.map((button, index) => (
               <button key={index}
