@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
 import FeedActions from "./FeedActions"
 import { useSelector, useDispatch } from 'react-redux';
@@ -6,10 +6,12 @@ import * as actions from '../../redux/actions';
 import * as ActionTypes from '../../redux/ActionTypes';
 import isValid from '../../utility/isValid';
 import reduceTextLengh from '../../utility/reduceTextLengh';
+import useWindowDimensions from '../../utility/useWindowDimensions';
 
 const FeedsList = ({ feeds, onClickHandler }) => {
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 767px)' })
   const dispatch = useDispatch();
+  const { height, width } = useWindowDimensions();
 
   const { project, livefeed } = useSelector(state => {
     return {
@@ -17,6 +19,8 @@ const FeedsList = ({ feeds, onClickHandler }) => {
       project: state.project,
     };
   });
+
+  const [numberOfShowingNews, setNumberOfShowingNews] = useState(width < 1024 && livefeed.filtered_livefeeds.length > 20 ? 20 : livefeed.filtered_livefeeds.length);
 
   const handleClick = (feedId) => {
 
@@ -41,6 +45,10 @@ const FeedsList = ({ feeds, onClickHandler }) => {
   const addDefaultSrc = (e) => {
     e.target.src = '../assets/images/default_image.svg';
   }
+  
+  const loadMore = () => {
+    numberOfShowingNews + 20 < livefeed.filtered_livefeeds.length ? setNumberOfShowingNews(numberOfShowingNews + 20) : setNumberOfShowingNews(livefeed.filtered_livefeeds.length);
+  }
 
   return (
     <>
@@ -49,7 +57,7 @@ const FeedsList = ({ feeds, onClickHandler }) => {
         {/* <!-- Live Feeds --> */}
         <div className="h-full lg:overflow-y-scroll space-y-2 lg:space-y-4.5">
           {
-            livefeed.filtered_livefeeds.map((feed, index) => (
+            livefeed.filtered_livefeeds.slice(0, numberOfShowingNews).map((feed, index) => (
               <button key={index}
                 className="w-full flex flex-wrap text-left hover:bg-brand-gray-800 rounded-lg onHover px-3.5 py-2"
                 onClick={() => handleClick(feed._id)}
@@ -71,11 +79,20 @@ const FeedsList = ({ feeds, onClickHandler }) => {
                 {
                   isTabletOrMobile && <FeedActions feed={feed} />
                 }
-
               </button>
             ))
           }
-
+          {numberOfShowingNews < livefeed.filtered_livefeeds.length ?
+            <button 
+              className="flex lg:hidden justify-center w-52 font-medium mx-auto bg-purple-500 hover:bg-purple-700 text-white leading-7 rounded-xl px-4 py-1.5 text-center" 
+              style={{marginTop: '20px', marginBottom: '20px'}}
+              onClick={loadMore}
+            >
+              Load more
+            </button>
+            :
+            null
+          }
         </div>
       </div>
     </>
