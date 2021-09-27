@@ -72,8 +72,15 @@ const GainingMomenum = ({ }) => {
                   {/* <p className={`${item.gaining > 0 ? 'text-green-400' : 'text-red-500'} ml-auto`}>
                     {item.gaining > 0 && '+'}{item.gaining} %
                   </p> */}
-                  <p className="ml-auto" dangerouslySetInnerHTML={{__html: item.price}} />
-                  <p dangerouslySetInnerHTML={{__html: item.change}} />
+                  <div className="ml-auto flex flex-col lg:flex-row">
+                    <span className="text-gray-200 order-1 md:order-none md:mr-2">{item.price}</span>
+                    <div className="flex flex-row order-2">
+                      <p className="text-green-400 ml-auto md:ml-2"> +{item.percent.toFixed(2)}% </p>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                  </div>
                 </div>
               ))
             }

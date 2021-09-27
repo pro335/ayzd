@@ -27,7 +27,7 @@ const RankingSales = ({ projects, title, icon, day, classes }) => {
                   </p>
                   {
                     day &&
-                    <p className="text-xs text-brand-gray-700 font-medium leading-5 -mt-1">Cryptopunks</p>
+                    <p className="text-xs text-brand-gray-700 font-medium -mt-1">Cryptopunks</p>
                   }
                 </div>
 
@@ -38,7 +38,7 @@ const RankingSales = ({ projects, title, icon, day, classes }) => {
                         <div>
 
                           <p className="text-brand-gray-300">$165.19k</p>
-                          <p className="text-xs text-brand-gray-500 font-medium leading-5 -mt-1">49.99 ETH</p>
+                          <p className="text-xs text-brand-gray-500 font-medium -mt-1">49.99 ETH</p>
 
                         </div>
                       ) :

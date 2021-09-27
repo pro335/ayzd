@@ -45,7 +45,7 @@ const TopSalesList = () => {
                 <div>
                   <img src={isValid(item) && isValid(item.image) ? item.image : '../assets/images/default_image.svg'} className="w-full h-full object-cover" alt="" onError={addDefaultSrc} />
                 </div>
-                <div className="leading-5 p-3 pb-4">
+                <div className="p-3 pb-4">
                   <p>{item.name}</p>
                   <p className="text-brand-gray-300 -mt-1">{item.price}</p>
                 </div>

@@ -150,7 +150,7 @@ const Trading = () => {
                         </div>
 
                         <div className="flex items-center space-x-3">
-                          <div className="h-9 w-9">
+                          <div className="h-10 w-9">
                             <img className="w-full h-full object-cover" src={item.image} alt="" />
                           </div>
                           <div>

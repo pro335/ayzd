@@ -57,7 +57,7 @@ const Marketplaces = ({ title, icon, day, classes, count=10 }) => {
               rankings.tokens_by_market_cap.slice(0, count).map((item, index) => (
                 <div
                   key={index}
-                  className="flex items-center hover:bg-brand-gray-800 hover:text-gray-200 hover:cursor-pointer rounded-md px-2  md:px-3"
+                  className="h-full lg:h-10 flex items-center hover:bg-brand-gray-800 hover:text-gray-200 hover:cursor-pointer rounded-md px-2  md:px-3"
                   onClick={() => handleClick(item)}>
 
                   <div className="w-6 h-6 mr-4">
@@ -67,15 +67,15 @@ const Marketplaces = ({ title, icon, day, classes, count=10 }) => {
                     <p>
                       {index + 1}. {item.title}
                     </p>
-                    <p className="text-xs text-brand-gray-700 font-medium leading-5">{item.sub_title}</p>
+                    <p className="text-xs text-brand-gray-700 font-medium">{item.sub_title}</p>
                   </div>
 
                   <div className="flex flex-col md:flex-row items-end md:items-center text-green-400 ml-auto">
                     <div className="md:mr-2">
                       <span className="text-gray-200 order-1 md:order-none">{item.marketcap}</span>
-                      <p className="text-xs text-brand-gray-700 order-2 font-medium leading-5 text-right">{item.price}</p>
+                      <p className="text-xs text-brand-gray-700 order-2 font-medium text-right">{item.price}</p>
                     </div>
-                    <div className={`flex flex-row ${item.percent.indexOf('+') > -1 ? 'text-green-500' : 'text-red-500'}`}>
+                    <div className={`flex flex-row ${item.percent.indexOf('+') > -1 ? 'text-green-400' : 'text-red-500'}`}>
                       <p className="ml-auto">{item.percent} </p>
                       {item.percent.indexOf('+') > -1 ?
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">

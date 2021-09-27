@@ -53,7 +53,7 @@ const SimilarProjects = () => {
                 <div>
                   <img className="w-full h-full object-cover p-5" src={getImage(item)} alt="" />
                 </div>
-                <div className="leading-5 p-3 pb-4">
+                <div className="p-3 pb-4">
                   <p className="capitalize">
                     {isValid(item.category) ? item.category.name : ""}
                   </p>
