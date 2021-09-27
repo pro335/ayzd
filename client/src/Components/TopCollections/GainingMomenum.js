@@ -73,7 +73,7 @@ const GainingMomenum = ({ }) => {
                     {item.gaining > 0 && '+'}{item.gaining} %
                   </p> */}
                   <div className="ml-auto flex flex-col lg:flex-row">
-                    <span className="text-gray-200 order-1 md:order-none md:mr-2">{item.price}</span>
+                    <span className="text-gray-200 order-1 md:order-none text-right">{item.price}</span>
                     <div className="flex flex-row order-2">
                       <p className="text-green-400 ml-auto md:ml-2"> +{item.percent.toFixed(2)}% </p>
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-green-400" viewBox="0 0 20 20" fill="currentColor">
