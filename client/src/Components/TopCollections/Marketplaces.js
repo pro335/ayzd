@@ -1,6 +1,6 @@
 import React from 'react'
-import SectionHeading from "./../SectionHeading";
-import { Link, useHistory } from "react-router-dom";
+import SectionHeading from "../SectionHeading"
+import { Link, useHistory } from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux';
 import isValid from '../../utility/isValid';
 import config from '../../config/config';
@@ -9,59 +9,62 @@ import * as ActionTypes from '../../redux/ActionTypes';
 import LottieAnimation from '../Lottie/Lottie';
 import LOTTIE_DATA from '../Lottie/data.json';
 
-const Marketplaces = ({ title, icon, day, classes, count=10 }) => {
-  
+const Marketplaces = ({ }) => {
+ 
   const dispatch = useDispatch();
   const history = useHistory();
   
-  const { rankings, project } = useSelector(state => {
+  const { project, rankings } = useSelector(state => {
     return {
-      rankings: state.rankings,
       project: state.project,
+      rankings: state.rankings,
     };
   });
 
+  
   const handleClick = (collection) => {
  
-    let data = project.projects.filter(function(item) {
-      return item.name === collection.name;
-    });
-    if(isValid(data)) {
-      dispatch({
-        type: ActionTypes.SET_PROJECT,
-        data: data[0],
-      });
+    // let data = project.projects.filter(function(item) {
+    //   return item.name === collection.name;
+    // });
+    // if(isValid(data)) {
+    //   dispatch({
+    //     type: ActionTypes.SET_PROJECT,
+    //     data: data[0],
+    //   });
 
-      history.push(`/projects/${data[0].unique_id}`);
-    } else {
-      // alert("Doesn't exist")
-    }
+    //   history.push(`/projects/${data[0].unique_id}`);
+    // } else {
+    //   // alert("Doesn't exist")
+    // }
   }
 
   return (
     <>
-      <div className="border-r border-brand-gray-800">
+      <div>
         <SectionHeading
-          title={title}
-          icon={icon}
-          classes={classes}
+          title="NFT tokens by market cap today"
+          icon="tokens_market_cap"
+          buttons="view"
+          classes="border-t"
+          btnLink="/rankings"
         />
 
         { !isValid(rankings.tokens_by_market_cap) ?
-          <div className="h-full flex flex-col justify-center items-center pt-20 pb-40">
+          <div className="h-full flex flex-col justify-center items-center py-20">
             <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
           </div>
           :
-          <div className="flex flex-col text-brand-gray-400 font-medium space-y-2 py-2 md:py-5 px-2">
+          <div className="flex flex-col text-brand-gray-400 font-medium space-y-1 py-5 px-2">
             {
-              rankings.tokens_by_market_cap.slice(0, count).map((item, index) => (
+              rankings.tokens_by_market_cap.slice(0, 5).map((item, index) => (
                 <div
                   key={index}
-                  className="flex items-center hover:bg-brand-gray-800 hover:text-gray-200 hover:cursor-pointer rounded-md px-2  md:px-3"
+                  className="flex items-center hover:bg-brand-gray-800 hover:text-gray-200 hover:cursor-pointer rounded-md onHover px-3"
                   onClick={() => handleClick(item)}>
 
                   <div className="w-6 h-6 mr-4">
-                    <img className={`mx-auto h-full rounded-xl`} src={item.icon} alt="" />
+                    <img className="mx-auto h-full rounded-full" src={item.icon} alt="" />
                   </div>
                   <div>
                     <p>
@@ -71,9 +74,9 @@ const Marketplaces = ({ title, icon, day, classes, count=10 }) => {
                   </div>
 
                   <div className="flex flex-col md:flex-row items-end md:items-center text-green-400 ml-auto">
-                    <div className="md:mr-2">
+                    <div className="md:mr-2 flex flex-col">
                       <span className="text-gray-200 order-1 md:order-none">{item.marketcap}</span>
-                      <p className="text-xs text-brand-gray-700 order-2 font-medium leading-5 text-right">{item.price}</p>
+                      <span className="text-xs text-brand-gray-700 order-2 font-medium leading-5 text-right">{item.price}</span>
                     </div>
                     <div className={`flex flex-row ${item.percent.indexOf('+') > -1 ? 'text-green-500' : 'text-red-500'}`}>
                       <p className="ml-auto">{item.percent} </p>
@@ -91,6 +94,7 @@ const Marketplaces = ({ title, icon, day, classes, count=10 }) => {
                 </div>
               ))
             }
+
           </div>
         }
       </div>
@@ -98,4 +102,4 @@ const Marketplaces = ({ title, icon, day, classes, count=10 }) => {
   )
 }
 
-export default Marketplaces;
+export default Marketplaces

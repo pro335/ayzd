@@ -13,11 +13,10 @@ const SingleProject = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   
-  const { project, topCollections, biggestSalesAmount } = useSelector(state => {
+  const { project, rankings } = useSelector(state => {
     return {
       project: state.project,
-      topCollections: state.topCollections,
-      biggestSalesAmount: state.biggestSalesAmount,
+      rankings: state.rankings,
     };
   });
 
@@ -56,12 +55,12 @@ const SingleProject = () => {
     
             // get the project data(not from db)
             let volume = null, isBySellerCount = null, isBySalesVolume = null, discord_members = null, twitter_members = null;
-            topCollections.topCollections.map(one_item => {
+            rankings.topCollections.map(one_item => {
               if(item.name === one_item.name)
                 volume = one_item.price;
             })
     
-            topCollections.topCollections.slice(0, 8).map((one_item, index) => {
+            rankings.topCollections.slice(0, 8).map((one_item, index) => {
               if(item.name === one_item.name)
                 isBySellerCount = {
                   value: index,
@@ -69,7 +68,7 @@ const SingleProject = () => {
                 };
             })
     
-            biggestSalesAmount.biggestSalesAmount.slice(0, 8).map((one_item, index) => {
+            rankings.biggestSalesAmount.slice(0, 8).map((one_item, index) => {
               if(item.name === one_item.name)
                 isBySalesVolume =  {
                   value: index,

@@ -2,7 +2,7 @@ import React from 'react'
 import GainingMomenum from "../TopCollections/GainingMomenum"
 import TopCollectionsSection from "../TopCollections/TopCollectionsSection"
 import TopSalesSection from "../TopSales/TopSalesSection"
-import Marketplaces from "../Rankings/Marketplaces";
+import Marketplaces from "../TopCollections/Marketplaces"
 
 const RigthSide = () => {
   return (
@@ -11,12 +11,7 @@ const RigthSide = () => {
         <TopSalesSection />
         <TopCollectionsSection />
         <GainingMomenum />
-        <Marketplaces
-          title="NFT tokens by market cap today"
-          icon="tokens_market_cap"
-          classes="border-t"
-          count={5}
-        />
+        <Marketplaces />
       </div>
     </div>
   )
