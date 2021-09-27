@@ -85,7 +85,7 @@ const About = () => {
             </div>
             
             {isValid(project.projectData) && isValid(project.projectData.member_list) ?
-              <div className="border-r border-brand-gray-800 mb-1 lg:mb-8">
+              <div className="border-brand-gray-800 mb-1 lg:mb-8">
                 <div>
                   <SectionHeading
                     title="Team behind project"
@@ -107,7 +107,7 @@ const About = () => {
                   <SectionHeading
                     title="Stats"
                     icon="community_activity"
-                    classes="border-t"
+                    classes=""
                   />
                   <div className="w-full lg:w-auto lg:flex lg:flex-col lg:justify-start pr-5">
                     <div className="w-full lg:w-auto lg:flex items-center justify-center lg:justify-start">
