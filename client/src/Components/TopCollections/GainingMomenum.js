@@ -14,12 +14,10 @@ const GainingMomenum = ({ }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   
-  const { project, gainers, topCollections, biggestSalesAmount } = useSelector(state => {
+  const { project, rankings } = useSelector(state => {
     return {
       project: state.project,
-      gainers: state.gainers,
-      topCollections: state.topCollections,
-      biggestSalesAmount: state.biggestSalesAmount,
+      rankings: state.rankings,
     };
   });
 
@@ -52,14 +50,14 @@ const GainingMomenum = ({ }) => {
           btnLink="/rankings"
         />
 
-        { !isValid(gainers.gainers) ?
+        { !isValid(rankings.gainers) ?
           <div className="h-full flex flex-col justify-center items-center py-20">
             <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
           </div>
           :
           <div className="flex flex-col text-brand-gray-400 font-medium space-y-1 py-5 px-2">
             {
-              gainers.gainers.slice(0, 5).map((item, index) => (
+              rankings.gainers.slice(0, 5).map((item, index) => (
                 <div
                   key={index}
                   className="h-10 flex items-center hover:bg-brand-gray-800 hover:text-gray-200 hover:cursor-pointer rounded-md onHover px-3"

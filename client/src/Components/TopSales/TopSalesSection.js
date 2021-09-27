@@ -8,9 +8,9 @@ import isValid from '../../utility/isValid';
 
 const TopSalesSection = () => {
   
-  const { daySales } = useSelector(state => {
+  const { rankings } = useSelector(state => {
     return {
-      daySales: state.daySales,
+      rankings: state.rankings,
     };
   });
 
@@ -25,7 +25,7 @@ const TopSalesSection = () => {
           btnLink="/rankings"
         />
 
-        { !isValid(daySales.daySales) ?
+        { !isValid(rankings.daySales) ?
           <div className="h-full flex flex-col justify-center items-center py-20">
             <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
           </div>

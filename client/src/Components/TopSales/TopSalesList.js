@@ -11,9 +11,9 @@ SwiperCore.use([]);
 
 const TopSalesList = () => {
 
-  const { daySales } = useSelector(state => {
+  const { rankings } = useSelector(state => {
     return {
-      daySales: state.daySales,
+      rankings: state.rankings,
     };
   });
 
@@ -39,7 +39,7 @@ const TopSalesList = () => {
         }}
       >
         {
-          daySales.daySales.slice(0, 5).map((item, index) => (
+          rankings.daySales.slice(0, 5).map((item, index) => (
             <SwiperSlide key={index} className="pl-4">
               <div className="w-full block flex-shrink-0 bg-brand-gray-800 rounded-lg overflow-hidden">
                 <div>

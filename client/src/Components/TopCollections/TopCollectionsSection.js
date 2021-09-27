@@ -14,11 +14,10 @@ const TopCollectionsSection = ({ }) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { topCollections, project, biggestSalesAmount } = useSelector(state => {
+  const { rankings, project } = useSelector(state => {
     return {
       project: state.project,
-      topCollections: state.topCollections,
-      biggestSalesAmount: state.biggestSalesAmount,
+      rankings: state.rankings,
       };
   });
 
@@ -49,14 +48,14 @@ const TopCollectionsSection = ({ }) => {
           classes="border-t"
           btnLink="/rankings"
         />
-        { !isValid(topCollections.topCollections) ?
+        { !isValid(rankings.topCollections) ?
           <div className="h-full flex flex-col justify-center items-center py-20">
             <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
           </div>
           :
           <div className="flex flex-col text-brand-gray-400 font-medium space-y-1 py-5 px-2">
             {
-              topCollections.topCollections.slice(0, 5).map((item, index) => (
+              rankings.topCollections.slice(0, 5).map((item, index) => (
                 <div
                   key={index}
                   className="h-10 flex items-center hover:bg-brand-gray-800 hover:text-gray-200 hover:cursor-pointer rounded-md onHover px-3"

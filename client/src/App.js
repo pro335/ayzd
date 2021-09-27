@@ -299,9 +299,12 @@ function App() {
         let { success, gainers, loosers } = resGainersLoosers.data;
         if(success) {
           dispatch({
-            type: ActionTypes.GAINERS_LOOSERS,
-            gainers,
-            loosers,
+            type: ActionTypes.GAINERS,
+            data: gainers,
+          });
+          dispatch({
+            type: ActionTypes.LOOSERS,
+            data: loosers,
           });
         } else {
           dispatch({
@@ -371,6 +374,26 @@ function App() {
         console.error(err);
       }
     }
+    async function fetchTokensByMarketcap() {
+      let resTrading = await actions.fetchTokensByMarketcap();
+      try {
+        let { success, data } = resTrading.data;
+        if(success) {
+          dispatch({
+            type: ActionTypes.TOKENS_BY_MARKET_CAP,
+            data,
+          });
+        } else {
+          dispatch({
+            type: ActionTypes.RANKINGS_ERR,
+            err: resTrading.data.errMessage
+          });
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    
 
     const loadData = () => {
       initializeProjects();
@@ -384,6 +407,7 @@ function App() {
       fetchAllCategories();
       fetchAllChains();
       // fetchTrading();
+      fetchTokensByMarketcap();
     }
 
     loadData();

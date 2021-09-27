@@ -7,9 +7,9 @@ import LOTTIE_DATA from '../Lottie/data.json';
 
 const RankingSales = ({ projects, title, icon, day, classes }) => {
   
-  const { daySales } = useSelector(state => {
+  const { rankings } = useSelector(state => {
     return {
-      daySales: state.daySales,
+      rankings: state.rankings,
     };
   });
 
@@ -27,14 +27,14 @@ const RankingSales = ({ projects, title, icon, day, classes }) => {
           classes={classes}
         />
         
-        { !isValid(daySales.daySales) ?
+        { !isValid(rankings.daySales) ?
           <div className="h-full flex flex-col justify-center items-center pt-20 pb-40">
             <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
           </div>
           :
           <div className="flex flex-col text-brand-gray-400 font-medium space-y-2 py-2 md:py-5 px-2">
             {
-              daySales.daySales.map((item, index) => (
+              rankings.daySales.map((item, index) => (
                 <div
                   key={index}
                   className="h-10 flex items-center hover:bg-brand-gray-800 hover:text-gray-200 hover:cursor-pointer rounded-md px-2  md:px-3">

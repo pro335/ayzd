@@ -9,13 +9,8 @@ import projectReducer from './reducers/projectReducer';
 import livefeedReducer from './reducers/livefeedReducer';
 import guideReducer from './reducers/guideReducer';
 import memberReducer from './reducers/memberReducer';
-import topSalesReducer from './reducers/topSalesReducer';
-import topCollectionsReducer from './reducers/topCollectionsReducer';
-import daySalesReducer from './reducers/daySalesReducer';
-import gainersReducer from './reducers/gainersReducer';
-import loosersReducer from './reducers/loosersReducer';
 import tradingReducer from './reducers/tradingReducer';
-import biggestSalesAmountReducer from './reducers/biggestSalesAmountReducer';
+import rankingsReducer from './reducers/rankingsReducer';
 
 const appReducer = combineReducers({
   auth: authReducer,
@@ -28,13 +23,14 @@ const appReducer = combineReducers({
   livefeed: livefeedReducer,
   guide: guideReducer,
   member: memberReducer,
-  topSales: topSalesReducer,
-  topCollections: topCollectionsReducer,
-  daySales: daySalesReducer,
-  gainers: gainersReducer,
-  loosers: loosersReducer,
-  trading: tradingReducer,
-  biggestSalesAmount: biggestSalesAmountReducer,
+  // topSales: topSalesReducer,
+  // topCollections: topCollectionsReducer,
+  // daySales: daySalesReducer,
+  // gainers: gainersReducer,
+  // loosers: loosersReducer,
+  // trading: tradingReducer,
+  // biggestSalesAmount: biggestSalesAmountReducer,
+  rankings: rankingsReducer,
   
 });
 

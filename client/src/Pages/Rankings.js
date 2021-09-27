@@ -44,8 +44,8 @@ const Rankings = () => {
         />
         <Marketplaces
           projects={data.projects}
-          title="Top marketplaces"
-          icon="top-marketplaces"
+          title="NFT tokens by market cap today"
+          icon="tokens_market_cap"
           classes="border-t"
         />
       </div>
