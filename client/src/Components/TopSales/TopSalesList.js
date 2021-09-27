@@ -47,7 +47,7 @@ const TopSalesList = () => {
                 </div>
                 <div className="p-3 pb-4">
                   <p>{item.name}</p>
-                  <p className="text-brand-gray-300 -mt-1">{item.price}</p>
+                  <p className="text-brand-gray-300 -mt-1">{item.priceWithoutSuffix}</p>
                 </div>
               </div>
             </SwiperSlide>
