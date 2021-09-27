@@ -11,11 +11,9 @@ const LeftDateList = ({ isActive, activeHandler }) => {
 
   const dispatch = useDispatch();
 
-  const { project, topCollections, biggestSalesAmount } = useSelector(state => {
+  const { project } = useSelector(state => {
     return {
       project: state.project,
-      topCollections: state.topCollections,
-      biggestSalesAmount: state.biggestSalesAmount,
     };
   });
 

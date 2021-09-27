@@ -17,11 +17,9 @@ export default function FeedModal({ open, setOpen }) {
   const dispatch = useDispatch();
   const history = useHistory();
   
-  const { topCollections, livefeed, biggestSalesAmount, project } = useSelector(state => {
+  const { livefeed, project } = useSelector(state => {
     return {
-      topCollections: state.topCollections,
       livefeed: state.livefeed,
-      biggestSalesAmount: state.biggestSalesAmount,
       project: state.project,
     };
   });
