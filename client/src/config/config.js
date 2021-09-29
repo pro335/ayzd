@@ -1,6 +1,6 @@
 const config = {
   api_url: process.env.NODE_ENV === "production"
-    ? ({httpUrl : 'http://api.test-app.ayzd.com', httpsUrl : 'https://api.test-app.ayzd.com'})
+    ? ({httpUrl : 'http://api.app.ayzd.com', httpsUrl : 'https://api.app.ayzd.com'})
     : {httpUrl :'http://localhost:8000'},
   REGION: "us-east-2",
   S3_BUCKET: "ayzd-storage",
