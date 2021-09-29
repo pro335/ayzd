@@ -37,21 +37,29 @@ const StatsTopComponent = ( {icon, title, amount} ) => {
             <p className="text-xs text-brand-gray-400 leading-4">{title}</p>
             <p className="text-lg text-brand-gray-300 font-semibold">{amount}</p>
           </div>
+          { isValid(project.projectData) && isValid(project.projectData.isUpcoming) && project.projectData.isUpcoming && isValid(project.projectData.upcoming_date) ?
+            <button 
+              className={ `${width > 515 ? 'flex' : "hidden"} flex-row items-center font-medium space-x-3 bg-black hover:bg-brand-calendar-button hover:border-brand-calendar-button text-white leading-7 rounded-xl px-2 lg:px-4 py-1.5 my-1.5 !ml-auto border border-brand-gray-800`}
+              onClick={addToCalendar}
+            >
+              <img src="../assets/icons/plus.svg" alt="" />
+              <p>Add to calendar</p>
+            </button>
+            :
+            null
+          }
+        </div>
+        { isValid(project.projectData) && isValid(project.projectData.isUpcoming) && project.projectData.isUpcoming && isValid(project.projectData.upcoming_date) ?
           <button 
-            className={ `${width > 515 ? 'flex' : "hidden"} flex-row items-center font-medium space-x-3 bg-black hover:bg-gray-800 text-white leading-7 rounded-xl px-2 lg:px-4 py-1.5 my-1.5 !ml-auto border border-brand-gray-800`}
+            className={ `${width <= 515 ? 'flex' : "hidden"} flex-row items-center font-medium space-x-3 bg-black hover:bg-brand-calendar-button hover:border-brand-calendar-button text-white leading-7 rounded-xl px-2 lg:px-4 py-1.5 !mx-auto border border-brand-gray-800`}
             onClick={addToCalendar}
           >
             <img src="../assets/icons/plus.svg" alt="" />
             <p>Add to calendar</p>
           </button>
-        </div>
-        <button 
-          className={ `${width <= 515 ? 'flex' : "hidden"} flex-row items-center font-medium space-x-3 bg-black hover:bg-gray-800 text-white leading-7 rounded-xl px-2 lg:px-4 py-1.5 !mx-auto border border-brand-gray-800`}
-          onClick={addToCalendar}
-        >
-          <img src="../assets/icons/plus.svg" alt="" />
-          <p>Add to calendar</p>
-        </button>
+          :
+          null
+        }
       </div>
       :
       null
