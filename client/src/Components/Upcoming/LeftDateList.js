@@ -64,7 +64,7 @@ const LeftDateList = ({ isActive, activeHandler }) => {
               <p>
                 {item.date}
               </p>
-              <span class="ml-auto inline-flex items-center justify-center px-3 py-1 text-xs font-bold leading-none text-red-100 bg-black" style={{ border: '1px solid #1D1D1D', borderRadius: '6px' }}>{item.count}</span>
+              <span className="ml-auto inline-flex items-center justify-center px-3 py-1 text-xs font-bold leading-none text-red-100 bg-black" style={{ border: '1px solid #1D1D1D', borderRadius: '6px' }}>{item.count}</span>
             </div>
           )
         })

@@ -71,10 +71,10 @@ export default function MobileSelectProjects({ }) {
                 onClick={() => handleClick(selected)}
                 // key={index}
               >
-                <p class="text-white">
+                <p className="text-white">
                   {selected.date}
                 </p>
-                <span class="ml-auto inline-flex items-center justify-center px-3 py-1 text-xs font-bold leading-none text-red-100 bg-black" style={{ border: '1px solid #1D1D1D', borderRadius: '6px' }}>{selected.count}</span>
+                <span className="ml-auto inline-flex items-center justify-center px-3 py-1 text-xs font-bold leading-none text-red-100 bg-black" style={{ border: '1px solid #1D1D1D', borderRadius: '6px' }}>{selected.count}</span>
               </div>
 
               <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
@@ -117,7 +117,7 @@ export default function MobileSelectProjects({ }) {
                                 <p>
                                   {one_date.date}
                                 </p>
-                                <span class="ml-auto inline-flex items-center justify-center px-3 py-1 text-xs font-bold leading-none text-red-100 bg-black" style={{ border: '1px solid #1D1D1D', borderRadius: '6px' }}>{one_date.count}</span>
+                                <span className="ml-auto inline-flex items-center justify-center px-3 py-1 text-xs font-bold leading-none text-red-100 bg-black" style={{ border: '1px solid #1D1D1D', borderRadius: '6px' }}>{one_date.count}</span>
                               </div>
                             </div>
                           </>

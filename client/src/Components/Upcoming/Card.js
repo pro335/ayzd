@@ -6,6 +6,7 @@ import config from '../../config/config';
 import * as actions from '../../redux/actions';
 import * as ActionTypes from '../../redux/ActionTypes';
 import moment from 'moment';
+// import ApiCalendar from "react-google-calendar-api";
 
 const Card = ({ item }) => {
   const history = useHistory();
@@ -25,7 +26,33 @@ const Card = ({ item }) => {
   }
 
   const addToCalendar = () => {
-    console.log("item", item)
+    // let stDate = "2021-11-01T12:00:00+05:30";
+    // let endDate = "2021-11-01T15:00:00+05:30";
+    // const event = {
+    //   summary: "new event created",
+    //   description: "demo of create event function",
+    //   start: {
+    //     dateTime: stDate
+    //   },
+    //   end: {
+    //     dateTime: endDate
+    //   }
+    // };
+
+    // ApiCalendar.createEvent(event)
+    //   .then((res) => console.log(res))
+    //   .catch((err) => console.log(err));
+
+    let stDate = isValid(item.upcoming_date) ? moment(item.upcoming_date).format("YYYYMMDDTHHmmss") : moment(new Date()).format("YYYYMMDDTHHmmss");
+    let endDate = isValid(item.upcoming_date) ? moment(item.upcoming_date).add(30, 'minutes').format("YYYYMMDDTHHmmss") : moment(new Date()).format("YYYYMMDDTHHmmss");
+    let text = isValid(item.name) ? item.name : "Upcoming project";
+    let location = isValid(item.app_link) ? item.app_link : "https://app.ayzd.com";
+    let details = isValid(item.small_description) ? item.small_description : "Drop calendar";
+    let timeZone = "GMT+3:00";
+
+    let url = `https://calendar.google.com/calendar/u/0/r/eventedit?dates=${stDate}/${endDate}&details=${details}&location=${location}&text=${text}&timeZone=${timeZone}`;
+    window.open(url, "_blank");
+
   }
 
   var main_image = isValid(item) && isValid(item.main_image) && isValid(item.main_image.url) ? item.main_image.url : `${config.bucket_url}/${config.common_image}`;
@@ -37,7 +64,7 @@ const Card = ({ item }) => {
           onClick={handleClick}
         >
           <img className="w-full h-full object-cover" src={main_image} alt="" onError={addDefaultSrc} />
-          <div class="h-7 absolute inset-y-0 top-0 right-0 text-white bg-base px-2 py-1 mt-2 mr-2 rounded-md">{isValid(item.price) ? `${item.price}` : null}</div>
+          <div className="h-7 absolute inset-y-0 top-0 right-0 text-white bg-base px-2 py-1 mt-2 mr-2 rounded-md">{isValid(item.price) ? `${item.price}` : null}</div>
         </div>
         <div
           className="text-xs font-medium px-3 py-2 hover:cursor-pointer"
