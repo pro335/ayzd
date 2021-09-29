@@ -80,7 +80,7 @@ const Card = ({ item }) => {
             {isValid(item.mint_size) ? `Mint size: ${item.mint_size}` : null}
           </p>
         </div>
-        <div className="border-t text-xs font-medium px-3 py-2" style={{borderColor: "rgba(255, 255, 255, 0.1)"}}>
+        <div className="border-t text-xs font-medium px-3 py-3" style={{borderColor: "rgba(255, 255, 255, 0.1)"}}>
           {isValid(item.twitter_members) ? 
             <div 
               className="flex space-x-2 hover:cursor-pointer"
@@ -107,8 +107,8 @@ const Card = ({ item }) => {
             : 
             null
           }
-          <button 
-            className="flex flex-row items-center font-medium space-x-3 bg-black hover:bg-gray-800 text-white leading-7 rounded-xl px-2 lg:px-4 py-1.5 my-1.5 mx-auto"
+          <button
+            className="flex flex-row items-center justify-center font-medium space-x-3 bg-black hover:bg-brand-calendar-button hover:border-brand-calendar-button text-white leading-7 rounded-xl px-2 lg:px-4 py-1.5 mt-3 mx-auto w-full onHover"
             onClick={addToCalendar}
           >
             <img src="../assets/icons/plus.svg" alt="" />

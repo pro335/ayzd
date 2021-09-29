@@ -19,8 +19,9 @@ module.exports = {
           },
           'dark-red': '#BD2150',
           'green': '#20E77B',
-          'yellow': '#D3B23D'
-        }
+          'yellow': '#D3B23D',
+          'calendar-button': '#6366F1',
+        },
       },
       spacing: {
         4.5: '18px',
