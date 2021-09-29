@@ -20,56 +20,23 @@ function App() {
 
   const dispatch = useDispatch();
 
-  const { project, livefeed } = useSelector(state => {
-    return {
-      project: state.project,
-      livefeed: state.livefeed,
-    };
-  });
-
   useEffect(() => {
 
     async function initializeProjects() {
       dispatch({
-        type: ActionTypes.SET_PROJECT_ID,
-        data: null,
+        type: ActionTypes.LOGOUT_SUCCESS,
       });
       // dispatch({
-      //   type: ActionTypes.SET_PROJECT,
+      //   type: ActionTypes.SET_PROJECT_ID,
       //   data: null,
-      // });
-      // dispatch({
-      //   type: ActionTypes.FILTERING_LIVE_FEED_BY_PROJECT,
-      //   projectData: null,
       // });
     }
 
     async function fetchData1() {
 
-      //get all projects
-      let resProject = await actions.allProjects();
-      let projects = [], success = false;
-      try {
-        success = resProject.data.success;
-        projects = resProject.data.projects;
-        if(success) {
-          dispatch({
-            type: ActionTypes.ALL_PROJECTS,
-            data: projects
-          });
-        } else {
-          dispatch({
-            type: ActionTypes.PROJECT_ERR,
-            err: resProject.data.errMessage
-          });
-        }
-      } catch (err) {
-        console.error(err);
-      }
-
       //get all livefeeds
       let resLivefeed = await actions.allLivefeeds();
-      let livefeeds = [];
+      let livefeeds = [], success = false;
       try {
         success = resLivefeed.data.success;
         livefeeds = resLivefeed.data.livefeeds;
@@ -86,6 +53,27 @@ function App() {
           dispatch({
             type: ActionTypes.LIVE_FEED_ERR,
             err: resLivefeed.data.errMessage
+          });
+        }
+      } catch (err) {
+        console.error(err);
+      }
+
+      //get all projects
+      let resProject = await actions.allProjects();
+      let projects = [];
+      try {
+        success = resProject.data.success;
+        projects = resProject.data.projects;
+        if(success) {
+          dispatch({
+            type: ActionTypes.ALL_PROJECTS,
+            data: projects
+          });
+        } else {
+          dispatch({
+            type: ActionTypes.PROJECT_ERR,
+            err: resProject.data.errMessage
           });
         }
       } catch (err) {
@@ -400,9 +388,9 @@ function App() {
       fetchData1();
       // updateLivefeeds();
       // fetchTopSales();
+      fetchDaySales();
       fetchTopCollections();
       fetchBiggestSalesVolume();
-      fetchDaySales();
       fetchGainersLoosers();
       fetchAllCategories();
       fetchAllChains();

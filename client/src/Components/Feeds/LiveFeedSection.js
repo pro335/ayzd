@@ -23,7 +23,7 @@ const LiveFeedSection = ({ showDetailsPanel=false, onClickHandler }) => {
   useEffect(() => {
     setTimeout(() => {
       setIsLoaded(true);
-    }, 15000);
+    }, 25000);
   }, []); // here
 
   return (
