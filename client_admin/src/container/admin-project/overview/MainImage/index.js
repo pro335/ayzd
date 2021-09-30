@@ -65,13 +65,13 @@ const MainImage = ({guideCategory = "project", title = null}) => {
           temp_defaultFileList = [
             {
               uid: '1',
-              name: isValid(guide.guideData.media) ? guide.guideData.media.name : "",
+              name: isValid(guide) && isValid(guide.guideData) && isValid(guide.guideData.media) ? guide.guideData.media.name : "",
               status: 'done',
               response: 'Server Error 500', // custom error message to show
-              url: isValid(guide.guideData.media) ? guide.guideData.media.url : "",
+              url: isValid(guide) && isValid(guide.guideData) && isValid(guide.guideData.media) ? guide.guideData.media.url : "",
             }
           ];
-          tempMedia = isValid(guide.guideData.media) ? guide.guideData.media : null;
+          tempMedia = isValid(guide) && isValid(guide.guideData) && isValid(guide.guideData.media) ? guide.guideData.media : null;
         }
       }
 
