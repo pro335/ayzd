@@ -8,6 +8,7 @@ import isValid from '../../utility/isValid';
 import LottieAnimation from '../Lottie/Lottie';
 import LOTTIE_DATA from '../Lottie/data.json';
 import NotFound from "../NFT/NotFound"
+import config from '../../config/config';
 
 const LiveFeedSection = ({ showDetailsPanel=false, onClickHandler }) => {
 
@@ -23,7 +24,7 @@ const LiveFeedSection = ({ showDetailsPanel=false, onClickHandler }) => {
   useEffect(() => {
     setTimeout(() => {
       setIsLoaded(true);
-    }, 25000);
+    }, config.LOADING_TIME);
   }, []); // here
 
   return (

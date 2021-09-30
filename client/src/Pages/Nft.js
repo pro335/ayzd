@@ -11,6 +11,8 @@ import isValid from '../utility/isValid';
 import config from '../config/config';
 import * as actions from '../redux/actions';
 import * as ActionTypes from '../redux/ActionTypes';
+import LottieAnimation from '../Components/Lottie/Lottie';
+import LOTTIE_DATA from '../Components/Lottie/data.json';
 
 const Nft = () => {
 
@@ -24,11 +26,19 @@ const Nft = () => {
     };
   });
 
+  const [isLoaded, setIsLoaded] = useState(false);
+
   const projects = project.projects;
   const [filteredProjects, setFilteredProjects] = useState(projects)
 
   const [all, setAll] = useState(false);
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoaded(true);
+    }, config.LOADING_TIME);
+  }, []); // here
 
   useEffect(() => {
     dispatch({
@@ -38,6 +48,10 @@ const Nft = () => {
       type: ActionTypes.CHAIN_CHK_LIST_INITIALIZE,
     });
   }, [category.categories, chain.chains])
+
+  useEffect(() => {
+    setFilteredProjects(project.projects);
+  }, [project.projects]);
 
   const handleChange = (e) => {
 
@@ -94,7 +108,7 @@ const Nft = () => {
 
   return (
     <>
-      <div className="relative w-full flex flex-col overflow-hidden">
+      <div className="h-full relative w-full flex flex-col overflow-hidden">
         <div className="w-full fixed h-16 bg-brand-gray-800 z-30">
           <div className="h-full w-full relative">
             <input type="text" placeholder="Search NFT Projects"
@@ -123,12 +137,16 @@ const Nft = () => {
 
           <div className="h-full pb-5 lg:col-span-5 mt-16 lg:mt-0 overflow-hidden">
             <div className="h-full overflow-y-scroll">
-              {
-                filteredProjects.length > 0 ? (
+              { isValid(filteredProjects) ?
                   <AllProjects projects={filteredProjects} type="categories" />
-                ) : (
-                  <NotFound />
-                )
+                  :
+                  ( !isLoaded ?
+                    <div className="h-full flex flex-col justify-center items-center pb-15">
+                      <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
+                    </div>
+                    :
+                    <NotFound />
+                  )
               }
             </div>
           </div>

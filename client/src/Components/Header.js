@@ -10,8 +10,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import * as actions from '../redux/actions';
 import * as ActionTypes from '../redux/ActionTypes';
 import isValid from '../utility/isValid';
-import LottieAnimation from './Lottie/Lottie';
-import LOTTIE_DATA from './Lottie/data.json';
 
 const navLinks = [
   {
@@ -89,26 +87,22 @@ const Header = () => {
           <nav className="h-16 flex items-center">
             <div className="hover:cursor-pointer" onClick={() => handleClick()}>
               <img src="../assets/Logo.svg" alt="" />
-              {/* <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} /> */}
             </div>
             <div className="nav-menu hidden lg:flex items-center font-medium space-x-4.5 px-4.5">
               {
                 navLinks.map((link, index) => (
-                  (link.name !== "Drop calendar") || (link.name === "Drop calendar" && isValid(project.upcomings) && project.upcomings.length > 0 ) ?
-                    <NavLink exact
-                      to={`${link.to}`}
-                      activeClassName="active"
-                      key={index}
-                      className="group flex items-center border-b-2 border-transparent hover:border-brand-AYZD-PURPLE hover:text-gray-100 px-1 pt-6 pb-5"
-                      onClick={() => handleClick(link)}
-                    >
-                      <svg className="w-5 h-5 mr-2 group-hover:text-brand-AYZD-PURPLE">
-                        <use href={`../assets/icons/${link.icon}.svg#icon-${link.icon}`}></use>
-                      </svg>
-                      {link.name}
-                    </NavLink>
-                    :
-                    null
+                  <NavLink exact
+                    to={`${link.to}`}
+                    activeClassName="active"
+                    key={index}
+                    className="group flex items-center border-b-2 border-transparent hover:border-brand-AYZD-PURPLE hover:text-gray-100 px-1 pt-6 pb-5"
+                    onClick={() => handleClick(link)}
+                  >
+                    <svg className="w-5 h-5 mr-2 group-hover:text-brand-AYZD-PURPLE">
+                      <use href={`../assets/icons/${link.icon}.svg#icon-${link.icon}`}></use>
+                    </svg>
+                    {link.name}
+                  </NavLink>
                 ))
               }
             </div>

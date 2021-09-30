@@ -11,6 +11,8 @@ import config from '../config/config';
 import * as actions from '../redux/actions';
 import * as ActionTypes from '../redux/ActionTypes';
 import moment from 'moment-timezone';
+import LottieAnimation from '../Components/Lottie/Lottie';
+import LOTTIE_DATA from '../Components/Lottie/data.json';
 
 const Upcoming = () => {
 
@@ -25,6 +27,14 @@ const Upcoming = () => {
   });
 
   const [all, setAll] = useState(false);
+
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoaded(true);
+    }, config.LOADING_TIME);
+  }, []); // here
 
   useEffect(() => {
     // dispatch({
@@ -69,7 +79,7 @@ const Upcoming = () => {
 
   return (
     <>
-      <div className="relative w-full flex flex-col overflow-hidden">
+      <div className="h-full relative w-full flex flex-col overflow-hidden">
         <div className="w-full fixed h-16 bg-brand-gray-800 z-30">
           <div className="h-full w-full relative">
             <input type="text" placeholder="Search drops"
@@ -86,20 +96,31 @@ const Upcoming = () => {
 
         {/* Content */}
         <div className="h-full w-full grid lg:grid-cols-6 lg:overflow-hidden pt-16">
-          <div className="lg:hidden px-4 mt-2">
-            <MobileSelectProjects />
-          </div>
-          <div className="hidden lg:block border-r border-brand-gray-800 overflow-y-scroll pb-4">
-            <CalendarSidebar all={all} />
-          </div>
+          {/* { isValid(project.upcoming_date_list) ? */}
+            <>
+              <div className="lg:hidden px-4 mt-2">
+                <MobileSelectProjects />
+              </div>
+              <div className="h-full hidden lg:block border-r border-brand-gray-800 overflow-y-scroll pb-4">
+                <CalendarSidebar all={all} />
+              </div>
+            </>
+            {/* :
+            null
+          } */}
           
           <div className="h-full pb-5 lg:col-span-5 mt-2 lg:mt-0 overflow-hidden">
             <div className="h-full overflow-y-scroll">
               {
-                isValid(project.upcoming_show_list) && project.upcoming_show_list.length > 0 ? (
+                isValid(project.upcoming_show_list) ? (
                   <AllProjects />
                 ) : (
-                  <NotFound />
+                  !isLoaded ?
+                    <div className="h-full flex flex-col justify-center items-center pb-15">
+                      <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
+                    </div>
+                    :
+                    <p>No Data found</p>
                 )
               }
             </div>

@@ -38,7 +38,7 @@ const CalendarList = ({ all, title, icon, classes }) => {
         icon={icon}
         classes={classes}
       />
-      <div className="border-brand-gray-800 lg:overflow-hidden">
+      <div className="h-full border-brand-gray-800 lg:overflow-hidden">
         <div className="h-full hidden lg:flex flex-col">
           {/* Projects List */}
           <LeftDateList isActive={isActive} activeHandler={activeHandler} />

@@ -24,7 +24,7 @@ const ProjectsList = ({ isActive, activeHandler }) => {
   useEffect(() => {
     setTimeout(() => {
       setIsLoaded(true);
-    }, 25000);
+    }, config.LOADING_TIME);
   }, []); // here
 
   const handleClick = (proj) => {

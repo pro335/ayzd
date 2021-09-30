@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import SectionHeading from "./../SectionHeading";
 import data from '../../data.json'
 import { useSelector, useDispatch } from 'react-redux';
@@ -6,9 +6,20 @@ import isValid from '../../utility/isValid';
 import config from '../../config/config';
 import * as actions from '../../redux/actions';
 import * as ActionTypes from '../../redux/ActionTypes';
+import LottieAnimation from '../Lottie/Lottie';
+import LOTTIE_DATA from '../Lottie/data.json';
+import NotFound from "../NFT/NotFound"
 
 const CheckBoxesList = ({ data, all, handleChange, title, icon, classes }) => {
   const dispatch = useDispatch();
+
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoaded(true);
+    }, config.LOADING_TIME);
+  }, []); // here
 
   const onChange = (_id) => {
     if(title === "Categories") {
@@ -32,8 +43,8 @@ const CheckBoxesList = ({ data, all, handleChange, title, icon, classes }) => {
         icon={icon}
         classes={classes}
       />
-      <div className="space-y-1 p-2">
-        {
+      <div className="h-full space-y-1 p-2">
+        {isValid(data) ?
           data.map((input, index) => {
             return (
               <label key={index} className="h-10 relative flex items-center hover:bg-brand-gray-800  hover:text-gray-200 rounded-md px-2 py-1">
@@ -52,6 +63,14 @@ const CheckBoxesList = ({ data, all, handleChange, title, icon, classes }) => {
               </label>
             )
           })
+          :
+          ( !isLoaded ?
+            <div className="h-full flex flex-col justify-center items-center py-20">
+              <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
+            </div>
+            :
+            <NotFound />
+          )
         }
       </div>
     </div>

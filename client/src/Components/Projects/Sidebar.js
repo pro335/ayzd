@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ProjectsList from "./ProjectsList"
 import MobileSelectProjects from "./MobileSelectProjects";
 import { useSelector, useDispatch } from 'react-redux';
 import * as actions from '../../redux/actions';
 import * as ActionTypes from '../../redux/ActionTypes';
 import isValid from '../../utility/reduceTextLengh';
-
-import data from '../../data.json'
+import config from '../../config/config';
+import LottieAnimation from '../Lottie/Lottie';
+import LOTTIE_DATA from '../Lottie/data.json';
 
 const Sidebar = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,14 @@ const Sidebar = () => {
   });
 
   const [isActive, setIsActive] = useState(isValid(project.projects_has_news_show_list) ? project.projects_has_news_show_list[0].name : "");
+
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoaded(true);
+    }, config.LOADING_TIME);
+  }, []); // here
 
   const activeHandler = text => {
     setIsActive(text)
@@ -44,7 +53,17 @@ const Sidebar = () => {
     <>
       <div className="border-r border-brand-gray-800 lg:overflow-hidden">
         <div className="lg:hidden px-4 z-100">
-          <MobileSelectProjects projects={project.projects_has_news_show_list} />
+          { isValid(project.projects_has_news_show_list) ?
+            <MobileSelectProjects projects={project.projects_has_news_show_list} />
+            :
+            ( !isLoaded ?
+              <div className="h-full flex flex-col justify-center items-center py-5">
+                <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
+              </div>
+              :
+              null
+            )
+          }
         </div>
 
         <div className="h-full hidden lg:flex flex-col">

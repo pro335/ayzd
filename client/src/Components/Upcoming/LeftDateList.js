@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from "react-router-dom";
 import isValid from '../../utility/isValid';
@@ -6,6 +6,8 @@ import config from '../../config/config';
 import * as actions from '../../redux/actions';
 import * as ActionTypes from '../../redux/ActionTypes';
 import moment from 'moment-timezone';
+import LottieAnimation from '../Lottie/Lottie';
+import LOTTIE_DATA from '../Lottie/data.json';
 
 const LeftDateList = ({ isActive, activeHandler }) => {
 
@@ -16,6 +18,14 @@ const LeftDateList = ({ isActive, activeHandler }) => {
       project: state.project,
     };
   });
+
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoaded(true);
+    }, config.LOADING_TIME);
+  }, []); // here
 
   const handleClick = (proj) => {
     let data = project.upcoming_date_list.filter(function(item) {
@@ -53,7 +63,7 @@ const LeftDateList = ({ isActive, activeHandler }) => {
 
   return (
     <div className="h-full flex flex-col font-medium overflow-y-scroll space-y-2 py-3 px-2">
-      {
+      { isValid(project.upcoming_date_list) ?
         project.upcoming_date_list.map((item, index) => {
           return (
             <div
@@ -68,9 +78,14 @@ const LeftDateList = ({ isActive, activeHandler }) => {
             </div>
           )
         })
-      }
-      {
-        project.upcoming_date_list.length <= 0 && <p>No Data found</p>
+        :
+        ( !isLoaded ?
+          <div className="h-full flex flex-col justify-center items-center pb-15">
+            <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
+          </div>
+          :
+          project.upcoming_date_list.length <= 0 && <p>No Data found</p>
+        )
       }
     </div>
   )
