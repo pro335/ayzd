@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { Listbox, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
@@ -24,6 +24,10 @@ export default function MobileSelectProjects({ projects }) {
   });
 
   const [selected, setSelected] = useState(isValid(project.projects_has_news_show_list) ? project.projects_has_news_show_list[0] : "");
+
+  useEffect(() => {
+    isValid(project.projects_has_news_show_list) ? setSelected(project.projects_has_news_show_list[0]) : setSelected("");
+  }, [project.projects_has_news_show_list]); // here
 
   const handleClick = (proj) => {
 

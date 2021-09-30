@@ -73,7 +73,7 @@ const Heading = () => {
       }
 
       {/* Right */}
-      {isValid(project.projectData.btn_label) && isValid(project.projectData.btn_url) ?
+      {isValid(project.projectData) && isValid(project.projectData.btn_label) && isValid(project.projectData.btn_url) ?
         <div className="flex items-center font-medium mx-auto lg:ml-auto lg:mr-0 space-x-3">
           <a
             href={project.projectData.btn_url}
