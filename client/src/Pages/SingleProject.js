@@ -23,6 +23,31 @@ const SingleProject = () => {
   useEffect(() => {
     let unmounted = false;
     if (!unmounted) {
+
+      const checkProjectsList = async () => {
+        if(!isValid(project.projects)) {
+          //get all projects
+          let resProject = await actions.allProjects();
+          let projects = [], success = false;
+          try {
+            success = resProject.data.success;
+            projects = resProject.data.projects;
+            if(success) {
+              dispatch({
+                type: ActionTypes.ALL_PROJECTS,
+                data: projects
+              });
+            } else {
+              dispatch({
+                type: ActionTypes.PROJECT_ERR,
+                err: resProject.data.errMessage
+              });
+            }
+          } catch (err) {
+            console.error(err);
+          }
+        }
+      }
   
       const getProjectFromUrl = async () => {
         let arrLocation = window.location.pathname.split('/');
@@ -122,7 +147,8 @@ const SingleProject = () => {
         }
     
       }
-  
+
+      checkProjectsList();
       getProjectFromUrl();
     }
     return () => {

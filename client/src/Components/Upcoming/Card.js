@@ -48,9 +48,8 @@ const Card = ({ item }) => {
     let text = isValid(item.name) ? item.name : "Upcoming project";
     let location = isValid(item.app_link) ? item.app_link : "https://app.ayzd.com";
     let details = isValid(item.small_description) ? item.small_description : "Drop calendar";
-    let timeZone = "GMT+3:00";
 
-    let url = `https://calendar.google.com/calendar/u/0/r/eventedit?dates=${stDate}/${endDate}&details=${details}&location=${location}&text=${text}&timeZone=${timeZone}`;
+    let url = `https://calendar.google.com/calendar/u/0/r/eventedit?ctz=Europe/Riga&dates=${stDate}/${endDate}&details=${details}&location=${location}&text=${text}`;
     window.open(url, "_blank");
 
   }
