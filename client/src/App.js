@@ -94,7 +94,7 @@ function App() {
           temp_projects_has_news.push(one_project);
         } else {
           let foundIndex = temp_projects_has_news_id_list.findIndex(x => one_project._id === x);
-          if(foundIndex !== -1)
+          if(foundIndex !== -1 && one_project.name !== "Research & Analytics")
             temp_projects_has_news.push(one_project);
         }
       })
@@ -108,7 +108,7 @@ function App() {
       let temp_upcomings = [];
       //fetch only upcoming projects
       projects.filter(function(item, index) {
-        if((index !== 0) && isValid(item) && isValid(item.isUpcoming) && item.isUpcoming)
+        if((index !== 0) && isValid(item) && isValid(item.isUpcoming) && item.isUpcoming && (item.name !== "Research & Analytics") )
           temp_upcomings.push(item);
       });
 

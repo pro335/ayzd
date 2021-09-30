@@ -7,7 +7,7 @@ const AllProjects = ({ projects, type }) => {
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-x-5 lg:gap-y-7">
         {
           projects.map((item, index) =>
-            item.name !== "Smart feed" ?
+            (item.name !== "Smart feed") && (item.name !== "Research & Analytics") ?
               <Card key={index} item={item} type={type} />
               :
               null
