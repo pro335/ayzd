@@ -11,8 +11,8 @@ const MainImage = ({guideCategory = "project", title = null}) => {
   /**
    * Description of the params
    * 
-   * guideCategory: determine main/secondary image of the project or the preview image of the add guide
-   *                  project: main image of the project, secondary: secondary image of the project, guide: preview image of the add guide
+   * guideCategory: determine main/secondary image of the project or the video/preview image of the add guide
+   *                  project: main image of the project, secondary: secondary image of the project, guide_video: video of the add guide, guide_image: preview image of add guide
   */
   
   const [state, setState] = useState({
@@ -61,17 +61,28 @@ const MainImage = ({guideCategory = "project", title = null}) => {
             }
           ];
           tempMedia = isValid(project.projectData.secondary_image) ? project.projectData.secondary_image : null;
-        } else if(guideCategory === "guide") {    // guide
+        } else if(guideCategory === "guide_video") {    // guide_video
           temp_defaultFileList = [
             {
               uid: '1',
-              name: isValid(guide) && isValid(guide.guideData) && isValid(guide.guideData.media) ? guide.guideData.media.name : "",
+              name: isValid(guide) && isValid(guide.guideData) && isValid(guide.guideData.media_video) ? guide.guideData.media_video.name : "",
               status: 'done',
               response: 'Server Error 500', // custom error message to show
-              url: isValid(guide) && isValid(guide.guideData) && isValid(guide.guideData.media) ? guide.guideData.media.url : "",
+              url: isValid(guide) && isValid(guide.guideData) && isValid(guide.guideData.media_video) ? guide.guideData.media_video.url : "",
             }
           ];
-          tempMedia = isValid(guide) && isValid(guide.guideData) && isValid(guide.guideData.media) ? guide.guideData.media : null;
+          tempMedia = isValid(guide) && isValid(guide.guideData) && isValid(guide.guideData.media_video) ? guide.guideData.media_video : null;
+        } else if(guideCategory === "guide_image") {    // guide_image
+          temp_defaultFileList = [
+            {
+              uid: '1',
+              name: isValid(guide) && isValid(guide.guideData) && isValid(guide.guideData.media_image) ? guide.guideData.media_image.name : "",
+              status: 'done',
+              response: 'Server Error 500', // custom error message to show
+              url: isValid(guide) && isValid(guide.guideData) && isValid(guide.guideData.media_image) ? guide.guideData.media_image.url : "",
+            }
+          ];
+          tempMedia = isValid(guide) && isValid(guide.guideData) && isValid(guide.guideData.media_image) ? guide.guideData.media_image : null;
         }
       }
 
@@ -123,7 +134,7 @@ const MainImage = ({guideCategory = "project", title = null}) => {
           let newVal = null;
 
           if(guideCategory === "project") {
-            if(imageUrl !== null && imageUrl !== undefined) {
+            if(isValid(imageUrl)) {
               newVal = {
                 ...project.projectData,
                 main_image: info.file.originFileObj,
@@ -139,7 +150,7 @@ const MainImage = ({guideCategory = "project", title = null}) => {
               data: newVal
             });
           } else if(guideCategory === "secondary") {
-            if(imageUrl !== null && imageUrl !== undefined) {
+            if(isValid(imageUrl)) {
               newVal = {
                 ...project.projectData,
                 secondary_image: info.file.originFileObj,
@@ -154,16 +165,32 @@ const MainImage = ({guideCategory = "project", title = null}) => {
               type: ActionTypes.SET_PROJECT,
               data: newVal
             });
-          } else if(guideCategory === "guide") {
-            if(imageUrl !== null && imageUrl !== undefined) {
+          } else if(guideCategory === "guide_video") {
+            if(isValid(imageUrl)) {
               newVal = {
                 ...guide.guideData,
-                media: info.file.originFileObj,
+                media_video: info.file.originFileObj,
               };
             } else {
               newVal = {
                 ...guide.guideData,
-                media: null,
+                media_video: null,
+              };
+            }
+            dispatch({
+              type: ActionTypes.SET_GUIDE,
+              data: newVal
+            });
+          } else if(guideCategory === "guide_image") {
+            if(isValid(imageUrl)) {
+              newVal = {
+                ...guide.guideData,
+                media_image: info.file.originFileObj,
+              };
+            } else {
+              newVal = {
+                ...guide.guideData,
+                media_image: null,
               };
             }
             dispatch({
@@ -195,10 +222,19 @@ const MainImage = ({guideCategory = "project", title = null}) => {
           type: ActionTypes.SET_PROJECT,
           data: newVal
         });
-      } else if(guideCategory === "guide") {
+      } else if(guideCategory === "guide_video") {
         newVal = {
           ...guide.guideData,
-          media: null,
+          media_video: null,
+        };
+        dispatch({
+          type: ActionTypes.SET_GUIDE,
+          data: newVal
+        });
+      } else if(guideCategory === "guide_image") {
+        newVal = {
+          ...guide.guideData,
+          media_image: null,
         };
         dispatch({
           type: ActionTypes.SET_GUIDE,
@@ -208,7 +244,7 @@ const MainImage = ({guideCategory = "project", title = null}) => {
     }
   };
   
-  const titleText = title !== null && title !== undefined ? title : "File Browser";
+  const titleText = isValid(title) ? title : "File Browser";
   return (
     <Cards title={titleText} className="sDash_upload-form mb-25">
       <Form name="sDash_upload" layout="vertical">

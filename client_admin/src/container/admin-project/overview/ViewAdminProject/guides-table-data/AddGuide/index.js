@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Row, Col, Spin, notification } from 'antd';
+import { Row, Col, Spin, Checkbox, notification } from 'antd';
 import { Switch, useHistory } from 'react-router-dom';
 import FeatherIcon from 'feather-icons-react';
 import { ProjectHeader } from './style';
@@ -56,7 +56,15 @@ const AddGuide = () => {
       return;
     }
 
-    if( !isValid(newGuide.media) ) {
+    if( isValid(newGuide.is_video_guide) && newGuide.is_video_guide && !isValid(newGuide.media_video) ) {
+      notification['error'] ({
+        message: 'Error',
+        description: 'Please upload the video guide! If you don\'t want to upload video, please check the status of \"Upload Video\"!'
+      });
+      return;
+    }
+
+    if( !isValid(newGuide.media_image) ) {
       notification['error'] ({
         message: 'Error',
         description: 'Please check the preview image!'
@@ -64,11 +72,11 @@ const AddGuide = () => {
       return;
     }
 
-    //Code for preview image(whether uploading image or not)
-    let previewImage = null;
-    if( newGuide.media instanceof File ) {  // if file
+    //Code for video guide(whether uploading video or not)
+    let media_video = null;
+    if( ( isValid(newGuide.is_video_guide) && newGuide.is_video_guide ) &&  (newGuide.media_video instanceof File) ) {  // if file
 
-      let resultUpload =  await fileUploadToS3(newGuide.media);
+      let resultUpload =  await fileUploadToS3(newGuide.media_video);
       let {success, data, errMessage} =  resultUpload;
       if(!success) {
         notification['error'] ({
@@ -76,24 +84,49 @@ const AddGuide = () => {
           description: errMessage
         });
   
-        previewImage = null;
+        media_video = null;
 
       } else {
-        previewImage = {
+        media_video = {
           name: data.key,
           url: data.location,
-          type: 0,
-          relation: 1,
+          type: 1,
         }
       }
     } else {
-      previewImage = newGuide.media;
+      media_video = newGuide.media_video;
     }
 
-    //Set the main image of the project
+    //Code for preview image(whether uploading image or not)
+    let media_image = null;
+    if( newGuide.media_image instanceof File ) {  // if file
+
+      let resultUpload =  await fileUploadToS3(newGuide.media_image);
+      let {success, data, errMessage} =  resultUpload;
+      if(!success) {
+        notification['error'] ({
+          message: 'Error',
+          description: errMessage
+        });
+  
+        media_image = null;
+
+      } else {
+        media_image = {
+          name: data.key,
+          url: data.location,
+          type: 0,
+        }
+      }
+    } else {
+      media_image = newGuide.media;
+    }
+
+    //Set the video/preview image of the project
     newGuide = {
       ...guide.guideData,
-      media: previewImage
+      media_video: media_video,
+      media_image: media_image,
     };
 
 
@@ -175,12 +208,30 @@ const AddGuide = () => {
     history.goBack();
   }
 
+  const onIsVideoGuideChange = (e) => {
+    let newVal = {
+      ...guide.guideData,
+      is_video_guide: e.target.checked
+    };
+    dispatch({
+      type: ActionTypes.SET_GUIDE,
+      data: newVal
+    });
+  }
+
   const titleText = guide.guide_action === "create" ? "Add Guide" : "Update Guide";
 
   return (
     <>
       <ProjectHeader>
         <PageHeader
+          buttons={[
+            <Checkbox 
+              checked={isValid(guide) && isValid(guide.guideData) && isValid(guide.guideData.is_video_guide) && guide.guideData.is_video_guide ? guide.guideData.is_video_guide : false} 
+              onChange={onIsVideoGuideChange}>
+                Upload Video
+            </Checkbox>,
+          ]}
           title={titleText}
         />
       </ProjectHeader>
@@ -205,8 +256,15 @@ const AddGuide = () => {
                         <Col sm={24} xs={24}>
                           <Title />
                         </Col>
+                        {isValid(guide) && isValid(guide.guideData) && isValid(guide.guideData.is_video_guide) && guide.guideData.is_video_guide ?
+                          <Col sm={24} xs={24}>
+                            <MainImage title={ "Video Guide" } guideCategory={"guide_video"} />
+                          </Col>
+                          :
+                          null
+                        }
                         <Col sm={24} xs={24}>
-                          <MainImage title={ "Preview image" } guideCategory={"guide"} />
+                          <MainImage title={ "Preview image" } guideCategory={"guide_image"} />
                         </Col>
                       </Row>
                     </Col>

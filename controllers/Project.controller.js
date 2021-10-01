@@ -429,23 +429,33 @@ exports.deleteProject = async (req, res) =>  {
 }
 
 exports.createGuide = async (req, res) =>  {
-    let project = null;
-    let newGuide = null;
+    let project = null, newGuide = null;
     try {
         if(req.body.newGuide !== null) {        //  create new guide
         
-            // Determine whether creating new media or not
-            let newMedia = null, media_id = null;
-            if(req.body.newGuide.media !== null) {        //  create new media
-                newMedia = new Media(req.body.newGuide.media);
-                await Media.insertMany(newMedia);
-                media_id = newMedia._id;
+            // Determine whether creating new media_video or not
+            let new_media_video = null, media_video_id = null;
+            if(isValid(req.body.newGuide.is_video_guide) && req.body.newGuide.is_video_guide && req.body.newGuide.media_video !== null) {        //  create new video
+                new_media_video = new Media(req.body.newGuide.media);
+                await Media.insertMany(new_media_video);
+                media_video_id = new_media_video._id;
             } else {
-                media_id = Config.fake_mongodb_id;
+                media_video_id = Config.fake_mongodb_id;
+            }
+     
+            // Determine whether creating new image or not
+            let new_media_image = null, media_image_id = null;
+            if(req.body.newGuide.media !== null) {        //  create new media
+                new_media_image = new Media(req.body.newGuide.media);
+                await Media.insertMany(new_media_image);
+                media_image_id = new_media_image._id;
+            } else {
+                media_image_id = Config.fake_mongodb_id;
             }
      
             newGuide = new Guide(req.body.newGuide);
-            newGuide.media = media_id;
+            newGuide.media_video = media_video_id;
+            newGuide.media_image = media_image_id;
             await Guide.insertMany(newGuide);
 
             await Project.updateOne( {_id: req.body._id}, { $push: {guide_list: [newGuide._id] } } );
@@ -464,17 +474,29 @@ exports.updateGuide = async (req, res) =>  {
     let newGuide = req.body.newGuide;
     try {
         if(newGuide !== null) {
-            let newMedia = null, media_id = null;
+            let new_media_video = null, media_video_id = null;
             if(newGuide.media !== null) {
-                if(utility.isValid(newGuide.media._id)) {
-                    media_id = newGuide.media._id;
+                if(utility.isValid(newGuide.media_video._id)) {
+                    media_video_id = newGuide.media_video._id;
                 } else {
-                    newMedia = new Media(newGuide.media);
-                    await Media.insertMany(newMedia);
-                    media_id = newMedia._id;
+                    new_media_video = new Media(newGuide.media_video);
+                    await Media.insertMany(new_media_video);
+                    media_video_id = new_media_video._id;
                 }
             }
-            await Guide.updateOne( {"_id": req.body.beforeGuideId}, { '$set': {'title': req.body.newGuide.title, 'full_description': req.body.newGuide.full_description, 'media': media_id} } );
+
+            let new_media_image = null, media_image_id = null;
+            if(newGuide.media !== null) {
+                if(utility.isValid(newGuide.media_image._id)) {
+                    media_image_id = newGuide.media_image._id;
+                } else {
+                    new_media_image = new Media(newGuide.media_image);
+                    await Media.insertMany(new_media_image);
+                    media_image_id = new_media_image._id;
+                }
+            }
+
+            await Guide.updateOne( {"_id": req.body.beforeGuideId}, { '$set': {'title': req.body.newGuide.title, 'full_description': req.body.newGuide.full_description, 'is_video_guide': req.body.newGuide.is_video_guide, 'media_video': req.body.newGuide.media_video, 'media_image': req.body.newGuide.media_image} } );
 
         } else {        // remove the guide id in the list of the guide
             await Project.updateOne( {_id: req.body._id}, { $pullAll: {guide_list: [req.body.beforeGuideId] } } );
