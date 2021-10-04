@@ -21,9 +21,9 @@ const config = {
   S3_BUCKET: "ayzd-storage",
   endpoint: "fra1.digitaloceanspaces.com",
   bucket_url: "https://ayzd-storage.fra1.digitaloceanspaces.com",
-
   general_avatar: "general_avatar.png",
   common_image: "common_image.png",
+  video_mark_image: "video_mark.png",
   TIME_INTERVAL: 1000*60*60,    // 1 hour,
 };
 

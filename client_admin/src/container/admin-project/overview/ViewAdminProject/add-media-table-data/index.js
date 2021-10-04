@@ -19,7 +19,7 @@ const AddMediaTableData = ({ visible, onCancel, mediaCategory = 1, mediaId = 0, 
   /**
    * Description about the each parameters
    * 
-   * mediaCategory: 0: main image, 1: media, 2: secondary image, default: 1,
+   * mediaCategory:     0: main image, 1: media, 2: secondary image, 3: video guide, 4: image guide, default: 1,
    * mediaId: the object id of media, default: 0,
    * mediaAction: 0: add, 1: update, default: 1
    * 
@@ -28,9 +28,10 @@ const AddMediaTableData = ({ visible, onCancel, mediaCategory = 1, mediaId = 0, 
   const [form] = Form.useForm();
 
   
-  const { project } = useSelector(state => {
+  const { project, guide } = useSelector(state => {
     return {
       project: state.project,
+      guide: state.guide,
     };
   });
 
@@ -105,7 +106,30 @@ const AddMediaTableData = ({ visible, onCancel, mediaCategory = 1, mediaId = 0, 
         }
       ];
       tempMedia = isValid(project.projectData.secondary_image) ? project.projectData.secondary_image : null;
+    } else if(mediaCategory === 3 && mediaAction === 1) {    // if update video guide
+      temp_defaultFileList = [
+        {
+          uid: '1',
+          name: isValid(guide.guideData.media_video) ? guide.guideData.media_video.name : "",
+          status: 'done',
+          response: 'Server Error 500', // custom error message to show
+          url: isValid(guide.guideData.media_video) ? guide.guideData.media_video.url : "",
+        }
+      ];
+      tempMedia = isValid(guide.guideData.media_video) ? guide.guideData.media_video : null;
+    } else if(mediaCategory === 4 && mediaAction === 1) {    // if update image guide
+      temp_defaultFileList = [
+        {
+          uid: '1',
+          name: isValid(guide.guideData.media_image) ? guide.guideData.media_image.name : "",
+          status: 'done',
+          response: 'Server Error 500', // custom error message to show
+          url: isValid(guide.guideData.media_image) ? guide.guideData.media_image.url : "",
+        }
+      ];
+      tempMedia = isValid(guide.guideData.media_image) ? guide.guideData.media_image : null;
     }
+
     setState({
       defaultFileList: temp_defaultFileList,
       media: tempMedia,
@@ -132,14 +156,14 @@ const AddMediaTableData = ({ visible, onCancel, mediaCategory = 1, mediaId = 0, 
       authorization: 'authorization-text',
     },
     beforeUpload(file) {
-      const isLt25M = file.size / 1024 / 1024 < 25;
-      if (!isLt25M) {
+      const isLt128M = file.size / 1024 / 1024 < 128;
+      if (!isLt128M) {
         notification['error'] ({
           message: 'Error',
-          description: 'Media file must be smaller than 25MB!'
+          description: 'Media file must be smaller than 128MB!'
         });
       }
-      return isLt25M;
+      return isLt128M;
     },
     onChange(info) {
       // if (info.file.status === 'uploading') {
@@ -174,7 +198,7 @@ const AddMediaTableData = ({ visible, onCancel, mediaCategory = 1, mediaId = 0, 
   };
 
   const processFunc = async () => {
-    
+
     if(mediaCategory === 0 && mediaAction === 1) {    // if update main image
       let main_image = null;
 
@@ -436,8 +460,165 @@ const AddMediaTableData = ({ visible, onCancel, mediaCategory = 1, mediaId = 0, 
           })          
         }
       })
-    }
+    } else if(mediaCategory === 3 && mediaAction === 1) {    // if update video guide
+      let media_video = null;
+
+      if(!state.isFile)
+        return;
+
+      if( isValid(state.media) ) {
+
+        let resultUpload =  await fileUploadToS3(state.media);
+        let {success, data, errMessage} =  resultUpload;
+        if(!success) {
+          notification['error'] ({
+            message: 'Error',
+            description: errMessage
+          });
     
+          media_video = null;
+
+        } else {
+          media_video = {
+            name: data.key,
+            url: data.location,
+            type: 0,
+            relation: 5,
+          }
+        }
+      } else {
+        media_video = null;
+      }
+
+      let newProject = {
+        _id: project.project_id,
+        beforeGuideId: guide.guideData._id,
+        newGuide: {
+          ...guide.guideData,
+          media_video: media_video
+        }
+      }
+
+      actions.updateProjectGuide(newProject).then( res => {
+        const { success, isExistingProject, updated_project, guide_data } = res.data;
+        if(success) {
+          if(isExistingProject) {
+            dispatch({
+              type: ActionTypes.SET_PROJECT,
+              data: updated_project
+            });
+            dispatch({
+                type: ActionTypes.UPDATE_PROJECT,
+                data: updated_project
+            });
+            if(isValid(guide_data)) {
+              dispatch({
+                type: ActionTypes.SET_GUIDE,
+                data: guide_data
+              });
+            }
+          }
+          // if(isValid(media)) {
+          //   dispatch({
+          //     type: ActionTypes.UPDATE_MEDIA,
+          //     data: media
+          //   });
+          // }  
+          notification['success'] ({
+            message: 'The video of the guide was updated successfully',
+            description: ''
+          })              
+        } else {
+          dispatch({
+              type: ActionTypes.PROJECT_ERR,
+              err: res.data.errMessage,
+          });
+          notification['error'] ({
+            message: 'Error',
+            description: res.data.errMessage
+          })          
+        }
+      })
+    } else if(mediaCategory === 4 && mediaAction === 1) {    // if update image guide
+      let media_image = null;
+
+      if(!state.isFile)
+        return;
+
+      if( isValid(state.media) ) {
+
+        let resultUpload =  await fileUploadToS3(state.media);
+        let {success, data, errMessage} =  resultUpload;
+        if(!success) {
+          notification['error'] ({
+            message: 'Error',
+            description: errMessage
+          });
+    
+          media_image = null;
+
+        } else {
+          media_image = {
+            name: data.key,
+            url: data.location,
+            type: 0,
+            relation: 5,
+          }
+        }
+      } else {
+        media_image = null;
+      }
+
+      let newProject = {
+        _id: project.project_id,
+        beforeGuideId: guide.guideData._id,
+        newGuide: {
+          ...guide.guideData,
+          media_image: media_image
+        }
+      }
+
+      actions.updateProjectGuide(newProject).then( res => {
+        const { success, isExistingProject, updated_project, guide_data } = res.data;
+        if(success) {
+          if(isExistingProject) {
+            dispatch({
+              type: ActionTypes.SET_PROJECT,
+              data: updated_project
+            });
+            dispatch({
+                type: ActionTypes.UPDATE_PROJECT,
+                data: updated_project
+            });
+          }
+          if(isValid(guide_data)) {
+            dispatch({
+              type: ActionTypes.SET_GUIDE,
+              data: guide_data
+          });
+        }
+          // if(isValid(media)) {
+          //   dispatch({
+          //     type: ActionTypes.UPDATE_MEDIA,
+          //     data: media
+          //   });
+          // }  
+          notification['success'] ({
+            message: 'The image of the guide was updated successfully',
+            description: ''
+          })              
+        } else {
+          dispatch({
+              type: ActionTypes.PROJECT_ERR,
+              err: res.data.errMessage,
+          });
+          notification['error'] ({
+            message: 'Error',
+            description: res.data.errMessage
+          })          
+        }
+      })
+    }    
     onCancel();
   };
 
@@ -482,7 +663,7 @@ const AddMediaTableData = ({ visible, onCancel, mediaCategory = 1, mediaId = 0, 
               </Form>
             </Form.Item>
 
-            { mediaCategory !== 0 ?
+            { mediaCategory === 1 || mediaCategory === 2 ?
               <Form.Item name="type" initialValue={state.mediaType} label="Type">
                 <Select style={{ width: '100%' }}>
                   <Option value={0}>Image</Option>

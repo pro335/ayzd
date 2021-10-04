@@ -29,7 +29,7 @@ export default function Score() {
           labels: [
             "Utility",
             "Uniqueness",
-            "Comunity",
+            "Community",
             "Team",
             "Viral Potential",
             "Visual Quality",

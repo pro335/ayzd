@@ -9,6 +9,7 @@ import Heading from '../../../../../components/heading/heading';
 import { PageHeader } from '../../../../../components/page-headers/page-headers';
 import isValid from '../../../../../utility/isValid';
 import AddMediaTableData from '../add-media-table-data';
+import config from '../../../../../config/config';
 
 const MainImageTableData = ({mediaCategory = 0}) => {
 
@@ -16,14 +17,15 @@ const MainImageTableData = ({mediaCategory = 0}) => {
   /**
    * Description about the parameter
    * 
-   * mediaCategory: 0: main image, 2: secondary image, default: 0,
+   * mediaCategory: 0: main image, 2: secondary image, 3: video guide, 4: image guide, default: 0,
    * 
    */
 
 
-  const { project } = useSelector(state => {
+  const { project, guide } = useSelector(state => {
     return {
       project: state.project,
+      guide: state.guide,
     };
   });
 
@@ -94,12 +96,34 @@ const MainImageTableData = ({mediaCategory = 0}) => {
         setState({
           media: temp_media
         });
+      } else if(mediaCategory === 3 && isValid(guide) && isValid(guide.guideData) && isValid(guide.guideData.media_video)) {
+        temp_media = [{
+            key: '1',
+            media_data: {
+              url: `${config.bucket_url}/${config.video_mark_image}`,
+              name: guide.guideData.media_video.name,
+            },
+          }];
+        setState({
+          media: temp_media
+        });
+      } else if(mediaCategory === 4 && isValid(guide) && isValid(guide.guideData) && isValid(guide.guideData.media_image)) {
+        temp_media = [{
+            key: '1',
+            media_data: {
+              url: guide.guideData.media_image.url,
+              name: guide.guideData.media_image.name,
+            },
+          }];
+        setState({
+          media: temp_media
+        });
       }
     }
     return () => {
       unmounted = true;
     };
-  }, [project.projectData.main_image, project.projectData.secondary_image]);
+  }, [project.projectData.main_image, project.projectData.secondary_image, guide.guideData]);
 
   function onChange(pagination, filters, sorter, extra) {
     setState({ ...state, values: { pagination, filters, sorter, extra } });
@@ -120,11 +144,18 @@ const MainImageTableData = ({mediaCategory = 0}) => {
     });
   };
 
+  const title = 
+    mediaCategory === 0 ? "Main image"
+    : mediaCategory === 2 ? "Secondary image"
+      : mediaCategory === 3 ? "Video guide"
+        : mediaCategory === 4 ? "Preview image"
+          : "Upload file";
+
   return (
     <>
       <Row>
         <PageHeader
-          title={mediaCategory === 0 ? "Main image" : "Secondary Image"}
+          title={title}
         />
         <Col xs={24}>
           <Cards title="" headless>

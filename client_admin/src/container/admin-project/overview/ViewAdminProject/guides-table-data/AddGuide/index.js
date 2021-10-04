@@ -14,6 +14,7 @@ import * as actions from '../../../../../../redux/actions';
 import * as ActionTypes from '../../../../../../redux/ActionTypes';
 import isValid from '../../../../../../utility/isValid';
 import fileUploadToS3 from '../../../../../../utility/fileUploadToS3';
+import MainImageTableData from '../../main-image-table-data';
 
 const AddGuide = () => {
 
@@ -119,7 +120,7 @@ const AddGuide = () => {
         }
       }
     } else {
-      media_image = newGuide.media;
+      media_image = newGuide.media_image;
     }
 
     //Set the video/preview image of the project
@@ -128,7 +129,6 @@ const AddGuide = () => {
       media_video: media_video,
       media_image: media_image,
     };
-
 
     let data = {
       _id: project.project_id,
@@ -205,7 +205,8 @@ const AddGuide = () => {
       });
     }
 
-    history.goBack();
+    // history.goBack();
+    history.push("/admin/admin-project/view");
   }
 
   const onIsVideoGuideChange = (e) => {
@@ -256,15 +257,24 @@ const AddGuide = () => {
                         <Col sm={24} xs={24}>
                           <Title />
                         </Col>
-                        {isValid(guide) && isValid(guide.guideData) && isValid(guide.guideData.is_video_guide) && guide.guideData.is_video_guide ?
-                          <Col sm={24} xs={24}>
-                            <MainImage title={ "Video Guide" } guideCategory={"guide_video"} />
-                          </Col>
-                          :
-                          null
-                        }
                         <Col sm={24} xs={24}>
-                          <MainImage title={ "Preview image" } guideCategory={"guide_image"} />
+                          {
+                            isValid(guide) && isValid(guide.guideData) && isValid(guide.guideData.is_video_guide) && guide.guideData.is_video_guide ? (
+                              guide.guide_action !== "create" && isValid(guide.guideData.media_video) && isValid(guide.guideData.media_video.url) ?
+                                <MainImageTableData mediaCategory={3} />
+                                :
+                                <MainImage title={ "Video Guide" } guideCategory={"guide_video"} />
+                            )
+                            :
+                            null
+                          }
+                        </Col>
+                        <Col sm={24} xs={24}>
+                          {guide.guide_action !== "create" && isValid(guide.guideData) && isValid(guide.guideData.media_image) && isValid(guide.guideData.media_image.url) ?
+                            <MainImageTableData mediaCategory={4} />
+                            :
+                            <MainImage title={ "Preview image" } guideCategory={"guide_image"} />
+                          }
                         </Col>
                       </Row>
                     </Col>

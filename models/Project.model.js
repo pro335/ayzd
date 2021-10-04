@@ -25,7 +25,7 @@ var ProjectSchema = new mongoose.Schema({
     slug: {type: String, default: "" },
     unique_id: {type: String, default: "" },
     isUpcoming: {type: Boolean, default: false },
-    price: {type: Number, default: 0 },
+    price: {type: String, default: "0$" },
     upcoming_date: {type: Date, default: null },
     mint_size: {type: Number, default: 0 },
     twitter_members: {type: Number},

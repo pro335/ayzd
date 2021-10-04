@@ -44,7 +44,7 @@ const GuidesTableData = () => {
           tempData.push({
             key: project.projectData.guide_list[i]._id,
             firstData: { 
-              media: isValid(project.projectData.guide_list[i].media) ? project.projectData.guide_list[i].media.url : `${config.bucket_url}/${config.common_image}`,
+              media: isValid(project.projectData.guide_list[i].media_image) && isValid(project.projectData.guide_list[i].media_image.url) ? project.projectData.guide_list[i].media_image.url : `${config.bucket_url}/${config.common_image}`,
               title: project.projectData.guide_list[i].title,
             },
             added: moment(project.projectData.guide_list[i].created_time).format("DD MMM YYYY"),

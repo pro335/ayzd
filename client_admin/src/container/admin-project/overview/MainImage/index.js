@@ -116,14 +116,14 @@ const MainImage = ({guideCategory = "project", title = null}) => {
       authorization: 'authorization-text',
     },
     beforeUpload(file) {
-      const isLt8M = file.size / 1024 / 1024 < 8;
-      if (!isLt8M) {
+      const isLtLimit = guideCategory === "guide_video" ? file.size / 1024 / 1024 < 128 : file.size / 1024 / 1024 < 8 ;
+      if (!isLtLimit) {
         notification['error'] ({
           message: 'Error',
-          description: 'Image must be smaller than 8MB!'
+          description: `File must be smaller than ${guideCategory === "guide_video" ? 128 : 8}MB!`
         });
       }
-      return isLt8M;
+      return isLtLimit;
     },
     onChange(info) {
       // if (info.file.status === 'uploading') {
