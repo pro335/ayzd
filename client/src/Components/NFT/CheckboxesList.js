@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react';
 import SectionHeading from "./../SectionHeading";
 import data from '../../data.json'
 import { useSelector, useDispatch } from 'react-redux';
@@ -8,17 +8,23 @@ import * as actions from '../../redux/actions';
 import * as ActionTypes from '../../redux/ActionTypes';
 import LottieAnimation from '../Lottie/Lottie';
 import LOTTIE_DATA from '../Lottie/data.json';
-import NotFound from "../NFT/NotFound"
+import NotFound from "../NFT/NotFound";
 
 const CheckBoxesList = ({ data, all, handleChange, title, icon, classes }) => {
   const dispatch = useDispatch();
 
   const [isLoaded, setIsLoaded] = useState(false);
+  const _isMounted = useRef(false); // Initial value _isMounted = false
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoaded(true);
-    }, config.LOADING_TIME);
+    if (!_isMounted) {
+      setTimeout(() => {
+        setIsLoaded(true);
+      }, config.LOADING_TIME);
+    }
+    return () => {
+      _isMounted.current = true;
+    };
   }, []); // here
 
   const onChange = (_id) => {

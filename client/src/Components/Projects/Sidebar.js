@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import ProjectsList from "./ProjectsList"
 import MobileSelectProjects from "./MobileSelectProjects";
 import { useSelector, useDispatch } from 'react-redux';
@@ -21,11 +21,17 @@ const Sidebar = () => {
   const [isActive, setIsActive] = useState(isValid(project.projects_has_news_show_list) ? project.projects_has_news_show_list[0].name : "");
 
   const [isLoaded, setIsLoaded] = useState(false);
+  const _isMounted = useRef(false); // Initial value _isMounted = false
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoaded(true);
-    }, config.LOADING_TIME);
+    if (!_isMounted) {
+      setTimeout(() => {
+        setIsLoaded(true);
+      }, config.LOADING_TIME);
+    }
+    return () => {
+      _isMounted.current = true;
+    };
   }, []); // here
 
   const activeHandler = text => {

@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect, useRef } from 'react'
 import AllProjects from "../Components/Upcoming/AllProjects"
 import CalendarSidebar from "../Components/Upcoming/CalendarSidebar"
 import NotFound from "../Components/NFT/NotFound"
@@ -29,21 +29,19 @@ const Upcoming = () => {
   const [all, setAll] = useState(false);
 
   const [isLoaded, setIsLoaded] = useState(false);
+  const _isMounted = useRef(false); // Initial value _isMounted = false
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoaded(true);
-    }, config.LOADING_TIME);
+    if (!_isMounted) {
+      setTimeout(() => {
+        setIsLoaded(true);
+      }, config.LOADING_TIME);
+    }
+    return () => {
+      _isMounted.current = true;
+    };
   }, []); // here
 
-  useEffect(() => {
-    // dispatch({
-    //   type: ActionTypes.CATEGORY_CHK_LIST_INITIALIZE,
-    // });
-    // dispatch({
-    //   type: ActionTypes.CHAIN_CHK_LIST_INITIALIZE,
-    // });
-  }, [category.categories, chain.chains])
 
   const handleSearch = (event) => {
     let value = event.target.value.toLowerCase();

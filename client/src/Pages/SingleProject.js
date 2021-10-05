@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Link, useHistory } from 'react-router-dom';
 import Heading from "../Components/SingleProject/Heading"
 import Tabs from "../Components/SingleProject/Tabs"
@@ -19,11 +19,10 @@ const SingleProject = () => {
       rankings: state.rankings,
     };
   });
+  const _isMounted = useRef(false); // Initial value _isMounted = false
 
-  useEffect(() => {
-    let unmounted = false;
-    if (!unmounted) {
-
+  useEffect( async () => {
+    if (!_isMounted) {
       const checkProjectsList = async () => {
         if(!isValid(project.projects)) {
           //get all projects
@@ -54,6 +53,10 @@ const SingleProject = () => {
   
         if(isValid(arrLocation) && isValid(arrLocation[arrLocation.length - 1])) {
           let unique_id = arrLocation[arrLocation.length - 1];
+
+          if(!isValid(project.projects)) {
+            await checkProjectsList();
+          }
           
           let data = project.projects.filter(function(x) {
             return x.unique_id === unique_id;
@@ -148,11 +151,11 @@ const SingleProject = () => {
     
       }
 
-      checkProjectsList();
-      getProjectFromUrl();
+      await checkProjectsList();
+      await getProjectFromUrl();
     }
     return () => {
-      unmounted = true;
+      _isMounted.current = true;
     };
   }, []);
 

@@ -117,7 +117,7 @@ const job = schedule.scheduleJob('0 * * * *', async function(){
   
   await project.updateUpcomingProjects();
 
-  //it takes a few minutes to execute the following method; usually 5 ~ 7 minutes.
+  //it takes a few minutes to execute the following method; usually 5 ~ 7 minutes or more than that.
   await newsfeedSource.updateLivefeeds();
 });
 

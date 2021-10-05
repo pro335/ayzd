@@ -32,13 +32,13 @@ const LivefeedReducer = (state = initState, action) => {
         loading: false,
         error: null
       };
-    case ActionTypes.SET_FILTERED_LIVE_FEEDS:
-      return {
-        ...state,
-        filtered_livefeeds: data,
-        loading: false,
-        error: null
-      };
+    // case ActionTypes.SET_FILTERED_LIVE_FEEDS:
+    //   return {
+    //     ...state,
+    //     filtered_livefeeds: data,
+    //     loading: false,
+    //     error: null
+    //   };
     case ActionTypes.UPDATE_LIVE_FEED:
       tempData = state.livefeeds;
       let foundIndex = state.livefeeds.findIndex(x => x._id === data._id);

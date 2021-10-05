@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./Components/Header";
@@ -20,7 +20,15 @@ function App() {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  const { project } = useSelector(state => {
+    return {
+      project: state.project,
+    };
+  });
+
+  const _isMounted = useRef(false); // Initial value _isMounted = false
+
+  useEffect( () => {
 
     async function initializeProjects() {
       dispatch({
@@ -45,9 +53,10 @@ function App() {
             type: ActionTypes.ALL_LIVE_FEEDS,
             data: livefeeds
           });
+          //Sort the livefeednews by the selected project
           dispatch({
-            type: ActionTypes.SET_FILTERED_LIVE_FEEDS,
-            data: livefeeds
+            type: ActionTypes.FILTERING_LIVE_FEED_BY_PROJECT,
+            projectData: isValid(project) && isValid(project.projectData) ? project.projectData : null,
           });
         } else {
           dispatch({
@@ -190,9 +199,10 @@ function App() {
             type: ActionTypes.ALL_LIVE_FEEDS,
             data: livefeeds
           });
+          //Sort the livefeednews by the selected project
           dispatch({
-            type: ActionTypes.SET_FILTERED_LIVE_FEEDS,
-            data: livefeeds
+            type: ActionTypes.FILTERING_LIVE_FEED_BY_PROJECT,
+            projectData: isValid(project) && isValid(project.projectData) ? project.projectData : null,
           });
         } else {
           dispatch({
@@ -383,19 +393,19 @@ function App() {
     }
     
 
-    const loadData = () => {
-      initializeProjects();
-      fetchData1();
-      // updateLivefeeds();
-      // fetchTopSales();
-      fetchDaySales();
-      fetchTopCollections();
-      fetchBiggestSalesVolume();
-      fetchGainersLoosers();
-      fetchAllCategories();
-      fetchAllChains();
-      // fetchTrading();
-      fetchTokensByMarketcap();
+    const loadData = async () => {
+      await initializeProjects();
+      await fetchData1();
+      // await updateLivefeeds();
+      // await fetchTopSales();
+      await fetchDaySales();
+      await fetchTopCollections();
+      await fetchBiggestSalesVolume();
+      await fetchGainersLoosers();
+      await fetchAllCategories();
+      await fetchAllChains();
+      // await fetchTrading();
+      await fetchTokensByMarketcap();
     }
 
     loadData();

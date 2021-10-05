@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import { useSelector} from 'react-redux';
 import SectionHeading from "../SectionHeading"
 import FeedsList from "./FeedsList"
@@ -20,11 +20,17 @@ const LiveFeedSection = ({ showDetailsPanel=false, onClickHandler }) => {
   });
 
   const [isLoaded, setIsLoaded] = useState(false);
+  const _isMounted = useRef(false); // Initial value _isMounted = false
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoaded(true);
-    }, config.LOADING_TIME);
+    if (!_isMounted) {
+      setTimeout(() => {
+        setIsLoaded(true);
+      }, config.LOADING_TIME);
+    }
+    return () => {
+      _isMounted.current = true;
+    };
   }, []); // here
 
   return (

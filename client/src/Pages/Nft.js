@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect, useRef } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import AllProjects from "../Components/NFT/AllProjects"
@@ -33,24 +33,40 @@ const Nft = () => {
 
   const [all, setAll] = useState(false);
   const [open, setOpen] = useState(false);
+  const _isMounted = useRef(false); // Initial value _isMounted = false
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoaded(true);
-    }, config.LOADING_TIME);
+    if (!_isMounted) {
+      setTimeout(() => {
+        setIsLoaded(true);
+      }, config.LOADING_TIME);
+    }
+    return () => {
+      _isMounted.current = true;
+    };
   }, []); // here
 
   useEffect(() => {
-    dispatch({
-      type: ActionTypes.CATEGORY_CHK_LIST_INITIALIZE,
-    });
-    dispatch({
-      type: ActionTypes.CHAIN_CHK_LIST_INITIALIZE,
-    });
+    if (!_isMounted) {
+      dispatch({
+        type: ActionTypes.CATEGORY_CHK_LIST_INITIALIZE,
+      });
+      dispatch({
+        type: ActionTypes.CHAIN_CHK_LIST_INITIALIZE,
+      });
+    }
+    return () => {
+      _isMounted.current = true;
+    };
   }, [category.categories, chain.chains])
 
   useEffect(() => {
-    setFilteredProjects(project.projects);
+    if (!_isMounted) {
+      setFilteredProjects(project.projects);
+    }
+    return () => {
+      _isMounted.current = true;
+    };
   }, [project.projects]);
 
   const handleChange = (e) => {
