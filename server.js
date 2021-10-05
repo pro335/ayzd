@@ -81,7 +81,8 @@ const upload = multer({
     key: function (request, file, cb) {
       cb(null, file.originalname);
     }
-  })
+  }),
+  limits: { fileSize: null }
 }).single('file_upload');
 
 app.put('/upload', upload, (req, res, next) => {
