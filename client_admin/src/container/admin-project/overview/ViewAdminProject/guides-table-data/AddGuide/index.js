@@ -15,6 +15,7 @@ import * as ActionTypes from '../../../../../../redux/ActionTypes';
 import isValid from '../../../../../../utility/isValid';
 import fileUploadToS3 from '../../../../../../utility/fileUploadToS3';
 import MainImageTableData from '../../main-image-table-data';
+import config from '../../../../../../config/config';
 
 const AddGuide = () => {
 
@@ -90,7 +91,7 @@ const AddGuide = () => {
       } else {
         media_video = {
           name: data.key,
-          url: data.location,
+          url: `${config.bucket_url}/${data.key}`,
           type: 1,
         }
       }

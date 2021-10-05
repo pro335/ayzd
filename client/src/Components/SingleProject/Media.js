@@ -43,7 +43,7 @@ const MediaList = () => {
         }}
       >
         {
-          project.projectData.media_list.map((media, index) => (
+          isValid(project) && isValid(project.projectData) && isValid(project.projectData.media_list) && project.projectData.media_list.map((media, index) => (
             image = isValid(media.url) && media.type === 0 ? media.url : `${config.bucket_url}/${config.common_image}`,
             url = isValid(media.url) ? [media.url] : [`https://www.google.com`],
 

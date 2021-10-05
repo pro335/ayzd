@@ -28,4 +28,5 @@ module.exports = (app) => {
     app.post("/api/project/updateTwitterMembersForOneProject", project.updateTwitterMembersForOneProject);
     
     // app.post("/api/project/removeUnusedUpcomingProjects", project.removeUnusedUpcomingProjects);
+    app.post("/api/project/getProjectFromUniqueId", project.getProjectFromUniqueId);    
 };

@@ -116,11 +116,11 @@ const MainImage = ({guideCategory = "project", title = null}) => {
       authorization: 'authorization-text',
     },
     beforeUpload(file) {
-      const isLtLimit = guideCategory === "guide_video" ? file.size / 1024 / 1024 < 128 : file.size / 1024 / 1024 < 8 ;
+      const isLtLimit = guideCategory === "guide_video" ? file.size / 1024 / 1024 < 128 : file.size / 1024 / 1024 < 50 ;
       if (!isLtLimit) {
         notification['error'] ({
           message: 'Error',
-          description: `File must be smaller than ${guideCategory === "guide_video" ? 128 : 8}MB!`
+          description: `File must be smaller than ${guideCategory === "guide_video" ? 128 : 50}MB!`
         });
       }
       return isLtLimit;

@@ -176,6 +176,10 @@ export const updateTwitterMembersForOneProject = (data) => {
     return axios.post("/api/project/updateTwitterMembersForOneProject", data);
 }
 
+export const getProjectFromUniqueId = (data) => {
+    return axios.post("/api/project/getProjectFromUniqueId", data);
+}
+
 // livefeed action(s)
 export const addLivefeed = (data) => {
     return axios.put("/api/livefeed/create", data);
