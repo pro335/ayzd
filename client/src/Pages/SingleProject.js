@@ -33,6 +33,27 @@ const SingleProject = () => {
           
           try {
             data = await actions.getProjectFromUniqueId({unique_id});
+            
+            //get all livefeeds
+            let resLivefeed = await actions.allLivefeeds();
+            let livefeeds = [], success = false;
+            try {
+              success = resLivefeed.data.success;
+              livefeeds = resLivefeed.data.livefeeds;
+              if(success) {
+                dispatch({
+                  type: ActionTypes.ALL_LIVE_FEEDS,
+                  data: livefeeds
+                });
+              } else {
+                dispatch({
+                  type: ActionTypes.LIVE_FEED_ERR,
+                  err: resLivefeed.data.errMessage
+                });
+              }
+            } catch (err) {
+              console.error(err);
+            }
 
             if(isValid(data)) {
               let item = data.data.data[0];

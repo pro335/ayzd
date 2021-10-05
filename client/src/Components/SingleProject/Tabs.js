@@ -38,11 +38,11 @@ const Tabs = () => {
     //   "title": "Statistics",
     // });
 
-    if(isValid(state.project.projectData) && isValid(state.project.projectData.guide_list))
-      tempButtons.push({
-        "id": 4,
-        "title": "Guides",
-      });
+    // if(isValid(state.project.projectData) && isValid(state.project.projectData.guide_list))
+    //   tempButtons.push({
+    //     "id": 4,
+    //     "title": "Guides",
+    //   });
 
     if(isValid(state.livefeed) && isValid(state.livefeed.filtered_livefeeds))
       tempButtons.push({
@@ -132,7 +132,7 @@ const Tabs = () => {
           project.activeTab === 1 ? <About /> :
             project.activeTab === 2 ? <NFTList /> :
               // project.activeTab === 3 ? <Statistics /> :
-                project.activeTab === 4 ? <Guides /> :
+                // project.activeTab === 4 ? <Guides /> :
                   project.activeTab === 5 ? <LiveFeedSection showDetailsPanel={false} onClickHandler={onClickHandler} /> :
                     project.activeTab === 6 && <SimilarProjects />
         }
