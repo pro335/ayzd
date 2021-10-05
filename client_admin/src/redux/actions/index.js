@@ -220,7 +220,7 @@ export const updateLivefeeds = () => {
 
 // file upload
 export const fileUpload = (file) => {
-    return axios.put("/upload", file, configFormData);
+    return axios.post("/upload", file, configFormData);
 }
 
 // authorization token action(s)

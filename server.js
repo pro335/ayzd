@@ -85,7 +85,7 @@ const upload = multer({
   limits: { fileSize: 512 * 1024 * 1024 }
 }).single('file_upload');
 
-app.put('/upload', upload, (req, res, next) => {
+app.post('/upload', upload, (req, res, next) => {
   if (!req.file) {
     return res.json({ success: false, errMessage: 'Please upload a file' });
   } else {
