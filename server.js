@@ -82,7 +82,7 @@ const upload = multer({
       cb(null, file.originalname);
     }
   }),
-  limits: { fileSize: null }
+  limits: { fileSize: 512 * 1024 * 1024 }
 }).single('file_upload');
 
 app.put('/upload', upload, (req, res, next) => {
