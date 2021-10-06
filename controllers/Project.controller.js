@@ -496,7 +496,7 @@ exports.updateGuide = async (req, res) =>  {
                 }
             }
 
-            await Guide.updateOne( {"_id": req.body.beforeGuideId}, { '$set': {'title': req.body.newGuide.title, 'full_description': req.body.newGuide.full_description, 'is_video_guide': req.body.newGuide.is_video_guide, 'media_video': media_video_id, 'media_image': media_image_id} } );
+            await Guide.updateOne( {"_id": req.body.beforeGuideId}, { '$set': {'title': req.body.newGuide.title, 'full_description': req.body.newGuide.full_description, 'is_video_guide': req.body.newGuide.is_video_guide, 'media_video': media_video_id, 'media_image': media_image_id, 'project': req.body.newGuide.project} } );
 
         } else {        // remove the guide id in the list of the guide
             await Project.updateOne( {_id: req.body._id}, { $pullAll: {guide_list: [req.body.beforeGuideId] } } );
@@ -508,7 +508,7 @@ exports.updateGuide = async (req, res) =>  {
     }
 
     project = await Project.findById(req.body._id).populate({path: "category", select: ["_id", "name"] }).populate({path: "chain", select: ["_id", "name"] }).populate({path: "main_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "secondary_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "newsfeedSource_list", select: ["_id", "link", "project", "keyword_list"]}).populate({path: "media_list", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "guide_list", populate: [{path: "media_video", select: ['name', 'url']}, {path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}, select: ["_id", "name", "avatar", "position", "facebook_link", "twitter_link", "dribbble_link", "instagram_link", "medium_link"] }).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]});
-    let guide_data = await Guide.findById(req.body.beforeGuideId).populate({path: "media_video", select: ['name', 'url']}).populate({path: "media_image", select: ['name', 'url']});
+    let guide_data = await Guide.findById(req.body.beforeGuideId).populate({path: "media_video", select: ['name', 'url']}).populate({path: "media_image", select: ['name', 'url']}).populate({path: "project", select: ['name']});
     res.json({success: true, guide: newGuide, isExistingProject: utility.isValid(project), updated_project: project, guide_data: guide_data });
 }
 

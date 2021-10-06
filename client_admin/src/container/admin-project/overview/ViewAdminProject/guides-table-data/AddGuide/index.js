@@ -129,6 +129,7 @@ const AddGuide = () => {
       ...guide.guideData,
       media_video: media_video,
       media_image: media_image,
+      project: project.project_id,
     };
 
     let data = {

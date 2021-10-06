@@ -197,6 +197,10 @@ export const deleteLivefeed = (id) => {
     return axios.delete(`/api/livefeed/delete/${id}`);
 }
 
+// guide action(s)
+export const allGuides = () => {
+    return axios.post("/api/guide/all");
+}
 
 // Scrape data
 export const fetchTopSales = () => {

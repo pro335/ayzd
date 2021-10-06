@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./Components/Header";
@@ -26,8 +26,6 @@ function App() {
       project: state.project,
     };
   });
-
-  const _isMounted = useRef(false); // Initial value _isMounted = false
 
   useEffect( () => {
 
@@ -101,7 +99,7 @@ function App() {
         }
       });
       projects.map((one_project, index) => {
-        if(index === 0) {
+        if(index === 0) { // if project is "Smart feed"
           temp_projects_has_news.push(one_project);
         } else {
           let foundIndex = temp_projects_has_news_id_list.findIndex(x => one_project._id === x);
@@ -114,6 +112,55 @@ function App() {
         data: temp_projects_has_news
       })
 
+      //get all guides
+      let resGuide = await actions.allGuides();
+      let guides = [];
+      try {
+        success = resGuide.data.success;
+        guides = resGuide.data.guides;
+        if(success) {
+          dispatch({
+            type: ActionTypes.ALL_GUIDES,
+            data: guides
+          });
+
+          //Sort the guides by the selected project
+          dispatch({
+            type: ActionTypes.FILTERING_GUIDE_BY_PROJECT,
+            projectData: isValid(project) && isValid(project.projectData) ? project.projectData : null,
+          });
+        } else {
+          dispatch({
+            type: ActionTypes.GUIDE_ERR,
+            err: resGuide.data.errMessage
+          });
+        }
+      } catch (err) {
+        console.error(err);
+      }
+
+      // get the projects that has guides
+      let temp_projects_has_guides = [], temp_projects_has_guides_id_list = [];
+      guides.map((one_guide) => {
+        if(isValid(one_guide) && isValid(one_guide.project) && isValid(one_guide.project._id)) {
+          let foundIndex = temp_projects_has_guides_id_list.findIndex(x => one_guide.project._id === x);
+          if(foundIndex === -1)
+            temp_projects_has_guides_id_list.push(one_guide.project._id);
+        }
+      });
+      projects.map((one_project, index) => {
+        if(index === 0) { // if project is "Smart feed"
+          temp_projects_has_guides.push(one_project);
+        } else {
+          let foundIndex = temp_projects_has_guides_id_list.findIndex(x => one_project._id === x);
+          if(foundIndex !== -1 && one_project.name !== "Research & Analytics")
+            temp_projects_has_guides.push(one_project);
+        }
+      })
+      dispatch({
+        type: ActionTypes.SET_PROJECTS_HAS_GUIDES,
+        data: temp_projects_has_guides
+      })
 
       /** Start of get upcoming projects */
       let temp_upcomings = [];
@@ -192,30 +239,30 @@ function App() {
 
     }
 
-    async function updateLivefeeds() {
-      let resLivefeed = await actions.updateLivefeeds();
-      try {
-        let { success, livefeeds } = resLivefeed.data;
-        if(success) {
-          dispatch({
-            type: ActionTypes.ALL_LIVE_FEEDS,
-            data: livefeeds
-          });
-          //Sort the livefeednews by the selected project
-          dispatch({
-            type: ActionTypes.FILTERING_LIVE_FEED_BY_PROJECT,
-            projectData: isValid(project) && isValid(project.projectData) ? project.projectData : null,
-          });
-        } else {
-          dispatch({
-            type: ActionTypes.LIVE_FEED_ERR,
-            err: resLivefeed.data.errMessage
-          });
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    }
+    // async function updateLivefeeds() {
+    //   let resLivefeed = await actions.updateLivefeeds();
+    //   try {
+    //     let { success, livefeeds } = resLivefeed.data;
+    //     if(success) {
+    //       dispatch({
+    //         type: ActionTypes.ALL_LIVE_FEEDS,
+    //         data: livefeeds
+    //       });
+    //       //Sort the livefeednews by the selected project
+    //       dispatch({
+    //         type: ActionTypes.FILTERING_LIVE_FEED_BY_PROJECT,
+    //         projectData: isValid(project) && isValid(project.projectData) ? project.projectData : null,
+    //       });
+    //     } else {
+    //       dispatch({
+    //         type: ActionTypes.LIVE_FEED_ERR,
+    //         err: resLivefeed.data.errMessage
+    //       });
+    //     }
+    //   } catch (err) {
+    //     console.error(err);
+    //   }
+    // }
     // async function fetchTopSales() {
     //   let resTopSales = await actions.fetchTopSales();
     //   try {
@@ -354,26 +401,26 @@ function App() {
         console.error(err);
       }
     }
-    async function fetchTrading() {
-      let resTrading = await actions.fetchTrading();
-      try {
-        let { success, dapps, nfts } = resTrading.data;
-        if(success) {
-          dispatch({
-            type: ActionTypes.TRADING,
-            dapps,
-            nfts,
-          });
-        } else {
-          dispatch({
-            type: ActionTypes.TRADING_ERR,
-            err: resTrading.data.errMessage
-          });
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    }
+    // async function fetchTrading() {
+    //   let resTrading = await actions.fetchTrading();
+    //   try {
+    //     let { success, dapps, nfts } = resTrading.data;
+    //     if(success) {
+    //       dispatch({
+    //         type: ActionTypes.TRADING,
+    //         dapps,
+    //         nfts,
+    //       });
+    //     } else {
+    //       dispatch({
+    //         type: ActionTypes.TRADING_ERR,
+    //         err: resTrading.data.errMessage
+    //       });
+    //     }
+    //   } catch (err) {
+    //     console.error(err);
+    //   }
+    // }
     async function fetchTokensByMarketcap() {
       let resTrading = await actions.fetchTokensByMarketcap();
       try {
