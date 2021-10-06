@@ -124,7 +124,7 @@ function App() {
             data: guides
           });
 
-          //Sort the guides by the selected project
+          //Filter guides by the selected project
           dispatch({
             type: ActionTypes.FILTERING_GUIDE_BY_PROJECT,
             projectData: isValid(project) && isValid(project.projectData) ? project.projectData : null,
@@ -150,10 +150,18 @@ function App() {
       });
       projects.map((one_project, index) => {
         if(index === 0) { // if project is "Smart feed"
-          temp_projects_has_guides.push(one_project);
+          temp_projects_has_guides.push({
+            ...one_project,
+            name: "All guides",
+            main_image: {
+              _id: "123454e83a9eb20f12345678",
+              name: "guides.png",
+              url: "https://ayzd-storage.fra1.digitaloceanspaces.com/guides.png"
+            }
+          });
         } else {
           let foundIndex = temp_projects_has_guides_id_list.findIndex(x => one_project._id === x);
-          if(foundIndex !== -1 && one_project.name !== "Research & Analytics")
+          if(foundIndex !== -1)
             temp_projects_has_guides.push(one_project);
         }
       })

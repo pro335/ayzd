@@ -6,14 +6,15 @@ import config from '../config/config';
 import * as actions from '../redux/actions';
 import * as ActionTypes from '../redux/ActionTypes';
 
-const Card = ({ item, type="nft" }) => {
+const Card = ({ item, type="nft", onClickHandler }) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const { project, rankings } = useSelector(state => {
+  const { project, rankings, guide } = useSelector(state => {
     return {
       project: state.project,
       rankings: state.rankings,
+      guide: state.guide,
     };
   });
   
@@ -77,8 +78,19 @@ const Card = ({ item, type="nft" }) => {
   
         history.push(`/projects/${item.unique_id}`);
       }
-    } else {
-      // window.open(item.coinrankingUrl, "_blank")
+    } else if(type === "guides") {
+
+      let data = guide.guides.filter(function(proj) {
+        return item._id === proj._id;
+      });
+      if(isValid(data)) {
+        dispatch({
+          type: ActionTypes.SET_GUIDE,
+          data: data[0],
+        });
+        if(typeof onClickHandler === "function")
+          onClickHandler();
+      }
     }
   }
 
@@ -98,21 +110,22 @@ const Card = ({ item, type="nft" }) => {
       else
         media = `${config.bucket_url}/${config.common_image}`;
     }
-  } else {
+  } else if(type === "guides") {
+    if(isValid(item.media_image) && isValid(item.media_image.url))
+      media = item.media_image.url;
+    else
+      media = `${config.bucket_url}/${config.common_image}`;
+  } else {    
     media = isValid(item) && isValid(item.image) ? item.image : '../assets/images/default_image.svg';
   }
   return (
-    <div className={type === "categories" ? "hover:cursor-pointer" : ""} onClick={handleClick}>
+    <div className={type === "categories" || type === "guides" ? "hover:cursor-pointer" : ""} onClick={handleClick}>
       <div className="bg-brand-gray-800 border border-brand-gray-800 rounded-xl overflow-hidden">
         <div
-          className="block h-41 xl:h-52"
+          className="block h-41 xl:h-52 relative"
         >
-          {
-            type === "categories" ?
-              <img className="w-full h-full object-cover" src={media} alt="" />
-              :
-              <img className="w-full h-full object-cover" src={media} alt="" onError={addDefaultSrc} />
-          }
+          <img className="w-full h-full object-cover" src={media} alt="" onError={addDefaultSrc} />
+          <img className={`${type==="guides" && item.is_video_guide ? "visible": "invisible"} absolute inset-y-0 top-0 ml-2 mt-2`} src="../assets/icons/video.svg" alt="" />
         </div>
         <div className="text-xs font-medium pl-3 py-2 pr-5">
           {
@@ -126,18 +139,34 @@ const Card = ({ item, type="nft" }) => {
                     {item.name}
                   </p>
                 </>
-              ) : (
-                <>
-                  <p >
-                    {item.name}
-                  </p>
-                  <p className="text-brand-gray-400 font-bold">
-                    {item.dappName}
-                  </p>
-                  <p className="text-sm text-gray-300">
-                    $ {Math.round(item.priceInDollar * 100)/100}
-                  </p>
-                </>
+              ) 
+              : 
+              (
+                type === "guides" ?
+                (
+                  <>
+                    <p className="capitalize">
+                      {isValid(item.project) ? item.project.name : ""}
+                    </p>
+                    <p className="text-sm text-gray-300">
+                      {item.title}
+                    </p>
+                  </>
+                )
+                :
+                (
+                  <>
+                    <p >
+                      {item.name}
+                    </p>
+                    <p className="text-brand-gray-400 font-bold">
+                      {item.dappName}
+                    </p>
+                    <p className="text-sm text-gray-300">
+                      $ {Math.round(item.priceInDollar * 100)/100}
+                    </p>
+                  </>
+                )
               )
           }
 

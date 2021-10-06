@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import SectionHeading from "./../SectionHeading";
 import LeftDateList from "./LeftDateList"
-import MobileSelectProjects from "./MobileSelectProjects";
 import { useSelector, useDispatch } from 'react-redux';
 import * as actions from '../../redux/actions';
 import * as ActionTypes from '../../redux/ActionTypes';

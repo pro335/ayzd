@@ -12,15 +12,16 @@ import * as ActionTypes from '../../redux/ActionTypes';
 
 var moment = require('moment');
 
-export default function FeedModal({ open, setOpen }) {
+export default function FeedModal({ open, setOpen, type="dashboard" }) {
 
   const dispatch = useDispatch();
   const history = useHistory();
   
-  const { livefeed, project } = useSelector(state => {
+  const { livefeed, project, guide } = useSelector(state => {
     return {
       livefeed: state.livefeed,
       project: state.project,
+      guide: state.guide,
     };
   });
 
@@ -70,6 +71,9 @@ export default function FeedModal({ open, setOpen }) {
   }
 
   const handleClick = (proj) => {
+
+    if(type === "guides" && isValid(proj) && isValid(proj.name) && (proj.name === "Research & Analytics") )
+      return;
       
     let data = project.projects.filter(function(item) {
       return item._id === proj._id;
@@ -94,7 +98,11 @@ export default function FeedModal({ open, setOpen }) {
     e.target.src = '../assets/images/default_image.svg';
   }
 
-  const main_image =  isValid(livefeedData.project) && isValid(livefeedData.project.main_image) ? livefeedData.project.main_image.url : `${config.bucket_url}/${config.common_image}`;
+  let main_image = null;
+  if(type === "dashboard" )
+    main_image = isValid(livefeedData.project) && isValid(livefeedData.project.main_image) ? livefeedData.project.main_image.url : `${config.bucket_url}/${config.common_image}`;
+  else if(type === "guides")
+    main_image = isValid(guide.guideData) && isValid(guide.guideData.project) && isValid(guide.guideData.project.main_image) ? guide.guideData.project.main_image.url : `${config.bucket_url}/${config.common_image}`;
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -122,8 +130,8 @@ export default function FeedModal({ open, setOpen }) {
               leaveFrom="translate-x-0"
               leaveTo="translate-x-full"
             >
-              <div className="w-screen max-w-2xl">
-
+              <div className="w-screen max-w-2xl">                
+                {type === "dashboard" &&
                 <div className="h-full flex flex-col py-6 bg-brand-gray-900 border-l border-brand-gray-800 shadow-xl overflow-y-scroll">
                   {/* <!-- Modal Heading --> */}
                   <div className="border-b border-brand-gray-800 pb-7 px-6">
@@ -246,7 +254,55 @@ export default function FeedModal({ open, setOpen }) {
                       </button>
                     </div>
                   </div> */}
-                </div>
+                </div>}
+
+                {type === "guides" && isValid(guide) && isValid(guide.guideData) &&
+                <div className="h-full flex flex-col py-6 bg-brand-gray-900 border-l border-brand-gray-800 shadow-xl overflow-y-scroll">
+                  {/* <!-- Modal Heading --> */}
+                  <div className="border-b border-brand-gray-800 pb-7 px-6">
+
+                    <div className="flex items-start justify-between text-brand-gray-300">
+                      <h2 className="text-lg font-semibold">
+                        {guide.guideData.title}
+                      </h2>
+                      <div className="ml-7 flex items-center">
+                        <button type="button" aria-label="Top Right" className="focus:outline-none ml-auto" onClick={() => setOpen(false)}>
+                          <span className="sr-only">Close panel</span>
+                          <XIcon className="h-6 w-6" aria-hidden="true" />
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center flex-wrap text-xs text-brand-gray-600 font-medium md:space-x-3 mt-1">
+                      { isValid(guide.guideData.project) && (guide.guideData.project.name !== "Smart feed" && guide.guideData.project.name !== "All guides") ? 
+                        <div 
+                          className={`flex items-center border border-brand-gray-800 rounded-xl px-2 py-1 ${guide.guideData.project.name !== "Research & Analytics" ? "hover:cursor-pointer" : ""}`} 
+                          onClick={() => handleClick(guide.guideData.project)}
+                        >
+                          <div className="w-6 h-6 bg-brand-gray-900 mr-2">
+                            <img className={`mx-auto h-full ${guide.guideData.project.name !== "Research & Analytics" ? "rounded-full" : ""}`} src={main_image} alt={guide.guideData.project.name} />
+                          </div>
+                          <p className="text-sm text-gray-200">
+                            { guide.guideData.project.name }
+                          </p>
+                        </div>
+                        :
+                        null
+                      }
+                    </div>
+                    <div>
+                      {/* <!-- Image or video --> */}
+                      <div className="h-44 rounded-md overflow-hidden py-4">
+                        {/* {isValid(guide) && isValid(guide.guideData) && !guide.guideData.is_video_guide && isValid(guide.guideData.media_image) ? */}
+                          <img className="w-full h-full object-cover object-center" src={guide.guideData.media_image.url} alt="" onError={addDefaultSrc} />
+                          {/* :
+                          null
+                        } */}
+                      </div>
+                      <p className="text-sm text-brand-gray-400" dangerouslySetInnerHTML={{__html: guide.guideData.full_description}} />
+                    </div>                    
+                  </div>
+                </div>}
               </div>
             </Transition.Child>
           </div>

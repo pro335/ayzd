@@ -1,6 +1,8 @@
 import * as ActionTypes from '../ActionTypes';
+import isValid from '../../utility/isValid';
 const initState = {
   guides: [],
+  guides_show_list: [],   // guide list in the guide page to show
   guide_id: null,
   guide_action: "create", // "create": create, "read": read, "update": update, "delete": delete
   guideData: null,
@@ -72,6 +74,27 @@ const GuideReducer = (state = initState, action) => {
       return {
         ...state,
         guideData: data
+      }
+    case ActionTypes.SET_GUIDES_SHOW_LIST:
+      return {
+        ...state,
+        guides_show_list: data,
+        loading: false,
+        error: null
+      };      
+    case ActionTypes.FILTERING_GUIDE_BY_PROJECT:
+      let projectData = action.projectData;
+
+      if( !isValid(projectData) || projectData.name === "All guides") {
+        return {
+          ...state,
+          guides_show_list: [...state.guides.filter(x => x.project.name !== "Smart feed")],
+        }
+      } else {
+        return {
+          ...state,
+          guides_show_list: [...state.guides.filter(x => x.project.name === projectData.name)],
+        }
       }
       
     default:

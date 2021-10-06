@@ -3,6 +3,8 @@ const initState = {
   projects: [],
   projects_has_news: [],    // project list in the dashboard page(only projects that has the live news) 
   projects_has_news_show_list: [],    // project list in the dashboard page(only projects that has the live news) to show
+  projects_has_guides: [],    // project list in the guides page(only projects that has the guides) 
+  projects_has_guides_show_list: [],    // project list in the guides page(only projects that has the guides) to show
   upcomings: [],    // whole upcoming projects
   upcoming_show_list: [],   // upcoming projects to show
   upcoming_date_list: [],   // data for left side bar in Drop Calendar menu
@@ -150,7 +152,18 @@ const ProjectReducer = (state = initState, action) => {
         upcoming_show_list: action.upcoming_show_list,
         current_date_label: action.current_date_label,
       }      
-
+    case ActionTypes.SET_PROJECTS_HAS_GUIDES:
+      return {
+        ...state,
+        projects_has_guides: data,
+        projects_has_guides_show_list: data,
+      }
+    case ActionTypes.SET_PROJECTS_HAS_GUIDES_SHOW_LIST:
+      return {
+        ...state,
+        projects_has_guides_show_list: data,
+      }
+      
     default:
       return state;
   }
