@@ -8,7 +8,7 @@ import isValid from '../../utility/isValid';
 import reduceTextLengh from '../../utility/reduceTextLengh';
 import useWindowDimensions from '../../utility/useWindowDimensions';
 
-const FeedsList = ({ feeds, onClickHandler }) => {
+const FeedsList = ({ onClickHandler }) => {
   const isTabletOrMobile = useMediaQuery({ query: '(max-width: 767px)' })
   const dispatch = useDispatch();
   const { height, width } = useWindowDimensions();

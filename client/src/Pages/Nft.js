@@ -4,7 +4,7 @@ import { XIcon } from '@heroicons/react/outline'
 import AllProjects from "../Components/NFT/AllProjects"
 import NFTSidebar from "../Components/NFT/NFTSidebar"
 import NotFound from "../Components/NFT/NotFound"
-import data from '../data.json'
+// import data from '../data.json'
 import SortButton from "../Components/NFT/SortButton"
 import { useSelector, useDispatch } from 'react-redux';
 import isValid from '../utility/isValid';
@@ -118,7 +118,7 @@ const Nft = () => {
     let value = event.target.value.toLowerCase();
     let result = [];
 
-    result = projects.filter((data) => data.name.toLowerCase().search(value) !== -1);
+    // result = projects.filter((data) => data.name.toLowerCase().search(value) !== -1);
     setFilteredProjects(result);
   }
 
@@ -142,7 +142,7 @@ const Nft = () => {
         {/* Content */}
         <div className="h-full w-full grid lg:grid-cols-6 lg:overflow-hidden pt-16">
           <div className="hidden lg:block border-r border-brand-gray-800 overflow-y-scroll pb-4">
-            <NFTSidebar projects={data} handleChange={handleChange} all={all} />
+            <NFTSidebar handleChange={handleChange} all={all} />
           </div>
 
           {/* Sorting */}
@@ -235,7 +235,7 @@ const Nft = () => {
                       <span>Sort</span>
                     </button>
                     <div className="relative flex-1 mt-2">
-                      <NFTSidebar projects={data} handleChange={handleChange} all={all} />
+                      <NFTSidebar handleChange={handleChange} all={all} />
                     </div>
                   </div>
 

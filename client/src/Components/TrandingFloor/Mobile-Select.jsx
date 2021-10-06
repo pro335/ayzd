@@ -11,7 +11,7 @@ import * as ActionTypes from '../../redux/ActionTypes';
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
-const MobileSelect = ({ projects }) => {
+const MobileSelect = () => {
   const dispatch = useDispatch();
 
   const { dapps } = useSelector(state => {

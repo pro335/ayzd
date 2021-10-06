@@ -31,7 +31,7 @@ const Upcoming = () => {
   const handleFormData = (props, values, allFieldsValues) => {
     if(isValid(props) && isValid(Object.keys(props)) && isValid(Object.keys(props)[0]) && isValid(Object.values(props)) && isValid(Object.values(props)[0])) {
       let key = Object.keys(props)[0], value = Object.values(props)[0];
-      if(key === "price" || key === "mint_size") {
+      if(key === "mint_size") {
         let tempValue = value;
         value = Number(tempValue);
       }

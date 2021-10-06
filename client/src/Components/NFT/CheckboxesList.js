@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
 import SectionHeading from "./../SectionHeading";
-import data from '../../data.json'
 import { useSelector, useDispatch } from 'react-redux';
 import isValid from '../../utility/isValid';
 import config from '../../config/config';

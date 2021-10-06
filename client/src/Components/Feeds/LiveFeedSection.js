@@ -3,7 +3,6 @@ import { useSelector} from 'react-redux';
 import SectionHeading from "../SectionHeading"
 import FeedsList from "./FeedsList"
 import Banner from "../NBA/Banner";
-import data from '../../data.json'
 import isValid from '../../utility/isValid';
 import LottieAnimation from '../Lottie/Lottie';
 import LOTTIE_DATA from '../Lottie/data.json';
@@ -51,7 +50,7 @@ const LiveFeedSection = ({ showDetailsPanel=false, onClickHandler }) => {
         {/* <!-- End --> */}
 
         { isValid(livefeed.filtered_livefeeds) ?
-          <FeedsList feeds={data.livenews} onClickHandler={onClickHandler} />
+          <FeedsList onClickHandler={onClickHandler} />
           :
           ( !isLoaded ?
             <div className="h-full flex flex-col justify-center items-center pb-15">

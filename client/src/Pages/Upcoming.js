@@ -2,7 +2,6 @@ import { Fragment, useState, useEffect, useRef } from 'react'
 import AllProjects from "../Components/Upcoming/AllProjects"
 import CalendarSidebar from "../Components/Upcoming/CalendarSidebar"
 import NotFound from "../Components/NFT/NotFound"
-import data from '../data.json'
 import SortButton from "../Components/Upcoming/SortButton"
 import MobileSelectProjects from "../Components/Upcoming/MobileSelectProjects"
 import { useSelector, useDispatch } from 'react-redux';

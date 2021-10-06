@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import isValid from '../../utility/isValid';
 import config from '../../config/config';
 
-const NFTSidebar = ({ projects, handleChange, all }) => {
+const NFTSidebar = ({ handleChange, all }) => {
 
   const { category, chain } = useSelector(state => {
     return {

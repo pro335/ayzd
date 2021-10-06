@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import SectionHeading from "../Components/SectionHeading"
-import data from '../data.json'
 import MobileSelect from "../Components/TrandingFloor/Mobile-Select";
 import Settings from "../Components/TrandingFloor/Settings";
 import { useSelector, useDispatch } from 'react-redux';
@@ -71,7 +70,7 @@ const Trading = () => {
             </div>
 
             <div className="w-full bg-brand-gray-900 fixed lg:hidden z-40 px-4 sm:px-5 pb-1">
-              <MobileSelect projects={data.trading} />
+              <MobileSelect />
 
               <div className="w-full pt-3">
                 <button

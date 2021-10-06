@@ -7,8 +7,6 @@ import * as actions from '../../redux/actions';
 import * as ActionTypes from '../../redux/ActionTypes';
 import isValid from '../../utility/isValid';
 
-import data from '../../data.json'
-
 const CalendarList = ({ all, title, icon, classes }) => {
 
   const { project, isActive } = useSelector(state => {

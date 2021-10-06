@@ -5,6 +5,7 @@ import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import Dashboard from "./Pages/Dashboard";
 import Upcoming from "./Pages/Upcoming";
+import Guides from "./Pages/Guides";
 import Nft from "./Pages/Nft";
 import Rankings from "./Pages/Rankings";
 import Trading from "./Pages/Trading";
@@ -434,6 +435,7 @@ function App() {
             <Route exact path="/trading" component={Trading} />
             <Route exact path="/projects/:project_unique_id" component={SingleProject} />
             <Route exact path="/drops" component={Upcoming} />
+            <Route path="/guides" component={Guides} />
             <Route path="/" component={Dashboard} />
           </Switch>
         </main>

@@ -2,7 +2,6 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import AllProjects from "../NFT/AllProjects"
-import data from "../../data.json"
 import SectionHeading from "./../SectionHeading";
 import NFTListSelects from "./NFTListSelects";
 import { useSelector, useDispatch } from 'react-redux';
