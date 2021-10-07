@@ -193,8 +193,8 @@ export default function MobileSelectProjects({ type="dashboard" }) {
                         key={index}
                         className={({ active }) =>
                           classNames(
-                            active ? 'text-white bg-indigo-600' : 'rounded-lg',
-                            'cursor-default select-none relative py-2 pl-3 pr-9 rounded-lg'
+                            active ? 'text-white bg-indigo-600' : '',
+                            'cursor-default select-none relative py-2 pl-3 pr-9'
                           )
                         }
                         value={person}
