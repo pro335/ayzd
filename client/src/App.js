@@ -154,9 +154,9 @@ function App() {
             ...one_project,
             name: "All guides",
             main_image: {
-              _id: "123454e83a9eb20f12345678",
-              name: "guides.png",
-              url: "https://ayzd-storage.fra1.digitaloceanspaces.com/guides.png"
+              _id: "123454e83a9eb20f12345678",    // fake mongodb id
+              name: "all_guides.svg",
+              url: "https://ayzd-storage.fra1.digitaloceanspaces.com/all_guides.svg"
             }
           });
         } else {

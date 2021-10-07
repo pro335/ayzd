@@ -102,7 +102,7 @@ const Sidebar = ({type="dashboard"}) => {
             <div className="relative h-full flex items-center">
               <input
                 className="h-10 w-full bg-brand-gray-900 text-gray-300 placeholder-brand-gray-400 border border-brand-gray-800 focus:outline-none focus:border-brand-AYZD-PURPLE rounded-md pl-10 pr-4"
-                type="text" placeholder={`Search ${type === "dashboard" ? "project" : "guides"}...`}
+                type="text" placeholder={`Search ${type === "dashboard" ? "project" : "project"}...`}
                 onChange={e => handleSearch(e)}
               />
 

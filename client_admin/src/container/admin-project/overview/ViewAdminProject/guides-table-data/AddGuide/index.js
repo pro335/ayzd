@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Row, Col, Spin, Checkbox, notification } from 'antd';
 import { Switch, useHistory } from 'react-router-dom';
@@ -20,6 +20,7 @@ import config from '../../../../../../config/config';
 const AddGuide = () => {
 
   const history = useHistory();
+  const [isUploading, setIsUploading] = useState(false);
   
   const dispatch = useDispatch();
   
@@ -73,6 +74,9 @@ const AddGuide = () => {
       });
       return;
     }
+
+    // show the preloader.
+    setIsUploading(true);
 
     //Code for video guide(whether uploading video or not)
     let media_video = null;
@@ -207,6 +211,9 @@ const AddGuide = () => {
       });
     }
 
+    // hide the preloader.
+    setIsUploading(false);
+
     // history.goBack();
     history.push("/admin/admin-project/view");
   }
@@ -284,7 +291,7 @@ const AddGuide = () => {
                       <Button onClick={saveGuide} key="1" type="primary" size="default">
                         <FeatherIcon icon="plus" size={16} /> {guide.guide_action === "create" ? "Add Guide" : "Update Guide"}
                       </Button>
-                      <div style={{display: "block", marginTop: "10px", marginLeft: "10px"}} className="spin">
+                      <div style={{display: isUploading ? "block" : "none", marginTop: "10px", marginLeft: "10px"}} className="spin">
                         <Spin />
                       </div>
                     </Col>

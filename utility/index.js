@@ -6,7 +6,7 @@ exports.isValid = (data) =>  {
   return true;
 }
 
-// Create live feed news from source, keywords and project.
+// Create live feed news from source.
 exports.parseRss = async (source) => {
 
   let rssParser = null;

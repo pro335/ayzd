@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Form, Select, Upload, notification } from 'antd';
+import { Form, Select, Upload, Spin, notification } from 'antd';
 import propTypes from 'prop-types';
 import { Button } from '../../../../../components/buttons/buttons';
 import { Modal } from '../../../../../components/modals/antd-modals';
@@ -16,6 +16,7 @@ const { Option } = Select;
 
 const AddMediaTableData = ({ visible, onCancel, mediaCategory = 1, mediaId = 0, mediaAction = 1 }) => {
   const dispatch = useDispatch();
+  const [isUploading, setIsUploading] = useState(false);
 
   /**
    * Description about the each parameters
@@ -199,6 +200,9 @@ const AddMediaTableData = ({ visible, onCancel, mediaCategory = 1, mediaId = 0, 
   };
 
   const processFunc = async () => {
+
+    // show the preloader.
+    setIsUploading(true);
 
     if(mediaCategory === 0 && mediaAction === 1) {    // if update main image
       let main_image = null;
@@ -620,6 +624,10 @@ const AddMediaTableData = ({ visible, onCancel, mediaCategory = 1, mediaId = 0, 
         }
       })
     }    
+
+    // show the preloader.
+    setIsUploading(true);
+
     onCancel();
   };
 
@@ -639,13 +647,16 @@ const AddMediaTableData = ({ visible, onCancel, mediaCategory = 1, mediaId = 0, 
       title={title}
       visible={state.visible}
       footer={[
-        <div key="1">
-          <Button size="default" type="white" key="back" outlined onClick={handleCancel}>
+        <div key="1" style={{display: "flex"}}>
+          <Button size="default" type="white" key="back" outlined onClick={handleCancel} style={{marginLeft: "auto"}}>
             Cancel
           </Button>
           <Button size="default" type="primary" key="submit" onClick={handleOk}>
             Save & Next
           </Button>
+          <div style={{display: isUploading ? "block" : "none", marginTop: "10px", marginLeft: "10px"}}>
+            <Spin />
+          </div>
         </div>,
       ]}
       onCancel={handleCancel}
