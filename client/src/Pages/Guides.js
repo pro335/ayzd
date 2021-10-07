@@ -45,7 +45,7 @@ const Guides = () => {
         <Sidebar type={"guides"} />
         <div className="h-full pb-5 lg:col-span-5 mt-6 lg:mt-0 overflow-hidden">
           { isValid(project) && ( !isValid(project.projectData) || (isValid(project.projectData) && project.projectData.name === "All guides" ) ) ?
-            <MainBanner />
+            <MainBanner onClickHandler={onClickHandler} />
             :
             <Banner type={"guides"} />
           }

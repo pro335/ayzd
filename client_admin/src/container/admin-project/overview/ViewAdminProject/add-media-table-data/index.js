@@ -10,6 +10,7 @@ import isValid from '../../../../../utility/isValid';
 import * as ActionTypes from '../../../../../redux/ActionTypes';
 import * as actions from '../../../../../redux/actions';
 import fileUploadToS3 from '../../../../../utility/fileUploadToS3';
+import config from '../../../../../config/config';
 
 const { Option } = Select;
 
@@ -481,8 +482,8 @@ const AddMediaTableData = ({ visible, onCancel, mediaCategory = 1, mediaId = 0, 
         } else {
           media_video = {
             name: data.key,
-            url: data.location,
-            type: 0,
+            url: `${config.bucket_url}/${data.key}`,
+            type: 1,
             relation: 5,
           }
         }
