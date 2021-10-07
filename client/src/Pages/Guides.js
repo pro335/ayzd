@@ -44,12 +44,12 @@ const Guides = () => {
       <div className="h-full w-full grid lg:grid-cols-6 lg:overflow-hidden">
         <Sidebar type={"guides"} />
         <div className="h-full pb-5 lg:col-span-5 mt-6 lg:mt-0 overflow-hidden">
-          { isValid(project) && ( !isValid(project.projectData) || (isValid(project.projectData) && project.projectData.name === "All guides" ) ) ?
-            <MainBanner onClickHandler={onClickHandler} />
-            :
-            <Banner type={"guides"} />
-          }
           <div className="h-full overflow-y-scroll">
+            { isValid(project) && ( !isValid(project.projectData) || (isValid(project.projectData) && project.projectData.name === "All guides" ) ) ?
+              <MainBanner onClickHandler={onClickHandler} />
+              :
+              <Banner type={"guides"} />
+            }
             { isValid(guide.guides_show_list) ?
                 <AllProjects projects={guide.guides_show_list} type="guides" onClickHandler={onClickHandler} />
                 :

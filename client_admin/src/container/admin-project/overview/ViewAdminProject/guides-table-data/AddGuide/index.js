@@ -280,10 +280,13 @@ const AddGuide = () => {
                         </Col>
                       </Row>
                     </Col>
-                    <Col xs={24}>
+                    <Col xs={24} style={{display: "flex"}}>
                       <Button onClick={saveGuide} key="1" type="primary" size="default">
                         <FeatherIcon icon="plus" size={16} /> {guide.guide_action === "create" ? "Add Guide" : "Update Guide"}
                       </Button>
+                      <div style={{display: "block", marginTop: "10px", marginLeft: "10px"}} className="spin">
+                        <Spin />
+                      </div>
                     </Col>
                   </Row>
                 </Suspense>
