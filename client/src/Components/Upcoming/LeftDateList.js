@@ -73,14 +73,14 @@ const LeftDateList = ({ isActive, activeHandler }) => {
         project.upcoming_date_list.map((item, index) => {
           return (
             <div
-              className={`${isActive === item.date ? 'bg-brand-gray-800 text-gray-200' : ''} h-10 hover:bg-brand-gray-800 hover:cursor-pointer rounded-lg flex items-center text-brand-gray-600 hover:text-gray-200 onHover px-3 py-2`}
+              className={`${isActive === item.date ? 'bg-brand-gray-800 text-white' : ''} h-10 hover:bg-brand-gray-800 hover:cursor-pointer rounded-lg flex items-center text-brand-gray-600 hover:text-white onHover px-3 py-2`}
               onClick={() => handleClick(item)}
               key={index}
             >
               <p>
                 {item.date}
               </p>
-              <span className="ml-auto inline-flex items-center justify-center px-3 py-1 text-xs font-bold leading-none text-red-100 bg-black" style={{ border: '1px solid #1D1D1D', borderRadius: '6px' }}>{item.count}</span>
+              <span className={`${isActive === item.date ? 'text-white' : ''} ml-auto inline-flex items-center justify-center px-3 py-1 text-xs font-bold leading-none bg-black`} style={{ border: '1px solid #1D1D1D', borderRadius: '6px' }}>{item.count}</span>
             </div>
           )
         })
