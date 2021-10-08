@@ -23,7 +23,7 @@ const MainBanner = ({onClickHandler}) => {
   }
 
   return (
-    <div className="h-40 relative flex flex-col md:flex-row md:items-center justify-between bg-base z-40 px-5 py-5 md:pl-9 md:pr-6 mt-5 lg:mt-0">
+    <div className="h-72 relative flex flex-col md:flex-row md:items-center justify-between bg-base z-40 px-5 py-5 md:pl-9 md:pr-6 mt-5 lg:mt-0">
       <div>
         <h4 className="text-xl text-gray-100 font-bold leading-6">
           Getting started with NFTs

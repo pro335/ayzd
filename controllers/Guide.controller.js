@@ -14,7 +14,7 @@ exports.createGuide = async (req, res) =>  {
 }
 
 exports.allGuides = async (req, res) =>  {
-    Guide.find().populate({path: "media_video", select: ['name', 'url']}).populate({path: "media_image", select: ['name', 'url']}).populate({path: "project", select: ['name', 'main_image'], populate: {path: "main_image", select: ["name", "url"]} })
+    Guide.find().populate({path: "media_image", select: ['name', 'url']}).populate({path: "project", select: ['name', 'main_image'], populate: {path: "main_image", select: ["name", "url"]} })
     .exec(function(err, guides) {
         if (err) {
             return res.json({success: false, errMessage: "Unknown errors occurred while getting whole guides."});

@@ -58,7 +58,7 @@ exports.createProject = async (req, res) =>  {
 
         //Add new project
         await Project.insertMany(newProject);
-        let project = await Project.findById(newProject._id).populate({path: "category", select: ["_id", "name"] }).populate({path: "chain", select: ["_id", "name"] }).populate({path: "main_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "secondary_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "newsfeedSource_list", select: ["_id", "link", "project", "keyword_list"]}).populate({path: "media_list", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "guide_list", populate: [{path: "media_video", select: ['name', 'url']}, {path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}, select: ["_id", "name", "avatar", "position", "facebook_link", "twitter_link", "dribbble_link", "instagram_link", "medium_link"] }).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]});
+        let project = await Project.findById(newProject._id).populate({path: "category", select: ["_id", "name"] }).populate({path: "chain", select: ["_id", "name"] }).populate({path: "main_image", select: [ "_id", "name", "url", "type" ] }).populate({path: "secondary_image", select: [ "_id", "name", "url", "type" ] }).populate({path: "newsfeedSource_list", select: ["_id", "link", "project", "keyword_list"]}).populate({path: "media_list", select: [ "_id", "name", "url", "type" ] }).populate({path: "guide_list", populate: [{path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}, select: ["_id", "name", "avatar", "position", "facebook_link", "twitter_link", "dribbble_link", "instagram_link", "medium_link"] }).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]});
         res.json({success: true, project: project});
     } catch(err) {
         console.log(err);
@@ -97,7 +97,6 @@ exports.createFromUrl = async (req, res) =>  {
                 name: utility.isValid(dapp.name) ? dapp.name : "",
                 url: dapp.image,
                 type: 0,
-                relation: 0
             });
 
             await Media.insertMany(newMedia);
@@ -161,7 +160,7 @@ exports.createFromUrl = async (req, res) =>  {
         //Add new project
         await Project.insertMany(newProject);
 
-        let project = await Project.findById(newProject._id).populate({path: "category", select: ["_id", "name"] }).populate({path: "chain", select: ["_id", "name"] }).populate({path: "main_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "secondary_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "newsfeedSource_list", select: ["_id", "link", "project", "keyword_list"]}).populate({path: "media_list", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "guide_list", populate: [{path: "media_video", select: ['name', 'url']}, {path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}, select: ["_id", "name", "avatar", "position", "facebook_link", "twitter_link", "dribbble_link", "instagram_link", "medium_link"] }).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]});
+        let project = await Project.findById(newProject._id).populate({path: "category", select: ["_id", "name"] }).populate({path: "chain", select: ["_id", "name"] }).populate({path: "main_image", select: [ "_id", "name", "url", "type" ] }).populate({path: "secondary_image", select: [ "_id", "name", "url", "type" ] }).populate({path: "newsfeedSource_list", select: ["_id", "link", "project", "keyword_list"]}).populate({path: "media_list", select: [ "_id", "name", "url", "type" ] }).populate({path: "guide_list", populate: [{path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}, select: ["_id", "name", "avatar", "position", "facebook_link", "twitter_link", "dribbble_link", "instagram_link", "medium_link"] }).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]});
         res.json({success: true, project: project});
     } catch(err) {
         return res.json({success: false, errMessage: JSON.stringify(err)});
@@ -169,7 +168,7 @@ exports.createFromUrl = async (req, res) =>  {
 }
 
 exports.allProjects = async (req, res) =>  {
-    Project.find().populate("category").populate("chain").populate("main_image").populate("secondary_image").populate("newsfeedSource_list").populate("media_list").populate({path: "guide_list", populate: [{path: "media_video", select: ['name', 'url']}, {path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}}).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]})
+    Project.find().populate("category").populate("chain").populate("main_image").populate("secondary_image").populate("newsfeedSource_list").populate("media_list").populate({path: "guide_list", populate: [{path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}}).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]})
     .exec(function(err, projects) {
         if (err) {
             console.log("err", err)
@@ -248,7 +247,7 @@ exports.updateProject = async (req, res) =>  {
         // Add new project
         await Project.updateOne( {"_id": req.body._id}, { '$set': {'name': req.body.name, 'category': req.body.category, 'chain': req.body.chain, 'small_description': req.body.small_description, 'full_description': req.body.full_description, 'btn_label': req.body.btn_label, 'btn_url': req.body.btn_url, 'main_image': new_main_image, 'secondary_image': new_secondary_image, 'app_link': req.body.app_link, 'twitter_link': req.body.twitter_link, 'telegram_link': req.body.telegram_link, 'discord_link': req.body.discord_link, 'similar_list': req.body.similar_list, 'newsfeedSource_list': newsfeedSource_list, 'unique_id': unique_id, 'isUpcoming': req.body.isUpcoming, 'price': req.body.price, 'upcoming_date': req.body.upcoming_date, 'mint_size': req.body.mint_size, 'discord_members': newProject.discord_members, 'twitter_members': newProject.twitter_members, 'score_team': req.body.score_team, 'score_uniqueness': req.body.score_uniqueness, 'score_community': req.body.score_community, 'score_v_quality': req.body.score_v_quality, 'score_v_potential': req.body.score_v_potential, 'score_utility': req.body.score_utility } } );
 
-        let project = await Project.findById(req.body._id).populate({path: "category", select: ["_id", "name"] }).populate({path: "chain", select: ["_id", "name"] }).populate({path: "main_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "secondary_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "newsfeedSource_list", select: ["_id", "link", "project", "keyword_list"]}).populate({path: "media_list", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "guide_list", populate: [{path: "media_video", select: ['name', 'url']}, {path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}, select: ["_id", "name", "avatar", "position", "facebook_link", "twitter_link", "dribbble_link", "instagram_link", "medium_link"] }).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]});
+        let project = await Project.findById(req.body._id).populate({path: "category", select: ["_id", "name"] }).populate({path: "chain", select: ["_id", "name"] }).populate({path: "main_image", select: [ "_id", "name", "url", "type" ] }).populate({path: "secondary_image", select: [ "_id", "name", "url", "type" ] }).populate({path: "newsfeedSource_list", select: ["_id", "link", "project", "keyword_list"]}).populate({path: "media_list", select: [ "_id", "name", "url", "type" ] }).populate({path: "guide_list", populate: [{path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}, select: ["_id", "name", "avatar", "position", "facebook_link", "twitter_link", "dribbble_link", "instagram_link", "medium_link"] }).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]});
         res.json({success: true, project: project});
     } catch(err) {
         console.log(err);
@@ -285,7 +284,7 @@ exports.updateMainImage = async (req, res) =>  {
         return res.json({success: false, errMessage: "Unknown errors occurred while updating the main image of the project."});
     }
 
-    project = await Project.findById(req.body._id).populate({path: "category", select: ["_id", "name"] }).populate({path: "chain", select: ["_id", "name"] }).populate({path: "main_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "secondary_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "newsfeedSource_list", select: ["_id", "link", "project", "keyword_list"]}).populate({path: "media_list", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "guide_list", populate: [{path: "media_video", select: ['name', 'url']}, {path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}, select: ["_id", "name", "avatar", "position", "facebook_link", "twitter_link", "dribbble_link", "instagram_link", "medium_link"] }).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]});
+    project = await Project.findById(req.body._id).populate({path: "category", select: ["_id", "name"] }).populate({path: "chain", select: ["_id", "name"] }).populate({path: "main_image", select: [ "_id", "name", "url", "type" ] }).populate({path: "secondary_image", select: [ "_id", "name", "url", "type" ] }).populate({path: "newsfeedSource_list", select: ["_id", "link", "project", "keyword_list"]}).populate({path: "media_list", select: [ "_id", "name", "url", "type" ] }).populate({path: "guide_list", populate: [{path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}, select: ["_id", "name", "avatar", "position", "facebook_link", "twitter_link", "dribbble_link", "instagram_link", "medium_link"] }).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]});
     res.json({success: true, media: newMedia, isExistingProject: utility.isValid(project), updated_project: project });
 }
 
@@ -317,7 +316,7 @@ exports.updateSecondaryImage = async (req, res) =>  {
         return res.json({success: false, errMessage: "Unknown errors occurred while updating the main image of the project."});
     }
 
-    project = await Project.findById(req.body._id).populate({path: "category", select: ["_id", "name"] }).populate({path: "chain", select: ["_id", "name"] }).populate({path: "main_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "secondary_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "newsfeedSource_list", select: ["_id", "link", "project", "keyword_list"]}).populate({path: "media_list", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "guide_list", populate: [{path: "media_video", select: ['name', 'url']}, {path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}, select: ["_id", "name", "avatar", "position", "facebook_link", "twitter_link", "dribbble_link", "instagram_link", "medium_link"] }).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]});
+    project = await Project.findById(req.body._id).populate({path: "category", select: ["_id", "name"] }).populate({path: "chain", select: ["_id", "name"] }).populate({path: "main_image", select: [ "_id", "name", "url", "type" ] }).populate({path: "secondary_image", select: [ "_id", "name", "url", "type" ] }).populate({path: "newsfeedSource_list", select: ["_id", "link", "project", "keyword_list"]}).populate({path: "media_list", select: [ "_id", "name", "url", "type" ] }).populate({path: "guide_list", populate: [{path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}, select: ["_id", "name", "avatar", "position", "facebook_link", "twitter_link", "dribbble_link", "instagram_link", "medium_link"] }).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]});
     res.json({success: true, media: newMedia, isExistingProject: utility.isValid(project), updated_project: project });
 }
 
@@ -351,7 +350,7 @@ exports.createMedia = async (req, res) =>  {
         return res.json({success: false, errMessage: "Unknown errors occurred while creating media of the project."});
     }
 
-    project = await Project.findById(req.body._id).populate({path: "category", select: ["_id", "name"] }).populate({path: "chain", select: ["_id", "name"] }).populate({path: "main_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "secondary_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "newsfeedSource_list", select: ["_id", "link", "project", "keyword_list"]}).populate({path: "media_list", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "guide_list", populate: [{path: "media_video", select: ['name', 'url']}, {path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}, select: ["_id", "name", "avatar", "position", "facebook_link", "twitter_link", "dribbble_link", "instagram_link", "medium_link"] }).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]});
+    project = await Project.findById(req.body._id).populate({path: "category", select: ["_id", "name"] }).populate({path: "chain", select: ["_id", "name"] }).populate({path: "main_image", select: [ "_id", "name", "url", "type" ] }).populate({path: "secondary_image", select: [ "_id", "name", "url", "type" ] }).populate({path: "newsfeedSource_list", select: ["_id", "link", "project", "keyword_list"]}).populate({path: "media_list", select: [ "_id", "name", "url", "type" ] }).populate({path: "guide_list", populate: [{path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}, select: ["_id", "name", "avatar", "position", "facebook_link", "twitter_link", "dribbble_link", "instagram_link", "medium_link"] }).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]});
     res.json({success: true, media: newMedia, isExistingProject: utility.isValid(project), updated_project: project });
 }
 
@@ -388,7 +387,7 @@ exports.updateMedia = async (req, res) =>  {
         return res.json({success: false, errMessage: "Unknown errors occurred while creating media of the project."});
     }
 
-    project = await Project.findById(req.body._id).populate({path: "category", select: ["_id", "name"] }).populate({path: "chain", select: ["_id", "name"] }).populate({path: "main_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "secondary_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "newsfeedSource_list", select: ["_id", "link", "project", "keyword_list"]}).populate({path: "media_list", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "guide_list", populate: [{path: "media_video", select: ['name', 'url']}, {path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}, select: ["_id", "name", "avatar", "position", "facebook_link", "twitter_link", "dribbble_link", "instagram_link", "medium_link"] }).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]});
+    project = await Project.findById(req.body._id).populate({path: "category", select: ["_id", "name"] }).populate({path: "chain", select: ["_id", "name"] }).populate({path: "main_image", select: [ "_id", "name", "url", "type" ] }).populate({path: "secondary_image", select: [ "_id", "name", "url", "type" ] }).populate({path: "newsfeedSource_list", select: ["_id", "link", "project", "keyword_list"]}).populate({path: "media_list", select: [ "_id", "name", "url", "type" ] }).populate({path: "guide_list", populate: [{path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}, select: ["_id", "name", "avatar", "position", "facebook_link", "twitter_link", "dribbble_link", "instagram_link", "medium_link"] }).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]});
     res.json({success: true, media: newMedia, isExistingProject: utility.isValid(project), updated_project: project });
 }
 
@@ -407,7 +406,7 @@ exports.deleteMedia = async (req, res) => {
         console.log("delete media of the project error ~", err);
         res.json({success: false, errMessage: "An unknown error was occured while deleting the media of the project."});
     }
-    project = await Project.findById(id).populate({path: "category", select: ["_id", "name"] }).populate({path: "chain", select: ["_id", "name"] }).populate({path: "main_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "secondary_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "newsfeedSource_list", select: ["_id", "link", "project", "keyword_list"]}).populate({path: "media_list", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "guide_list", populate: [{path: "media_video", select: ['name', 'url']}, {path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}, select: ["_id", "name", "avatar", "position", "facebook_link", "twitter_link", "dribbble_link", "instagram_link", "medium_link"] }).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]});
+    project = await Project.findById(id).populate({path: "category", select: ["_id", "name"] }).populate({path: "chain", select: ["_id", "name"] }).populate({path: "main_image", select: [ "_id", "name", "url", "type" ] }).populate({path: "secondary_image", select: [ "_id", "name", "url", "type" ] }).populate({path: "newsfeedSource_list", select: ["_id", "link", "project", "keyword_list"]}).populate({path: "media_list", select: [ "_id", "name", "url", "type" ] }).populate({path: "guide_list", populate: [{path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}, select: ["_id", "name", "avatar", "position", "facebook_link", "twitter_link", "dribbble_link", "instagram_link", "medium_link"] }).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]});
     res.json({success: true, isExistingProject: utility.isValid(project), updated_project: project});
 }
 
@@ -433,15 +432,15 @@ exports.createGuide = async (req, res) =>  {
     try {
         if(req.body.newGuide !== null) {        //  create new guide
         
-            // Determine whether creating new media_video or not
-            let new_media_video = null, media_video_id = Config.fake_mongodb_id;
-            if(utility.isValid(req.body.newGuide.is_video_guide) && req.body.newGuide.is_video_guide && req.body.newGuide.media_video !== null) {        //  create new video
-                new_media_video = new Media(req.body.newGuide.media_video);
-                await Media.insertMany(new_media_video);
-                media_video_id = new_media_video._id;
-            } else {
-                media_video_id = Config.fake_mongodb_id;
-            }
+            // // Determine whether creating new media_video or not
+            // let new_media_video = null, media_video_id = Config.fake_mongodb_id;
+            // if(utility.isValid(req.body.newGuide.is_video_guide) && req.body.newGuide.is_video_guide && req.body.newGuide.media_video !== null) {        //  create new video
+            //     new_media_video = new Media(req.body.newGuide.media_video);
+            //     await Media.insertMany(new_media_video);
+            //     media_video_id = new_media_video._id;
+            // } else {
+            //     media_video_id = Config.fake_mongodb_id;
+            // }
      
             // Determine whether creating new image or not
             let new_media_image = null, media_image_id = Config.fake_mongodb_id;
@@ -454,7 +453,7 @@ exports.createGuide = async (req, res) =>  {
             }
      
             newGuide = new Guide(req.body.newGuide);
-            newGuide.media_video = media_video_id;
+            // newGuide.media_video = media_video_id;
             newGuide.media_image = media_image_id;
             await Guide.insertMany(newGuide);
 
@@ -465,7 +464,7 @@ exports.createGuide = async (req, res) =>  {
         return res.json({success: false, errMessage: "Unknown errors occurred while creating guide of the project."});
     }
 
-    project = await Project.findById(req.body._id).populate({path: "category", select: ["_id", "name"] }).populate({path: "chain", select: ["_id", "name"] }).populate({path: "main_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "secondary_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "newsfeedSource_list", select: ["_id", "link", "project", "keyword_list"]}).populate({path: "media_list", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "guide_list", populate: [{path: "media_video", select: ['name', 'url']}, {path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}, select: ["_id", "name", "avatar", "position", "facebook_link", "twitter_link", "dribbble_link", "instagram_link", "medium_link"] }).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]});
+    project = await Project.findById(req.body._id).populate({path: "category", select: ["_id", "name"] }).populate({path: "chain", select: ["_id", "name"] }).populate({path: "main_image", select: [ "_id", "name", "url", "type" ] }).populate({path: "secondary_image", select: [ "_id", "name", "url", "type" ] }).populate({path: "newsfeedSource_list", select: ["_id", "link", "project", "keyword_list"]}).populate({path: "media_list", select: [ "_id", "name", "url", "type" ] }).populate({path: "guide_list", populate: [{path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}, select: ["_id", "name", "avatar", "position", "facebook_link", "twitter_link", "dribbble_link", "instagram_link", "medium_link"] }).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]});
     res.json({success: true, guide: newGuide, isExistingProject: utility.isValid(project), updated_project: project });
 }
 
@@ -474,16 +473,16 @@ exports.updateGuide = async (req, res) =>  {
     let newGuide = req.body.newGuide;
     try {
         if(newGuide !== null) {
-            let new_media_video = null, media_video_id = Config.fake_mongodb_id;
-            if(utility.isValid(newGuide.media_video)) {
-                if(utility.isValid(newGuide.media_video._id)) {
-                    media_video_id = newGuide.media_video._id;
-                } else {
-                    new_media_video = new Media(newGuide.media_video);
-                    await Media.insertMany(new_media_video);
-                    media_video_id = new_media_video._id;
-                }
-            }
+            // let new_media_video = null, media_video_id = Config.fake_mongodb_id;
+            // if(utility.isValid(newGuide.media_video)) {
+            //     if(utility.isValid(newGuide.media_video._id)) {
+            //         media_video_id = newGuide.media_video._id;
+            //     } else {
+            //         new_media_video = new Media(newGuide.media_video);
+            //         await Media.insertMany(new_media_video);
+            //         media_video_id = new_media_video._id;
+            //     }
+            // }
 
             let new_media_image = null, media_image_id = Config.fake_mongodb_id;
             if(utility.isValid(newGuide.media_image)) {
@@ -496,7 +495,7 @@ exports.updateGuide = async (req, res) =>  {
                 }
             }
 
-            await Guide.updateOne( {"_id": req.body.beforeGuideId}, { '$set': {'title': req.body.newGuide.title, 'full_description': req.body.newGuide.full_description, 'is_video_guide': req.body.newGuide.is_video_guide, 'media_video': media_video_id, 'media_image': media_image_id, 'project': req.body.newGuide.project} } );
+            await Guide.updateOne( {"_id": req.body.beforeGuideId}, { '$set': {'title': req.body.newGuide.title, 'full_description': req.body.newGuide.full_description, 'is_video_guide': req.body.newGuide.is_video_guide, 'media_video': req.body.newGuide.media_video, 'media_image': media_image_id, 'project': req.body.newGuide.project} } );
 
         } else {        // remove the guide id in the list of the guide
             await Project.updateOne( {_id: req.body._id}, { $pullAll: {guide_list: [req.body.beforeGuideId] } } );
@@ -507,8 +506,8 @@ exports.updateGuide = async (req, res) =>  {
         return res.json({success: false, errMessage: "Unknown errors occurred while creating guide of the project."});
     }
 
-    project = await Project.findById(req.body._id).populate({path: "category", select: ["_id", "name"] }).populate({path: "chain", select: ["_id", "name"] }).populate({path: "main_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "secondary_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "newsfeedSource_list", select: ["_id", "link", "project", "keyword_list"]}).populate({path: "media_list", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "guide_list", populate: [{path: "media_video", select: ['name', 'url']}, {path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}, select: ["_id", "name", "avatar", "position", "facebook_link", "twitter_link", "dribbble_link", "instagram_link", "medium_link"] }).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]});
-    let guide_data = await Guide.findById(req.body.beforeGuideId).populate({path: "media_video", select: ['name', 'url']}).populate({path: "media_image", select: ['name', 'url']}).populate({path: "project", select: ['name', 'main_image'], populate: {path: "main_image", select: ["name", "url"]} });
+    project = await Project.findById(req.body._id).populate({path: "category", select: ["_id", "name"] }).populate({path: "chain", select: ["_id", "name"] }).populate({path: "main_image", select: [ "_id", "name", "url", "type" ] }).populate({path: "secondary_image", select: [ "_id", "name", "url", "type" ] }).populate({path: "newsfeedSource_list", select: ["_id", "link", "project", "keyword_list"]}).populate({path: "media_list", select: [ "_id", "name", "url", "type" ] }).populate({path: "guide_list", populate: [{path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}, select: ["_id", "name", "avatar", "position", "facebook_link", "twitter_link", "dribbble_link", "instagram_link", "medium_link"] }).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]});
+    let guide_data = await Guide.findById(req.body.beforeGuideId).populate({path: "media_image", select: ['name', 'url']}).populate({path: "project", select: ['name', 'main_image'], populate: {path: "main_image", select: ["name", "url"]} });
     res.json({success: true, guide: newGuide, isExistingProject: utility.isValid(project), updated_project: project, guide_data: guide_data });
 }
 
@@ -528,7 +527,7 @@ exports.deleteGuide = async (req, res) => {
         console.log("delete guide of the project error ~", err);
         res.json({success: false, errMessage: "An unknown error was occured while deleting the guide of the project."});
     }
-    project = await Project.findById(id).populate({path: "category", select: ["_id", "name"] }).populate({path: "chain", select: ["_id", "name"] }).populate({path: "main_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "secondary_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "newsfeedSource_list", select: ["_id", "link", "project", "keyword_list"]}).populate({path: "media_list", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "guide_list", populate: [{path: "media_video", select: ['name', 'url']}, {path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}, select: ["_id", "name", "avatar", "position", "facebook_link", "twitter_link", "dribbble_link", "instagram_link", "medium_link"] }).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]});
+    project = await Project.findById(id).populate({path: "category", select: ["_id", "name"] }).populate({path: "chain", select: ["_id", "name"] }).populate({path: "main_image", select: [ "_id", "name", "url", "type" ] }).populate({path: "secondary_image", select: [ "_id", "name", "url", "type" ] }).populate({path: "newsfeedSource_list", select: ["_id", "link", "project", "keyword_list"]}).populate({path: "media_list", select: [ "_id", "name", "url", "type" ] }).populate({path: "guide_list", populate: [{path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}, select: ["_id", "name", "avatar", "position", "facebook_link", "twitter_link", "dribbble_link", "instagram_link", "medium_link"] }).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]});
     res.json({success: true, isExistingProject: utility.isValid(project), updated_project: project});
 }
 
@@ -559,7 +558,7 @@ exports.createMember = async (req, res) =>  {
         return res.json({success: false, errMessage: "Unknown errors occurred while creating member of the project."});
     }
 
-    project = await Project.findById(req.body._id).populate({path: "category", select: ["_id", "name"] }).populate({path: "chain", select: ["_id", "name"] }).populate({path: "main_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "secondary_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "newsfeedSource_list", select: ["_id", "link", "project", "keyword_list"]}).populate({path: "media_list", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "guide_list", populate: [{path: "media_video", select: ['name', 'url']}, {path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}, select: ["_id", "name", "avatar", "position", "facebook_link", "twitter_link", "dribbble_link", "instagram_link", "medium_link"] }).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]});
+    project = await Project.findById(req.body._id).populate({path: "category", select: ["_id", "name"] }).populate({path: "chain", select: ["_id", "name"] }).populate({path: "main_image", select: [ "_id", "name", "url", "type" ] }).populate({path: "secondary_image", select: [ "_id", "name", "url", "type" ] }).populate({path: "newsfeedSource_list", select: ["_id", "link", "project", "keyword_list"]}).populate({path: "media_list", select: [ "_id", "name", "url", "type" ] }).populate({path: "guide_list", populate: [{path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}, select: ["_id", "name", "avatar", "position", "facebook_link", "twitter_link", "dribbble_link", "instagram_link", "medium_link"] }).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]});
     res.json({success: true, member: newMember, isExistingProject: utility.isValid(project), updated_project: project });
 }
 
@@ -589,7 +588,7 @@ exports.updateMember = async (req, res) =>  {
         return res.json({success: false, errMessage: "Unknown errors occurred while updating member of the project."});
     }
 
-    project = await Project.findById(req.body._id).populate({path: "category", select: ["_id", "name"] }).populate({path: "chain", select: ["_id", "name"] }).populate({path: "main_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "secondary_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "newsfeedSource_list", select: ["_id", "link", "project", "keyword_list"]}).populate({path: "media_list", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "guide_list", populate: [{path: "media_video", select: ['name', 'url']}, {path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}, select: ["_id", "name", "avatar", "position", "facebook_link", "twitter_link", "dribbble_link", "instagram_link", "medium_link"] }).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]});
+    project = await Project.findById(req.body._id).populate({path: "category", select: ["_id", "name"] }).populate({path: "chain", select: ["_id", "name"] }).populate({path: "main_image", select: [ "_id", "name", "url", "type" ] }).populate({path: "secondary_image", select: [ "_id", "name", "url", "type" ] }).populate({path: "newsfeedSource_list", select: ["_id", "link", "project", "keyword_list"]}).populate({path: "media_list", select: [ "_id", "name", "url", "type" ] }).populate({path: "guide_list", populate: [{path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}, select: ["_id", "name", "avatar", "position", "facebook_link", "twitter_link", "dribbble_link", "instagram_link", "medium_link"] }).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]});
     res.json({success: true, member: newMember, isExistingProject: utility.isValid(project), updated_project: project });
 }
 
@@ -609,7 +608,7 @@ exports.deleteMember = async (req, res) => {
         console.log("delete member of the project error ~", err);
         res.json({success: false, errMessage: "An unknown error was occured while deleting the member of the project."});
     }
-    project = await Project.findById(id).populate({path: "category", select: ["_id", "name"] }).populate({path: "chain", select: ["_id", "name"] }).populate({path: "main_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "secondary_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "newsfeedSource_list", select: ["_id", "link", "project", "keyword_list"]}).populate({path: "media_list", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "guide_list", populate: [{path: "media_video", select: ['name', 'url']}, {path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}, select: ["_id", "name", "avatar", "position", "facebook_link", "twitter_link", "dribbble_link", "instagram_link", "medium_link"] }).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]});
+    project = await Project.findById(id).populate({path: "category", select: ["_id", "name"] }).populate({path: "chain", select: ["_id", "name"] }).populate({path: "main_image", select: [ "_id", "name", "url", "type" ] }).populate({path: "secondary_image", select: [ "_id", "name", "url", "type" ] }).populate({path: "newsfeedSource_list", select: ["_id", "link", "project", "keyword_list"]}).populate({path: "media_list", select: [ "_id", "name", "url", "type" ] }).populate({path: "guide_list", populate: [{path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}, select: ["_id", "name", "avatar", "position", "facebook_link", "twitter_link", "dribbble_link", "instagram_link", "medium_link"] }).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]});
     res.json({success: true, isExistingProject: utility.isValid(project), updated_project: project});
 }
 
@@ -707,7 +706,7 @@ exports.updateTwitterMembersForOneProject = async (req, res) => {
 }
 
 exports.getProjectFromUniqueId = async (req, res) => {
-    let project = await Project.find({unique_id: req.body.unique_id}).populate({path: "category", select: ["_id", "name"] }).populate({path: "chain", select: ["_id", "name"] }).populate({path: "main_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "secondary_image", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "newsfeedSource_list", select: ["_id", "link", "project", "keyword_list"]}).populate({path: "media_list", select: [ "_id", "name", "url", "type", "relation" ] }).populate({path: "guide_list", populate: [{path: "media_video", select: ['name', 'url']}, {path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}, select: ["_id", "name", "avatar", "position", "facebook_link", "twitter_link", "dribbble_link", "instagram_link", "medium_link"] }).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]});
+    let project = await Project.find({unique_id: req.body.unique_id}).populate({path: "category", select: ["_id", "name"] }).populate({path: "chain", select: ["_id", "name"] }).populate({path: "main_image", select: [ "_id", "name", "url", "type" ] }).populate({path: "secondary_image", select: [ "_id", "name", "url", "type" ] }).populate({path: "newsfeedSource_list", select: ["_id", "link", "project", "keyword_list"]}).populate({path: "media_list", select: [ "_id", "name", "url", "type" ] }).populate({path: "guide_list", populate: [{path: "media_image", select: ['name', 'url']}]}).populate({path: "member_list", populate: {path: "avatar"}, select: ["_id", "name", "avatar", "position", "facebook_link", "twitter_link", "dribbble_link", "instagram_link", "medium_link"] }).populate({path: "similar_list", populate: [{path: "main_image"}, {path: "secondary_image"}, {path: "category"}]});
     if(utility.isValid(project)) {
         return res.json({success: true, data: project});
     } else {

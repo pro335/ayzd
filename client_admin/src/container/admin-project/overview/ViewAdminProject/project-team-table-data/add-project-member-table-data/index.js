@@ -180,7 +180,7 @@ const AddProjectMemberTableData = ({ visible, onCancel }) => {
           name: data.key,
           url: data.location,
           type: 0,
-          relation: 1,
+          // relation: 1,
         }
       }
     } else {

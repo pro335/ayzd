@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Row, Col, Form, Input, Select } from 'antd';
+import { Row, Col, Form, Input } from 'antd';
 import { Cards } from '../../../../../../../components/cards/frame/cards-frame';
 import { BasicFormWrapper } from '../../../../../../styled';
-import * as actions from '../../../../../../../redux/actions';
 import * as ActionTypes from '../../../../../../../redux/ActionTypes';
 
-const Title = () => {
+const InputComponent = ({name="title", label="Title"}) => {
 
   /**
    * Description about the each parameters
@@ -27,15 +26,20 @@ const Title = () => {
   });
 
   const [state, setState] = useState({
-    initialData: {
-      title: guide.guide_action === "create" ? "" : guide.guideData.title,
-    },
+    initialData: name === "title" ?
+      {
+        title: guide.guide_action === "create" ? "" : guide.guideData.title,
+      }
+      :
+      {
+        media_video: guide.guide_action === "create" ? "" : guide.guideData.media_video,
+      }
   });
 
-  const handleCancel = e => {
-    e.preventDefault();
-    form.resetFields();
-  };
+  // const handleCancel = e => {
+  //   e.preventDefault();
+  //   form.resetFields();
+  // };
 
   const handleFormData = (props, values, allFieldsValues) => {
     let newVal = {
@@ -54,8 +58,8 @@ const Title = () => {
       <Row justify="center">
         <Col xs={24}>
           <BasicFormWrapper>
-            <Form name="title" onValuesChange={handleFormData} initialValues={state.initialData}>
-              <Form.Item name="title" label="Title">
+            <Form name={name} onValuesChange={handleFormData} initialValues={state.initialData}>
+              <Form.Item name={name} label={label}>
                 <Input placeholder="" />
               </Form.Item>
             </Form>
@@ -66,4 +70,4 @@ const Title = () => {
   );
 };
 
-export default Title;
+export default InputComponent;

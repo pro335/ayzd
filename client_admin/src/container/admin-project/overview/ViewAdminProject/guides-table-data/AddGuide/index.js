@@ -9,7 +9,7 @@ import { PageHeader } from '../../../../../../components/page-headers/page-heade
 import { Button } from '../../../../../../components/buttons/buttons';
 import FullDescription from '../../../FullDescription'
 import MainImage from '../../../MainImage'
-import Title from './Title';
+import InputComponent from './InputComponent';
 import * as actions from '../../../../../../redux/actions';
 import * as ActionTypes from '../../../../../../redux/ActionTypes';
 import isValid from '../../../../../../utility/isValid';
@@ -78,30 +78,30 @@ const AddGuide = () => {
     // show the preloader.
     setIsUploading(true);
 
-    //Code for video guide(whether uploading video or not)
-    let media_video = null;
-    if( ( isValid(newGuide.is_video_guide) && newGuide.is_video_guide ) &&  (newGuide.media_video instanceof File) ) {  // if file
+    // //Code for video guide(whether uploading video or not)
+    // let media_video = null;
+    // if( ( isValid(newGuide.is_video_guide) && newGuide.is_video_guide ) &&  (newGuide.media_video instanceof File) ) {  // if file
 
-      let resultUpload =  await fileUploadToS3(newGuide.media_video);
-      let {success, data, errMessage} =  resultUpload;
-      if(!success) {
-        notification['error'] ({
-          message: 'Error',
-          description: errMessage
-        });
+    //   let resultUpload =  await fileUploadToS3(newGuide.media_video);
+    //   let {success, data, errMessage} =  resultUpload;
+    //   if(!success) {
+    //     notification['error'] ({
+    //       message: 'Error',
+    //       description: errMessage
+    //     });
   
-        media_video = null;
+    //     media_video = null;
 
-      } else {
-        media_video = {
-          name: data.key,
-          url: `${config.bucket_url}/${data.key}`,
-          type: 1,
-        }
-      }
-    } else {
-      media_video = newGuide.media_video;
-    }
+    //   } else {
+    //     media_video = {
+    //       name: data.key,
+    //       url: `${config.bucket_url}/${data.key}`,
+    //       type: 1,
+    //     }
+    //   }
+    // } else {
+    //   media_video = newGuide.media_video;
+    // }
 
     //Code for preview image(whether uploading image or not)
     let media_image = null;
@@ -131,7 +131,7 @@ const AddGuide = () => {
     //Set the video/preview image of the project
     newGuide = {
       ...guide.guideData,
-      media_video: media_video,
+      media_video: newGuide.media_video,
       media_image: media_image,
       project: project.project_id,
     };
@@ -264,18 +264,14 @@ const AddGuide = () => {
                     <Col lg={12} md={12} sm={24} xs={24}>
                       <Row gutter={25}>
                         <Col sm={24} xs={24}>
-                          <Title />
+                          <InputComponent name="title" label="Title" />
                         </Col>
                         <Col sm={24} xs={24}>
                           {
-                            isValid(guide) && isValid(guide.guideData) && isValid(guide.guideData.is_video_guide) && guide.guideData.is_video_guide ? (
-                              guide.guide_action !== "create" && isValid(guide.guideData.media_video) && isValid(guide.guideData.media_video.url) ?
-                                <MainImageTableData mediaCategory={3} />
-                                :
-                                <MainImage title={ "Video Guide" } guideCategory={"guide_video"} />
-                            )
-                            :
-                            null
+                            isValid(guide) && isValid(guide.guideData) && isValid(guide.guideData.is_video_guide) && guide.guideData.is_video_guide ?
+                              <InputComponent name="media_video" label="Video URL" />
+                              :
+                              null
                           }
                         </Col>
                         <Col sm={24} xs={24}>

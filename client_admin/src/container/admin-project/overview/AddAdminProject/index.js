@@ -133,7 +133,7 @@ const AddAdminProject = ({ match }) => {
           name: data.key,
           url: data.location,
           type: 0,
-          relation: 5,
+          // relation: 5,
         }
       }
     } else if( isValid(newProject.main_image) ) {   // existing saved file
@@ -161,7 +161,7 @@ const AddAdminProject = ({ match }) => {
           name: data.key,
           url: data.location,
           type: 0,
-          relation: 6,
+          // relation: 6,
         }
       }
     } else if( isValid(newProject.secondary_image) ) {   // existing saved file

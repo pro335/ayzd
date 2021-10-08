@@ -227,7 +227,7 @@ const AddMediaTableData = ({ visible, onCancel, mediaCategory = 1, mediaId = 0, 
             name: data.key,
             url: data.location,
             type: 0,
-            relation: 5,
+            // relation: 5,
           }
         }
       } else {
@@ -292,7 +292,7 @@ const AddMediaTableData = ({ visible, onCancel, mediaCategory = 1, mediaId = 0, 
             name: data.key,
             url: data.location,
             type: form.getFieldValue("type"),
-            relation: 6,
+            // relation: 6,
           }
         }
       } else {
@@ -355,7 +355,7 @@ const AddMediaTableData = ({ visible, onCancel, mediaCategory = 1, mediaId = 0, 
             name: data.key,
             url: data.location,
             type: form.getFieldValue("type"),
-            relation: 6,
+            // relation: 6,
           }
         }
       } else {
@@ -419,7 +419,7 @@ const AddMediaTableData = ({ visible, onCancel, mediaCategory = 1, mediaId = 0, 
             name: data.key,
             url: data.location,
             type: 0,
-            relation: 5,
+            // relation: 5,
           }
         }
       } else {
@@ -488,7 +488,7 @@ const AddMediaTableData = ({ visible, onCancel, mediaCategory = 1, mediaId = 0, 
             name: data.key,
             url: `${config.bucket_url}/${data.key}`,
             type: 1,
-            relation: 5,
+            // relation: 5,
           }
         }
       } else {
@@ -567,7 +567,7 @@ const AddMediaTableData = ({ visible, onCancel, mediaCategory = 1, mediaId = 0, 
             name: data.key,
             url: data.location,
             type: 0,
-            relation: 5,
+            // relation: 5,
           }
         }
       } else {

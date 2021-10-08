@@ -139,7 +139,7 @@ const AddAdminUser = ({ visible, onCancel, userAction = 0, userData = null }) =>
         name: data.key,
         url: data.location,
         type: 0,
-        relation: 0,
+        // relation: 0,
       }
     } else {
       media = null;

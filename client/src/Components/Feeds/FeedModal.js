@@ -9,6 +9,7 @@ import config from '../../config/config';
 import { Link, useHistory } from "react-router-dom";
 import * as actions from '../../redux/actions';
 import * as ActionTypes from '../../redux/ActionTypes';
+import ReactPlayer from 'react-player';
 
 var moment = require('moment');
 
@@ -294,9 +295,11 @@ export default function FeedModal({ open, setOpen, type="dashboard" }) {
                       {/* <!-- Image or video --> */}
                       {isValid(guide) && isValid(guide.guideData) && guide.guideData.is_video_guide && isValid(guide.guideData.media_video) &&
                         <div className="h-84 rounded-md overflow-hidden py-4">
-                          <video className="w-full h-full object-cover" controls >
-                              <source src={guide.guideData.media_video.url} type="video/mp4"/>
-                            </video>
+                          <ReactPlayer 
+                            className="w-full h-full object-cover"
+                            url={guide.guideData.media_video} 
+                            controls
+                          />
                         </div>
                       }
                       {isValid(guide) && isValid(guide.guideData) && !guide.guideData.is_video_guide && isValid(guide.guideData.media_image) &&
