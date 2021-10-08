@@ -296,7 +296,8 @@ export default function FeedModal({ open, setOpen, type="dashboard" }) {
                       {isValid(guide) && isValid(guide.guideData) && guide.guideData.is_video_guide && isValid(guide.guideData.media_video) &&
                         <div className="h-84 rounded-md overflow-hidden py-4">
                           <ReactPlayer 
-                            className="w-full h-full object-cover"
+                            // className="w-full h-full object-cover"
+                            width="100%"
                             url={guide.guideData.media_video} 
                             controls
                           />
