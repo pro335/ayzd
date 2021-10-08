@@ -42,7 +42,7 @@ const Guides = () => {
   return (
     <>
       <div className="h-full w-full grid lg:grid-cols-6 lg:overflow-hidden">
-        <div className="hidden lg:flex">
+        <div className="hidden lg:flex flex-col">
           <Sidebar type={"guides"} />
         </div>
         <div className="h-full pb-5 lg:col-span-5 mt-0 overflow-hidden">
@@ -55,17 +55,19 @@ const Guides = () => {
             <div className="flex flex-col lg:hidden">
               <Sidebar type={"guides"} />
             </div>
-            { isValid(guide.guides_show_list) ?
-                <AllProjects projects={guide.guides_show_list} type="guides" onClickHandler={onClickHandler} />
-                :
-                ( !isLoaded ?
-                  <div className="h-full flex flex-col justify-center items-center pb-15">
-                    <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
-                  </div>
+            <div className="pt-2">
+              { isValid(guide.guides_show_list) ?
+                  <AllProjects projects={guide.guides_show_list} type="guides" onClickHandler={onClickHandler} />
                   :
-                  <NotFound />
-                )
-            }
+                  ( !isLoaded ?
+                    <div className="h-full flex flex-col justify-center items-center pb-15">
+                      <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
+                    </div>
+                    :
+                    <NotFound />
+                  )
+              }
+            </div>
           </div>
         </div>
       </div>

@@ -81,7 +81,7 @@ const Sidebar = ({type="dashboard"}) => {
 
   return (
     <>
-      <div className="border-r border-brand-gray-800 lg:overflow-hidden">
+      <div className="h-full border-r border-brand-gray-800 lg:overflow-hidden">
         <div className="lg:hidden px-4 z-100">
           {isValid(project.projects_has_news_show_list) || isValid(project.projects_has_guides_show_list)
             ? <MobileSelectProjects type={type} />
