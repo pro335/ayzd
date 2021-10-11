@@ -55,7 +55,7 @@ const Guides = () => {
             <div className="flex flex-col lg:hidden">
               <Sidebar type={"guides"} />
             </div>
-            <div className="pt-2">
+            <div className="pt-2 h-full">
               { isValid(guide.guides_show_list) ?
                   <AllProjects projects={guide.guides_show_list} type="guides" onClickHandler={onClickHandler} />
                   :

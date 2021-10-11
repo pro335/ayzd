@@ -81,28 +81,42 @@ const Card = ({ item }) => {
         </div>
         <div className="border-t text-xs font-medium px-3 py-3" style={{borderColor: "rgba(255, 255, 255, 0.1)"}}>
           {isValid(item.twitter_members) ? 
-            <div 
-              className="flex space-x-2 hover:cursor-pointer"
+            <div
+              className="flex flex-col lg:flex-row hover:cursor-pointer"
               onClick={handleClick}
             >
-              <svg className="w-4 h-4">
-                <use href="../assets/icons/twitter.svg#twitter"></use>
-              </svg>
-              <p>{item.twitter_members}</p>
-            </div>
+              <div className="flex space-x-2">
+                <svg className="w-4 h-4">
+                  <use href="../assets/icons/twitter.svg#twitter"></use>
+                </svg>
+                <p>{item.twitter_members}</p>
+              </div>
+              <div className="flex flex-row order-2 ml-auto">
+                <p className={`${item.twitter_members >= item.twitter_members_24h ? 'text-green-400' : 'text-red-500'} ml-auto`}>
+                  {item.twitter_members >= item.twitter_members_24h ? '+' : '-'} {Math.abs(item.twitter_members - item.twitter_members_24h)}
+                </p>
+              </div>
+            </div>          
             : 
             null
           }
           {isValid(item.discord_members) ? 
-            <div 
-              className="flex space-x-2 pt-1 hover:cursor-pointer"
+            <div
+              className="flex flex-col lg:flex-row hover:cursor-pointer"
               onClick={handleClick}
             >
-              <svg className="w-4 h-4">
-                <use href="../assets/icons/discord.svg#discord"></use>
-              </svg>
-              <p>{item.discord_members}</p>
-            </div>
+              <div className="flex space-x-2">
+                <svg className="w-4 h-4">
+                  <use href="../assets/icons/discord.svg#discord"></use>
+                </svg>
+                <p>{item.discord_members}</p>
+              </div>
+              <div className="flex flex-row order-2 ml-auto">
+                <p className={`${item.discord_members >= item.discord_members_24h ? 'text-green-400' : 'text-red-500'} ml-auto`}>
+                  {item.discord_members >= item.discord_members_24h ? '+' : '-'} {Math.abs(item.discord_members - item.discord_members_24h)}
+                </p>
+              </div>
+            </div>          
             : 
             null
           }
