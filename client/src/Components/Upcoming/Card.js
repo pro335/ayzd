@@ -91,11 +91,13 @@ const Card = ({ item }) => {
                 </svg>
                 <p>{item.twitter_members}</p>
               </div>
-              {/* <div className="flex flex-row order-2 ml-auto">
-                <p className={`${item.twitter_members >= item.twitter_members_24h ? 'text-green-400' : 'text-red-500'} ml-auto`}>
-                  {item.twitter_members >= item.twitter_members_24h ? '+' : '-'} {Math.abs(item.twitter_members - item.twitter_members_24h)}
-                </p>
-              </div> */}
+              {isValid(item.twitter_members_24h) &&
+                <div className="flex flex-row order-2 ml-auto">
+                  <p className={`${item.twitter_members >= item.twitter_members_24h ? 'text-green-400' : 'text-red-500'} ml-auto`}>
+                    {item.twitter_members >= item.twitter_members_24h ? '+' : '-'} {Math.abs(item.twitter_members - item.twitter_members_24h)}
+                  </p>
+                </div>
+              }
             </div>          
             : 
             null
@@ -111,11 +113,13 @@ const Card = ({ item }) => {
                 </svg>
                 <p>{item.discord_members}</p>
               </div>
-              {/* <div className="flex flex-row order-2 ml-auto">
-                <p className={`${item.discord_members >= item.discord_members_24h ? 'text-green-400' : 'text-red-500'} ml-auto`}>
-                  {item.discord_members >= item.discord_members_24h ? '+' : '-'} {Math.abs(item.discord_members - item.discord_members_24h)}
-                </p>
-              </div> */}
+              {isValid(item.discord_members_24h) &&
+                <div className="flex flex-row order-2 ml-auto">
+                  <p className={`${item.discord_members >= item.discord_members_24h ? 'text-green-400' : 'text-red-500'} ml-auto`}>
+                    {item.discord_members >= item.discord_members_24h ? '+' : '-'} {Math.abs(item.discord_members - item.discord_members_24h)}
+                  </p>
+                </div>
+              }
             </div>          
             : 
             null
