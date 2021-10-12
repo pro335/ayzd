@@ -8,6 +8,9 @@ const initState = {
   upcomings: [],    // whole upcoming projects
   upcoming_show_list: [],   // upcoming projects to show
   upcoming_date_list: [],   // data for left side bar in Drop Calendar menu
+  previous_upcomings: [],    // whole upcoming projects
+  previous_upcoming_show_list: [],   // upcoming projects to show
+  previous_upcoming_date_list: [],   // data for left side bar in Drop Calendar menu
   current_date_label: null,   // the label of right side in the Drop Calendar page.
   project_id: null,
   project_action: 0, // 0: create, 1: read, 2: update, 3: delete

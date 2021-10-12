@@ -16,14 +16,14 @@ const NFTSidebar = ({ handleChange, all }) => {
   return (
     <>
       <CheckBoxesList
-        data={category.categories}
+        data={category.category_checked_list}
         handleChange={handleChange}
         all={all}
         title="Categories"
         icon="categories"
       />
       <CheckBoxesList
-        data={chain.chains}
+        data={chain.chain_checked_list}
         handleChange={handleChange}
         all={all}
         title="Chain"

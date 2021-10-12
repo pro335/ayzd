@@ -61,6 +61,7 @@ const CheckBoxesList = ({ data, all, handleChange, title, icon, classes }) => {
                   onChange={() => onChange(input._id)}
                   // checked={all}
                   className="form-checkbox w-5 h-5 bg-brand-gray-900 border border-brand-gray-700 rounded text-brand-AYZD-PURPLE"
+                  checked={input.checked}
                 />
                 <span htmlFor={input._id} className="flex-1 text-sm font-medium cursor-pointer capitalize ml-2">
                   {input.name}

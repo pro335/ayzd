@@ -36,6 +36,12 @@ const Nft = () => {
   const _isMounted = useRef(false); // Initial value _isMounted = false
 
   useEffect(() => {
+    dispatch({
+      type: ActionTypes.CATEGORY_CHK_LIST_INITIALIZE,
+    });
+    dispatch({
+      type: ActionTypes.CHAIN_CHK_LIST_INITIALIZE,
+    });
     if (!_isMounted) {
       setTimeout(() => {
         setIsLoaded(true);
@@ -46,27 +52,17 @@ const Nft = () => {
     };
   }, []); // here
 
-  useEffect(() => {
-    if (!_isMounted) {
-      dispatch({
-        type: ActionTypes.CATEGORY_CHK_LIST_INITIALIZE,
-      });
-      dispatch({
-        type: ActionTypes.CHAIN_CHK_LIST_INITIALIZE,
-      });
-    }
-    return () => {
-      _isMounted.current = true;
-    };
-  }, [category.categories, chain.chains])
+  // useEffect(() => {
+  //   dispatch({
+  //     type: ActionTypes.CATEGORY_CHK_LIST_INITIALIZE,
+  //   });
+  //   dispatch({
+  //     type: ActionTypes.CHAIN_CHK_LIST_INITIALIZE,
+  //   });
+  // }, [category.categories, chain.chains])
 
   useEffect(() => {
-    if (!_isMounted) {
-      setFilteredProjects(project.projects);
-    }
-    return () => {
-      _isMounted.current = true;
-    };
+    setFilteredProjects(project.projects);
   }, [project.projects]);
 
   const handleChange = (e) => {
