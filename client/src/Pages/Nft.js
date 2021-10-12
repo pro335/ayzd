@@ -118,7 +118,7 @@ const Nft = () => {
     let value = event.target.value.toLowerCase();
     let result = [];
 
-    // result = projects.filter((data) => data.name.toLowerCase().search(value) !== -1);
+    result = projects.filter((data) => data.name.toLowerCase().search(value) !== -1);
     setFilteredProjects(result);
   }
 

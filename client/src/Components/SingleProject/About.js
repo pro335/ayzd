@@ -101,45 +101,41 @@ const About = () => {
           </div>
 
           <div className="min-w-[320px] w-full">
-            {isValid(project.projectDataNotDatabase) && (isValid(project.projectDataNotDatabase.discord_members) || isValid(project.projectDataNotDatabase.twitter_members) ) ?
-              <div className="border-r border-b border-brand-gray-800">
-                <div>
-                  <SectionHeading
-                    title="Stats"
-                    icon="community_activity"
-                    classes="border-t lg:border-t-0"
-                  />
-                  <div className="w-full lg:w-auto lg:flex lg:flex-col lg:justify-start pr-5">
-                    <div className="w-full lg:w-auto lg:flex items-center justify-center lg:justify-start">
-                      { isValid(project.projectData) && (!isValid(project.projectData.isUpcoming) || ( isValid(project.projectData.isUpcoming) && !project.projectData.isUpcoming )) && isValid(project.projectDataNotDatabase) && isValid(project.projectDataNotDatabase.volume) ?
-                        <StatsTopComponent icon="sales_volume" title="Sales volume" amount={project.projectDataNotDatabase.volume} />
-                        :
-                        null
-                      }
-                      { isValid(project.projectData) && isValid(project.projectData.isUpcoming) && project.projectData.isUpcoming && isValid(project.projectData.upcoming_date) ?
-                        <StatsTopComponent icon="calendar1" title="Drop date (GMT +3)" amount={moment(project.projectData.upcoming_date).format("MMM D, YYYY hh:mm A")} />
-                        :
-                        null
-                      }
-                    </div>
-                    <div className="w-full lg:w-auto lg:flex items-center justify-center lg:justify-start mb-5">
-                      {isValid(project.projectDataNotDatabase.twitter_members) ?
-                        <CommunityActivityComponent icon="twitter_community" title="Twitter" amount={project.projectDataNotDatabase.twitter_members} url={project.projectData.twitter_link} />
-                        :
-                        null
-                      }
-                      {isValid(project.projectDataNotDatabase.discord_members) ?
-                        <CommunityActivityComponent icon="discord_community" title="Discord" amount={project.projectDataNotDatabase.discord_members} url={project.projectData.discord_link} />
-                        :
-                        null
-                      }
-                    </div>
+            <div className="border-r border-b border-brand-gray-800">
+              <div>
+                <SectionHeading
+                  title="Stats"
+                  icon="community_activity"
+                  classes="border-t lg:border-t-0"
+                />
+                <div className="w-full lg:w-auto lg:flex lg:flex-col lg:justify-start pr-5">
+                  <div className="w-full lg:w-auto lg:flex items-center justify-center lg:justify-start">
+                    { isValid(project.projectData) && (!isValid(project.projectData.isUpcoming) || ( isValid(project.projectData.isUpcoming) && !project.projectData.isUpcoming )) && isValid(project.projectDataNotDatabase) && isValid(project.projectDataNotDatabase.volume) ?
+                      <StatsTopComponent icon="sales_volume" title="Sales volume" amount={project.projectDataNotDatabase.volume} />
+                      :
+                      null
+                    }
+                    { isValid(project.projectData) && isValid(project.projectData.isUpcoming) && project.projectData.isUpcoming && isValid(project.projectData.upcoming_date) ?
+                      <StatsTopComponent icon="calendar1" title="Drop date (GMT +3)" amount={moment(project.projectData.upcoming_date).format("MMM D, YYYY hh:mm A")} />
+                      :
+                      null
+                    }
+                  </div>
+                  <div className="w-full lg:w-auto lg:flex items-center justify-center lg:justify-start mb-5">
+                    {isValid(project.projectData.twitter_members) ?
+                      <CommunityActivityComponent icon="twitter_community" title="Twitter" amount={project.projectData.twitter_members} url={project.projectData.twitter_link} />
+                      :
+                      null
+                    }
+                    {isValid(project.projectData.discord_members) ?
+                      <CommunityActivityComponent icon="discord_community" title="Discord" amount={project.projectData.discord_members} url={project.projectData.discord_link} />
+                      :
+                      null
+                    }
                   </div>
                 </div>
               </div>
-              :
-              null
-            }
+            </div>
 
             {isValid(project.projectData) && isValid(project.trendingNFTs) ?
               <NFTSliders
