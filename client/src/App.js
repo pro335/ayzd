@@ -153,20 +153,26 @@ function App() {
 
       // format the upcoming date from UTC to "Aug 31, 2021 12:00 AM"
       let temp_upcoming_date_list = [], temp_previous_upcoming_date_list = [];
+
+      // add "All upcoming drops" tab to upcoming_date_list.
+      temp_upcoming_date_list.push({
+        date: "All upcoming drops",
+        count: 0,
+      })
+
       // let year_current = moment(new Date()).get('year');
       for(let i = 0; i < 30; i ++) {
         // let year_after_some_days = moment(new Date()).add(i, 'days').get('year');
         let date_after_some_days = moment(new Date()).add(i, 'days').format("MMMM D");
         // if(year_current !== year_after_some_days)
         //   date_after_some_days = moment(new Date()).add(i, 'days').format("MMMM D, YYYY");
-
         temp_upcoming_date_list.push({
           date: date_after_some_days,
           count: 0
         });
       }
 
-      for(let i = -1; i > -10; i --) {
+      for(let i = -1; i > -11; i --) {
         let date_after_some_days = moment(new Date()).add(i, 'days').format("MMMM D");
         temp_previous_upcoming_date_list.push({
           date: date_after_some_days,
@@ -194,28 +200,20 @@ function App() {
           });
         }
       });
-      // temp_previous_upcomings.map((item) => {
-      //   let new_date = moment(item.upcoming_date).format("MMMM D");
-      //   // if(year_current !== year_of_specific_date)
-      //   //   new_date = moment(item.upcoming_date).format("MMMM D, YYYY");
-
-      //   let foundIndex = temp_upcoming_date_list.findIndex(x => x.date === new_date);
-      //   if(foundIndex !== -1) {
-      //     let temp_data = temp_upcoming_date_list[foundIndex];
-      //     temp_upcoming_date_list[foundIndex] = {
-      //       ...temp_data,
-      //       count: temp_data.count + 1
-      //     };
-      //   } else {
-      //     temp_upcoming_date_list.push({
-      //       date: new_date,
-      //       count: 1
-      //     });
-      //   }
-      // });
+      temp_previous_upcomings.map((item) => {
+        let new_date = moment(item.upcoming_date).format("MMMM D");
+        let foundIndex = temp_previous_upcoming_date_list.findIndex(x => x.date === new_date);
+        if(foundIndex !== -1) {
+          let temp_data = temp_previous_upcoming_date_list[foundIndex];
+          temp_previous_upcoming_date_list[foundIndex] = {
+            ...temp_data,
+            count: temp_data.count + 1
+          };
+        }
+      });
 
       // get upcoming_show_list, current_date_label
-      let temp_upcoming_show_list = [], temp_current_date_label = "";
+      let temp_upcoming_show_list = [], temp_current_date_label = "", temp_previous_upcoming_show_list = [];
       if(isValid(temp_upcoming_date_list)) {
         temp_upcoming_show_list = temp_upcomings.filter(function(item) {
           return moment(item.upcoming_date).format("MMMM D") === temp_upcoming_date_list[0].date;
@@ -226,6 +224,11 @@ function App() {
         month_label = temp_upcoming_date_list[0].date.split(" ")[0];
         day_label = temp_upcoming_date_list[0].date.split(" ")[1];
         temp_current_date_label = `${day_label} ${month_label}`;
+      }
+      if(isValid(temp_previous_upcoming_date_list)) {
+        temp_previous_upcoming_show_list = temp_previous_upcomings.filter(function(item) {
+          return moment(item.upcoming_date).format("MMMM D") === temp_previous_upcoming_date_list[0].date;
+        });
       }
       
       dispatch({
@@ -238,6 +241,12 @@ function App() {
         upcoming_show_list: temp_upcoming_show_list,
         current_date_label: temp_current_date_label,
       });     
+      dispatch({
+        type: ActionTypes.SET_PREVIOUS_UPCOMING_PROJECTS,
+        previous_upcomings: temp_previous_upcomings,    
+        previous_upcoming_show_list: temp_previous_upcoming_show_list,   
+        previous_upcoming_date_list: temp_previous_upcoming_date_list,   
+      });
       /** The End of get upcoming projects */
 
     }

@@ -164,7 +164,14 @@ const ProjectReducer = (state = initState, action) => {
         ...state,
         projects_has_guides_show_list: data,
       }
-      
+    case ActionTypes.SET_PREVIOUS_UPCOMING_PROJECTS:
+      return {
+        ...state,
+        previous_upcomings: action.previous_upcomings,    
+        previous_upcoming_show_list: action.previous_upcoming_show_list,   
+        previous_upcoming_date_list: action.previous_upcoming_date_list,   
+      }      
+
     default:
       return state;
   }
