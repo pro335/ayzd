@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom';
 import Heading from "../Components/SingleProject/Heading"
 import Tabs from "../Components/SingleProject/Tabs"
@@ -7,6 +7,9 @@ import isValid from '../utility/isValid';
 import config from '../config/config';
 import * as actions from '../redux/actions';
 import * as ActionTypes from '../redux/ActionTypes';
+import LottieAnimation from '../Components/Lottie/Lottie';
+import LOTTIE_DATA from '../Components/Lottie/data.json';
+import NotFound from "../Components/NFT/NotFound"
 
 const SingleProject = () => {
 
@@ -19,11 +22,18 @@ const SingleProject = () => {
       rankings: state.rankings,
     };
   });
+
   const _isMounted = useRef(false); // Initial value _isMounted = false
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect( async () => {
     // if (!_isMounted) {
       const getProjectFromUrl = async () => {
+
+        setTimeout(() => {
+          setIsLoaded(true);
+        }, config.LOADING_TIME);
+
         let arrLocation = window.location.pathname.split('/');
   
         if(isValid(arrLocation) && isValid(arrLocation[arrLocation.length - 1])) {
@@ -165,14 +175,20 @@ const SingleProject = () => {
   }, [rankings])
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-full">
       {isValid(project) && isValid(project.projectData) ?
         <>
           <Heading />
           <Tabs />
         </>
         :
-        null
+        ( !isLoaded ?
+          <div className="h-full flex flex-col justify-center items-center pb-15">
+            <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
+          </div>
+          :
+          <NotFound />
+        )
       }
     </div>
   )
