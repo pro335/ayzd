@@ -124,34 +124,34 @@ const SingleProject = () => {
             };
         })
 
-        // get the twitter numbers & discord numbers
-        try {
-          let resData = await actions.updateDiscordMembersForOneProject(item);
-          let { success, data } = resData.data;
-          if(success) {
-            discord_members = data;
-          }
-        } catch(err) {
-          console.log("discord data getting error!", err);
-        }
+        // // get the twitter numbers & discord numbers
+        // try {
+        //   let resData = await actions.updateDiscordMembersForOneProject(item);
+        //   let { success, data } = resData.data;
+        //   if(success) {
+        //     discord_members = data;
+        //   }
+        // } catch(err) {
+        //   console.log("discord data getting error!", err);
+        // }
 
-        try {
-          let resData = await actions.updateTwitterMembersForOneProject(item);
-          let { success, data } = resData.data;
-          if(success) {
-            twitter_members = data;
-          }
-        } catch( err ) {
-          console.log("twitter data getting error!", err);
-        }
+        // try {
+        //   let resData = await actions.updateTwitterMembersForOneProject(item);
+        //   let { success, data } = resData.data;
+        //   if(success) {
+        //     twitter_members = data;
+        //   }
+        // } catch( err ) {
+        //   console.log("twitter data getting error!", err);
+        // }
 
         let projectDataNotDatabase = {
           ...project.projectDataNotDatabase,
           volume,
           isBySellerCount,
           isBySalesVolume,
-          discord_members,
-          twitter_members,
+          // discord_members,
+          // twitter_members,
         }
 
         dispatch({

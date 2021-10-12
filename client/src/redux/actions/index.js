@@ -1,8 +1,6 @@
 import axios from 'axios';
 import config from '../../config/config';
 
-// axios.defaults.baseURL = config.api_url;
-
 axios.defaults.baseURL = config.api_url.httpUrl;
 
 if (window.location.protocol == 'https:') {
@@ -168,13 +166,13 @@ export const getTrendingNFTs = (params) => {
     return axios.post(`/api/project/getTrendingNFTs`, params);
 }
 
-export const updateDiscordMembersForOneProject = (data) => {
-    return axios.post("/api/project/updateDiscordMembersForOneProject", data);
-}
+// export const updateDiscordMembersForOneProject = (data) => {
+//     return axios.post("/api/project/updateDiscordMembersForOneProject", data);
+// }
 
-export const updateTwitterMembersForOneProject = (data) => {
-    return axios.post("/api/project/updateTwitterMembersForOneProject", data);
-}
+// export const updateTwitterMembersForOneProject = (data) => {
+//     return axios.post("/api/project/updateTwitterMembersForOneProject", data);
+// }
 
 export const getProjectFromUniqueId = (data) => {
     return axios.post("/api/project/getProjectFromUniqueId", data);

@@ -29,7 +29,7 @@ function App() {
 
   useEffect( () => {
 
-    async function initializeProjects() {
+    async function initializeData() {
       dispatch({
         type: ActionTypes.LOGOUT_SUCCESS,
       });
@@ -39,38 +39,11 @@ function App() {
       // });
     }
 
-    async function fetchData1() {
-
-      //get all livefeeds
-      let resLivefeed = await actions.allLivefeeds();
-      let livefeeds = [], success = false;
-      try {
-        success = resLivefeed.data.success;
-        livefeeds = resLivefeed.data.livefeeds;
-        if(success) {
-          dispatch({
-            type: ActionTypes.ALL_LIVE_FEEDS,
-            data: livefeeds
-          });
-
-          //Sort the livefeednews by the selected project
-          dispatch({
-            type: ActionTypes.FILTERING_LIVE_FEED_BY_PROJECT,
-            projectData: isValid(project) && isValid(project.projectData) ? project.projectData : null,
-          });
-        } else {
-          dispatch({
-            type: ActionTypes.LIVE_FEED_ERR,
-            err: resLivefeed.data.errMessage
-          });
-        }
-      } catch (err) {
-        console.error(err);
-      }
+    async function fetchData() {
 
       //get all projects
       let resProject = await actions.allProjects();
-      let projects = [];
+      let projects = [], success = false;
       try {
         success = resProject.data.success;
         projects = resProject.data.projects;
@@ -90,27 +63,15 @@ function App() {
       }
 
       // get the projects that has news
-      let temp_projects_has_news = [], temp_projects_has_news_id_list = [];
-      livefeeds.map((one_livefeed) => {
-        if(isValid(one_livefeed) && isValid(one_livefeed.project) && isValid(one_livefeed.project._id)) {
-          let foundIndex = temp_projects_has_news_id_list.findIndex(x => one_livefeed.project._id === x);
-          if(foundIndex === -1)
-            temp_projects_has_news_id_list.push(one_livefeed.project._id);
-        }
-      });
+      let temp_projects_has_news = [];
       projects.map((one_project, index) => {
-        if(index === 0) { // if project is "Smart feed"
+        if(isValid(one_project.has_livefeed) && one_project.has_livefeed)
           temp_projects_has_news.push(one_project);
-        } else {
-          let foundIndex = temp_projects_has_news_id_list.findIndex(x => one_project._id === x);
-          if(foundIndex !== -1 && one_project.name !== "Research & Analytics")
-            temp_projects_has_news.push(one_project);
-        }
       })
       dispatch({
         type: ActionTypes.SET_PROJECTS_HAS_NEWS,
         data: temp_projects_has_news
-      })
+      });
 
       //get all guides
       let resGuide = await actions.allGuides();
@@ -245,6 +206,35 @@ function App() {
       });     
       /** The End of get upcoming projects */
 
+    }
+
+    async function fetchLivefeeds() {
+      //get all livefeeds
+      let resLivefeed = await actions.allLivefeeds();
+      let livefeeds = [], success = false;
+      try {
+        success = resLivefeed.data.success;
+        livefeeds = resLivefeed.data.livefeeds;
+        if(success) {
+          dispatch({
+            type: ActionTypes.ALL_LIVE_FEEDS,
+            data: livefeeds
+          });
+
+          //Sort the livefeednews by the selected project
+          dispatch({
+            type: ActionTypes.FILTERING_LIVE_FEED_BY_PROJECT,
+            projectData: isValid(project) && isValid(project.projectData) ? project.projectData : null,
+          });
+        } else {
+          dispatch({
+            type: ActionTypes.LIVE_FEED_ERR,
+            err: resLivefeed.data.errMessage
+          });
+        }
+      } catch (err) {
+        console.error(err);
+      }
     }
 
     // async function updateLivefeeds() {
@@ -451,18 +441,25 @@ function App() {
     
 
     const loadData = async () => {
-      await initializeProjects();
-      await fetchData1();
-      // await updateLivefeeds();
-      // await fetchTopSales();
-      await fetchDaySales();
-      await fetchTopCollections();
-      await fetchBiggestSalesVolume();
-      await fetchGainersLoosers();
-      await fetchAllCategories();
-      await fetchAllChains();
-      // await fetchTrading();
-      await fetchTokensByMarketcap();
+
+      await initializeData();
+
+      let promises = [];
+
+      promises.push( fetchData() );
+      promises.push( fetchLivefeeds() );
+      // updateLivefeeds();
+      // fetchTopSales();
+      promises.push( fetchDaySales() );
+      promises.push( fetchTopCollections() );
+      promises.push( fetchBiggestSalesVolume() );
+      promises.push( fetchGainersLoosers() );
+      promises.push( fetchAllCategories() );
+      promises.push( fetchAllChains() );
+      // fetchTrading();
+      promises.push( fetchTokensByMarketcap() );
+
+      await Promise.all(promises);
     }
 
     loadData();

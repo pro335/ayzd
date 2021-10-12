@@ -91,18 +91,18 @@ const Card = ({ item }) => {
                 </svg>
                 <p>{item.twitter_members}</p>
               </div>
-              <div className="flex flex-row order-2 ml-auto">
+              {/* <div className="flex flex-row order-2 ml-auto">
                 <p className={`${item.twitter_members >= item.twitter_members_24h ? 'text-green-400' : 'text-red-500'} ml-auto`}>
                   {item.twitter_members >= item.twitter_members_24h ? '+' : '-'} {Math.abs(item.twitter_members - item.twitter_members_24h)}
                 </p>
-              </div>
+              </div> */}
             </div>          
             : 
             null
           }
           {isValid(item.discord_members) ? 
             <div
-              className="flex flex-col lg:flex-row hover:cursor-pointer"
+              className="flex flex-col lg:flex-row hover:cursor-pointer mt-1 mb-3"
               onClick={handleClick}
             >
               <div className="flex space-x-2">
@@ -111,17 +111,17 @@ const Card = ({ item }) => {
                 </svg>
                 <p>{item.discord_members}</p>
               </div>
-              <div className="flex flex-row order-2 ml-auto">
+              {/* <div className="flex flex-row order-2 ml-auto">
                 <p className={`${item.discord_members >= item.discord_members_24h ? 'text-green-400' : 'text-red-500'} ml-auto`}>
                   {item.discord_members >= item.discord_members_24h ? '+' : '-'} {Math.abs(item.discord_members - item.discord_members_24h)}
                 </p>
-              </div>
+              </div> */}
             </div>          
             : 
             null
           }
           <button
-            className="flex flex-row items-center justify-center font-medium space-x-3 bg-black hover:bg-brand-calendar-button hover:border-brand-calendar-button text-white leading-7 rounded-xl px-2 lg:px-4 py-1.5 mt-3 mx-auto w-full onHover"
+            className="flex flex-row items-center justify-center font-medium space-x-3 bg-black hover:bg-brand-calendar-button hover:border-brand-calendar-button text-white leading-7 rounded-xl px-2 lg:px-4 py-1.5 mx-auto w-full onHover"
             onClick={addToCalendar}
           >
             <img src="../assets/icons/plus.svg" alt="" />

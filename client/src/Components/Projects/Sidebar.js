@@ -41,6 +41,15 @@ const Sidebar = ({type="dashboard"}) => {
     };
   }, []); // here
 
+  useEffect(() => {
+    type === "dashboard" && isValid(project.projects_has_news_show_list)
+      ? setIsActive(project.projects_has_news_show_list[0].name)
+      : ( type === "guides" && isValid(project.projects_has_guides_show_list)
+          ? setIsActive(project.projects_has_guides_show_list[0].name) 
+          : setIsActive("")
+      )
+  }, [project.projects_has_news_show_list, project.projects_has_guides_show_list]); // here
+
   const activeHandler = text => {
     setIsActive(text)
   }
@@ -83,7 +92,7 @@ const Sidebar = ({type="dashboard"}) => {
     <>
       <div className="h-full border-r border-brand-gray-800 lg:overflow-hidden">
         <div className="lg:hidden px-4 z-100">
-          {isValid(project.projects_has_news_show_list) || isValid(project.projects_has_guides_show_list)
+          { ( type === "dashboard" && isValid(project.projects_has_news_show_list) ) || ( type === "guides" && isValid(project.projects_has_guides_show_list) )
             ? <MobileSelectProjects type={type} />
             :
             ( !isLoaded ?
