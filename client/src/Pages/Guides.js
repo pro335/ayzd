@@ -1,22 +1,26 @@
 import React, {useState, useEffect, useRef} from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Sidebar from "../Components/Projects/Sidebar";
 import AllProjects from "../Components/NFT/AllProjects"
 import LottieAnimation from '../Components/Lottie/Lottie';
 import LOTTIE_DATA from '../Components/Lottie/data.json';
 import NotFound from "../Components/NFT/NotFound"
 import isValid from '../utility/isValid';
+import SetProjectData from '../utility/SetProjectData';
 import config from '../config/config';
 import Banner from "../Components/Banner/Banner";
 import MainBanner from "../Components/Banner/MainBanner";
 import FeedModal from "../Components/Feeds/FeedModal";
 
 const Guides = () => {
+
+  const dispatch = useDispatch();
   
-  const { project, guide } = useSelector(state => {
+  const { project, guide, rankings } = useSelector(state => {
     return {
       project: state.project,
       guide: state.guide,
+      rankings: state.rankings,
     };
   });
 
@@ -26,6 +30,7 @@ const Guides = () => {
 
   useEffect(() => {
     if (!_isMounted) {
+      SetProjectData(null, project, rankings, dispatch);
       setTimeout(() => {
         setIsLoaded(true);
       }, config.LOADING_TIME);

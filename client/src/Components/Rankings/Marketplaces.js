@@ -27,11 +27,6 @@ const Marketplaces = ({ title, icon, day, classes, count=10 }) => {
       return item.name === collection.name;
     });
     if(isValid(data)) {
-      dispatch({
-        type: ActionTypes.SET_PROJECT,
-        data: data[0],
-      });
-
       history.push(`/projects/${data[0].unique_id}`);
     } else {
       // alert("Doesn't exist")

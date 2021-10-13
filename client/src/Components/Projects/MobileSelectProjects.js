@@ -2,11 +2,9 @@ import { Fragment, useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { Listbox, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
-import { Link } from "react-router-dom";
 import isValid from '../../utility/isValid';
+import SetProjectData from '../../utility/SetProjectData';
 import config from '../../config/config';
-import * as actions from '../../redux/actions';
-import * as ActionTypes from '../../redux/ActionTypes';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -44,80 +42,18 @@ export default function MobileSelectProjects({ type="dashboard" }) {
   const handleClick = (proj) => {
 
     if(type === "dashboard") {
-      dispatch({
-        type: ActionTypes.SET_PROJECT_ID,
-        data: proj._id,
-      });
-    
       let data = project.projects_has_news_show_list.filter(function(item) {
         return item._id === proj._id;
       });
       if(isValid(data)) {
-        dispatch({
-          type: ActionTypes.SET_PROJECT,
-          data: data[0],
-        });
-
-        //Sort the livefeednews by the selected project
-        dispatch({
-          type: ActionTypes.FILTERING_LIVE_FEED_BY_PROJECT,
-          projectData: data[0],
-        });
-
-        // get the project data(not from db)
-        let volume = null, isBySellerCount = null, isBySalesVolume = null;
-        rankings.topCollections.map(item => {
-          if(item.name === data[0].name)
-            volume = item.price;
-        })
-
-        rankings.topCollections.slice(0, 8).map((item, index) => {
-          if(item.name === data[0].name)
-            isBySellerCount = {
-              value: index,
-              flag: true
-            };
-        })
-
-        rankings.biggestSalesAmount.slice(0, 8).map((item, index) => {
-          if(item.name === data[0].name)
-            isBySalesVolume =  {
-              value: index,
-              flag: true
-            };
-        })
-
-        let projectDataNotDatabase = {
-          ...project.projectDataNotDatabase,
-          volume,
-          isBySellerCount,
-          isBySalesVolume,
-        }
-
-        dispatch({
-          type: ActionTypes.SET_PROJECT_NOT_DB,
-          data: projectDataNotDatabase,
-        });
-
-        dispatch({
-          type: ActionTypes.SET_ACTIVE_TAB,
-          data: 1
-        });
+        SetProjectData(data[0], project, rankings, dispatch);
       }
     } else if(type === "guides") {
-      dispatch({
-        type: ActionTypes.SET_PROJECT_ID,
-        data: proj._id,
-      });
-    
       let data = project.projects_has_guides_show_list.filter(function(item) {
         return item._id === proj._id;
       });
       if(isValid(data)) {
-        dispatch({
-          type: ActionTypes.SET_PROJECT,
-          data: data[0],
-        });
+        SetProjectData(data[0], project, rankings, dispatch);
       }
     }
   }

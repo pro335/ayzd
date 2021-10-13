@@ -27,11 +27,6 @@ const BiggestSalesVolume = ({ projects, title, icon, day, classes }) => {
       return item.name === proj.name;
     });
     if(isValid(data)) {
-      dispatch({
-        type: ActionTypes.SET_PROJECT,
-        data: data[0],
-      });
-
       history.push(`/projects/${data[0].unique_id}`);
     } else {
       // alert("Doesn't exist")

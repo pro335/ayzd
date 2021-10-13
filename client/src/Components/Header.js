@@ -7,9 +7,8 @@ import {
 } from '@heroicons/react/outline'
 import { Link, NavLink, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import * as actions from '../redux/actions';
-import * as ActionTypes from '../redux/ActionTypes';
 import isValid from '../utility/isValid';
+import SetProjectData from '../utility/SetProjectData';
 
 const navLinks = [
   {
@@ -47,13 +46,13 @@ const navLinks = [
     // current: false,
     badge: false
   },
-  // {
-  //   name: 'Guides & Research',
-  //   to: '/guides',
-  //   icon: 'guides',
-  //   // current: false,
-  //   badge: false
-  // },
+  {
+    name: 'Guides & Research',
+    to: '/guides',
+    icon: 'guides',
+    // current: false,
+    badge: false
+  },
 ]
 
 const Header = () => {
@@ -61,9 +60,10 @@ const Header = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   
-  const { project } = useSelector(state => {
+  const { project, rankings } = useSelector(state => {
     return {
       project: state.project,
+      rankings: state.rankings,
     };
   });
 
@@ -72,18 +72,8 @@ const Header = () => {
       return;
 
     // if user click the "Logo" or "Dashboard" navbar
-    dispatch({
-      type: ActionTypes.SET_PROJECT_ID,
-      data: null,
-    });
-    dispatch({
-      type: ActionTypes.SET_PROJECT,
-      data: null,
-    });
-    dispatch({
-      type: ActionTypes.FILTERING_LIVE_FEED_BY_PROJECT,
-      projectData: null,
-    });
+    SetProjectData(null, project, rankings, dispatch);
+
     history.push(`/`);
   }
 

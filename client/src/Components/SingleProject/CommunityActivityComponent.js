@@ -21,7 +21,7 @@ const CommunityActivityComponent = ( {icon, title, amount, url} ) => {
             <p className="text-xs text-brand-gray-400 leading-4">{title}</p>
             <p className="text-lg text-brand-gray-300 font-semibold">{amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
           </div>
-          { title === "Twitter" &&
+          { title === "Twitter" && isValid(project.projectData.twitter_members_24h) && (amount !== project.projectData.twitter_members_24h) &&
             <div className={`relative flex flex-row rounded-2xl overflow-hidden whitespace-nowrap px-3 py-1.5 !ml-auto ${project.projectData.twitter_members > project.projectData.twitter_members_24h ? 'text-brand-green' : 'text-brand-AYZD-PURPLE'}`}>
               {project.projectData.twitter_members > project.projectData.twitter_members_24h ?
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
@@ -36,7 +36,7 @@ const CommunityActivityComponent = ( {icon, title, amount, url} ) => {
               <span className={`w-full h-full absolute left-0 top-0 opacity-30 ${project.projectData.twitter_members > project.projectData.twitter_members_24h ? 'bg-secondary' : 'bg-base'}`}></span>
             </div>
           }
-          { title === "Discord" &&
+          { title === "Discord" && isValid(project.projectData.discord_members_24h) && (amount !== project.projectData.discord_members_24h) &&
             <div className={`relative flex flex-row rounded-2xl overflow-hidden whitespace-nowrap px-3 py-1.5 !ml-auto ${project.projectData.discord_members > project.projectData.discord_members_24h ? 'text-brand-green' : 'text-brand-AYZD-PURPLE'}`}>
               {project.projectData.discord_members > project.projectData.discord_members_24h ?
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">

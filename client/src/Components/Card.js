@@ -25,57 +25,7 @@ const Card = ({ item, type="nft", onClickHandler }) => {
       let data = project.projects.filter(function(proj) {
         return item._id === proj._id;
       });
-      if(isValid(data)) {
-        dispatch({
-          type: ActionTypes.SET_PROJECT,
-          data: data[0],
-        });
-        //Sort the livefeednews by the selected project
-        dispatch({
-          type: ActionTypes.FILTERING_LIVE_FEED_BY_PROJECT,
-          projectData: data[0],
-        });
-  
-        // get the project data(not from db)
-        let volume = null, isBySellerCount = null, isBySalesVolume = null;
-        rankings.topCollections.map(item => {
-          if(item.name === data[0].name)
-            volume = item.price;
-        })
-  
-        rankings.topCollections.slice(0, 8).map((item, index) => {
-          if(item.name === data[0].name)
-            isBySellerCount = {
-              value: index,
-              flag: true
-            };
-        })
-  
-        rankings.biggestSalesAmount.slice(0, 8).map((item, index) => {
-          if(item.name === data[0].name)
-            isBySalesVolume =  {
-              value: index,
-              flag: true
-            };
-        })
-  
-        let projectDataNotDatabase = {
-          ...project.projectDataNotDatabase,
-          volume,
-          isBySellerCount,
-          isBySalesVolume,
-        }
-  
-        dispatch({
-          type: ActionTypes.SET_PROJECT_NOT_DB,
-          data: projectDataNotDatabase,
-        });
-        
-        dispatch({
-          type: ActionTypes.SET_ACTIVE_TAB,
-          data: 1
-        });
-  
+      if(isValid(data)) {  
         history.push(`/projects/${item.unique_id}`);
       }
     } else if(type === "guides") {

@@ -4,6 +4,7 @@ import Heading from "../Components/SingleProject/Heading"
 import Tabs from "../Components/SingleProject/Tabs"
 import { useSelector, useDispatch } from 'react-redux';
 import isValid from '../utility/isValid';
+import SetProjectData from '../utility/SetProjectData';
 import config from '../config/config';
 import * as actions from '../redux/actions';
 import * as ActionTypes from '../redux/ActionTypes';
@@ -16,10 +17,11 @@ const SingleProject = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   
-  const { project, rankings } = useSelector(state => {
+  const { project, rankings, livefeed } = useSelector(state => {
     return {
       project: state.project,
       rankings: state.rankings,
+      livefeed: state.livefeed,
     };
   });
 
@@ -28,77 +30,6 @@ const SingleProject = () => {
 
   useEffect( async () => {
     // if (!_isMounted) {
-      const getProjectFromUrl = async () => {
-
-        setTimeout(() => {
-          setIsLoaded(true);
-        }, config.LOADING_TIME);
-
-        let arrLocation = window.location.pathname.split('/');
-  
-        if(isValid(arrLocation) && isValid(arrLocation[arrLocation.length - 1])) {
-          let unique_id = arrLocation[arrLocation.length - 1];
-
-          let data = null;
-          
-          try {
-            data = await actions.getProjectFromUniqueId({unique_id});
-            
-            //get all livefeeds
-            let resLivefeed = await actions.allLivefeeds();
-            let livefeeds = [], success = false;
-            try {
-              success = resLivefeed.data.success;
-              livefeeds = resLivefeed.data.livefeeds;
-              if(success) {
-                dispatch({
-                  type: ActionTypes.ALL_LIVE_FEEDS,
-                  data: livefeeds
-                });
-              } else {
-                dispatch({
-                  type: ActionTypes.LIVE_FEED_ERR,
-                  err: resLivefeed.data.errMessage
-                });
-              }
-            } catch (err) {
-              console.error(err);
-            }
-
-            if(isValid(data)) {
-              let item = data.data.data[0];
-      
-              dispatch({
-                type: ActionTypes.SET_PROJECT_ID,
-                data: item._id,
-              });
-            
-              dispatch({
-                type: ActionTypes.SET_PROJECT,
-                data: item,
-              });
-      
-              //Sort the livefeednews by the selected project
-              dispatch({
-                type: ActionTypes.FILTERING_LIVE_FEED_BY_PROJECT,
-                projectData: item,
-              });
-      
-              dispatch({
-                type: ActionTypes.SET_ACTIVE_TAB,
-                data: 1
-              });
-            } else {
-              alert("Invalid url");
-              history.push(`/`);
-            }
-          } catch(err) {
-            console.log("~error", err);
-          }
-        }
-    
-      }
-
       await getProjectFromUrl();
     // }
     // return () => {
@@ -107,72 +38,82 @@ const SingleProject = () => {
   }, []);
 
   useEffect( async () => {
-    // set the project data(not from db)
-    const setProjectDataNotDatabase = async () => {
+    await getProjectFromUrl();
+  }, [project.projects]);
 
-      if(isValid(project) && isValid(project.projectData)) {
-        let item = project.projectData;
-        let volume = null, isBySellerCount = null, isBySalesVolume = null, discord_members = null, twitter_members = null;
-        rankings.topCollections.map(one_item => {
-          if(item.name === one_item.name)
-            volume = one_item.price;
-        })
+  const getProjectFromUrl = async () => {
+    
+    setIsLoaded(false);
+    setTimeout(() => {
+      setIsLoaded(true);
+    }, config.LOADING_TIME);
 
-        rankings.topCollections.slice(0, 8).map((one_item, index) => {
-          if(item.name === one_item.name)
-            isBySellerCount = {
-              value: index,
-              flag: true
-            };
-        })
+    let arrLocation = window.location.pathname.split('/');
 
-        rankings.biggestSalesAmount.slice(0, 8).map((one_item, index) => {
-          if(item.name === one_item.name)
-            isBySalesVolume =  {
-              value: index,
-              flag: true
-            };
-        })
+    if(isValid(arrLocation) && isValid(arrLocation[arrLocation.length - 1])) {
+      let unique_id = arrLocation[arrLocation.length - 1];
 
-        // // get the twitter numbers & discord numbers
-        // try {
-        //   let resData = await actions.updateDiscordMembersForOneProject(item);
-        //   let { success, data } = resData.data;
-        //   if(success) {
-        //     discord_members = data;
-        //   }
-        // } catch(err) {
-        //   console.log("discord data getting error!", err);
-        // }
+      let data = null;
+      
+      try {
+        if(!isValid(project.projectData)) {
+          data = await actions.getProjectFromUniqueId({unique_id});
 
-        // try {
-        //   let resData = await actions.updateTwitterMembersForOneProject(item);
-        //   let { success, data } = resData.data;
-        //   if(success) {
-        //     twitter_members = data;
-        //   }
-        // } catch( err ) {
-        //   console.log("twitter data getting error!", err);
-        // }
+          if(isValid(data)) {
+            let item = data.data.data[0];
 
-        let projectDataNotDatabase = {
-          ...project.projectDataNotDatabase,
-          volume,
-          isBySellerCount,
-          isBySalesVolume,
-          // discord_members,
-          // twitter_members,
+            // if livefeeds is not valid
+            if(!isValid(livefeed)) {
+              let resLivefeed = await actions.allLivefeeds();
+              let livefeeds = [], success = false;
+              try {
+                success = resLivefeed.data.success;
+                livefeeds = resLivefeed.data.livefeeds;
+                if(success) {
+                  dispatch({
+                    type: ActionTypes.ALL_LIVE_FEEDS,
+                    data: livefeeds
+                  });
+                } else {
+                  dispatch({
+                    type: ActionTypes.LIVE_FEED_ERR,
+                    err: resLivefeed.data.errMessage
+                  });
+                }
+              } catch (err) {
+                console.error(err);
+              }
+            }
+
+            SetProjectData(data[0], project, rankings, dispatch);
+
+            // if discord(twitter) link is valid, but discord(twitter) members is not valid, update the discord(twitter) members
+            if(isValid(project.discord_link) && !isValid(project.discord_members)) {
+              try {
+                await actions.updateDiscordMembersForOneProject(item);
+              } catch(err) {
+                console.log("discord data getting error!", err);
+              }
+            }
+
+            if(isValid(project.twitter_link) && !isValid(project.twitter_members)) {
+              try {
+                await actions.updateTwitterMembersForOneProject(item);
+              } catch( err ) {
+                console.log("twitter data getting error!", err);
+              }
+            }
+
+          } else {
+            alert("Invalid url");
+            history.push(`/`);
+          }
         }
-
-        dispatch({
-          type: ActionTypes.SET_PROJECT_NOT_DB,
-          data: projectDataNotDatabase,
-        });
+      } catch(err) {
+        console.log("~error", err);
       }
     }
-
-    await setProjectDataNotDatabase();
-  }, [rankings])
+  }
 
   return (
     <div className="flex flex-col h-full">

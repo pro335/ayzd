@@ -21,9 +21,10 @@ function App() {
 
   const dispatch = useDispatch();
 
-  const { project } = useSelector(state => {
+  const { project, livefeed } = useSelector(state => {
     return {
       project: state.project,
+      livefed: state.livefeed,
     };
   });
 
@@ -33,10 +34,6 @@ function App() {
       dispatch({
         type: ActionTypes.LOGOUT_SUCCESS,
       });
-      // dispatch({
-      //   type: ActionTypes.SET_PROJECT_ID,
-      //   data: null,
-      // });
     }
 
     async function fetchData() {
@@ -154,11 +151,11 @@ function App() {
       // format the upcoming date from UTC to "Aug 31, 2021 12:00 AM"
       let temp_upcoming_date_list = [], temp_previous_upcoming_date_list = [];
 
-      // add "All upcoming drops" tab to upcoming_date_list.
-      temp_upcoming_date_list.push({
-        date: "All upcoming drops",
-        count: 0,
-      })
+      // // add "All upcoming drops" tab to upcoming_date_list.
+      // temp_upcoming_date_list.push({
+      //   date: "All upcoming drops",
+      //   count: 0,
+      // })
 
       // let year_current = moment(new Date()).get('year');
       for(let i = 0; i < 30; i ++) {
@@ -252,31 +249,33 @@ function App() {
     }
 
     async function fetchLivefeeds() {
-      //get all livefeeds
-      let resLivefeed = await actions.allLivefeeds();
-      let livefeeds = [], success = false;
-      try {
-        success = resLivefeed.data.success;
-        livefeeds = resLivefeed.data.livefeeds;
-        if(success) {
-          dispatch({
-            type: ActionTypes.ALL_LIVE_FEEDS,
-            data: livefeeds
-          });
+      // if livefeeds is not valid
+      if(!isValid(livefeed)) {
+        let resLivefeed = await actions.allLivefeeds();
+        let livefeeds = [], success = false;
+        try {
+          success = resLivefeed.data.success;
+          livefeeds = resLivefeed.data.livefeeds;
+          if(success) {
+            dispatch({
+              type: ActionTypes.ALL_LIVE_FEEDS,
+              data: livefeeds
+            });
 
-          //Sort the livefeednews by the selected project
-          dispatch({
-            type: ActionTypes.FILTERING_LIVE_FEED_BY_PROJECT,
-            projectData: isValid(project) && isValid(project.projectData) ? project.projectData : null,
-          });
-        } else {
-          dispatch({
-            type: ActionTypes.LIVE_FEED_ERR,
-            err: resLivefeed.data.errMessage
-          });
+            //Sort the livefeednews by the selected project
+            dispatch({
+              type: ActionTypes.FILTERING_LIVE_FEED_BY_PROJECT,
+              projectData: isValid(project) && isValid(project.projectData) ? project.projectData : null,
+            });
+          } else {
+            dispatch({
+              type: ActionTypes.LIVE_FEED_ERR,
+              err: resLivefeed.data.errMessage
+            });
+          }
+        } catch (err) {
+          console.error(err);
         }
-      } catch (err) {
-        console.error(err);
       }
     }
 

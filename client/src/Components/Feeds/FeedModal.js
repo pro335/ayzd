@@ -83,11 +83,6 @@ export default function FeedModal({ open, setOpen, type="dashboard" }) {
       return;
 
     const item = data[0];
-  
-    dispatch({
-      type: ActionTypes.SET_PROJECT,
-      data: item,
-    });
 
     setOpen(false);
 
