@@ -46,13 +46,13 @@ const navLinks = [
     // current: false,
     badge: false
   },
-  {
-    name: 'Guides & Research',
-    to: '/guides',
-    icon: 'guides',
-    // current: false,
-    badge: false
-  },
+  // {
+  //   name: 'Guides & Research',
+  //   to: '/guides',
+  //   icon: 'guides',
+  //   // current: false,
+  //   badge: false
+  // },
 ]
 
 const Header = () => {

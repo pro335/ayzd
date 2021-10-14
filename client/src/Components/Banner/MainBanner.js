@@ -48,7 +48,7 @@ const MainBanner = ({onClickHandler}) => {
       {/* code duplicated - for mobile size */}
       <div 
         className="flex md:hidden h-40 lg:h-72 relative flex-col md:flex-row md:items-center justify-between z-40 px-5 py-5 md:pl-9 md:pr-6 mt-0 bg-center bg-cover bg-no-repeat" 
-        style={{backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.49), rgba(0, 0, 0, 0.49)), url(../assets/images/main-banner-bg.png)"}}
+        style={{backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.49), rgba(0, 0, 0, 0.49)), url(../assets/images/main-banner-bg.jxr)"}}
       >
         <div className="flex flex-col">
           <h4 className="text-xl text-gray-100 text-center md:text-left font-bold leading-6">

@@ -32,7 +32,7 @@ const CommunityActivityComponent = ( {icon, title, amount, url} ) => {
                   <path fillRule="evenodd" d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l2.293-2.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
               }
-              {Math.abs(project.projectData.twitter_members - project.projectData.twitter_members_24h)}
+              {(Math.abs(project.projectData.twitter_members - project.projectData.twitter_members_24h)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
               <span className={`w-full h-full absolute left-0 top-0 opacity-30 ${project.projectData.twitter_members > project.projectData.twitter_members_24h ? 'bg-secondary' : 'bg-base'}`}></span>
             </div>
           }
@@ -47,7 +47,7 @@ const CommunityActivityComponent = ( {icon, title, amount, url} ) => {
                   <path fillRule="evenodd" d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l2.293-2.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
               }
-              {Math.abs(project.projectData.discord_members - project.projectData.discord_members_24h)}
+              {(Math.abs(project.projectData.discord_members - project.projectData.discord_members_24h)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
               <span className={`w-full h-full absolute left-0 top-0 opacity-30 ${project.projectData.discord_members > project.projectData.discord_members_24h ? 'bg-secondary' : 'bg-base'}`}></span>
             </div>
           }
