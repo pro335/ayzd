@@ -29,15 +29,15 @@ const Guides = () => {
   const _isMounted = useRef(false); // Initial value _isMounted = false
 
   useEffect(() => {
-    if (!_isMounted) {
+    // if (!_isMounted) {
       SetProjectData(null, project, rankings, dispatch);
       setTimeout(() => {
         setIsLoaded(true);
       }, config.LOADING_TIME);
-    }
-    return () => {
-      _isMounted.current = true;
-    };
+    // }
+    // return () => {
+    //   _isMounted.current = true;
+    // };
   }, []); // here
 
   const onClickHandler = () => {

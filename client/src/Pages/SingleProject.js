@@ -56,7 +56,13 @@ const SingleProject = () => {
       let data = null;
       
       try {
-        if(!isValid(project.projectData)) {
+        if(!isValid(project.projectData) || (unique_id !== project.projectData.unique_id)) {
+
+          dispatch({
+            type: ActionTypes.SET_PROJECT,
+            data: null,
+          });
+        
           data = await actions.getProjectFromUniqueId({unique_id});
 
           if(isValid(data)) {
@@ -85,7 +91,7 @@ const SingleProject = () => {
               }
             }
 
-            SetProjectData(data[0], project, rankings, dispatch);
+            SetProjectData(item, project, rankings, dispatch);
 
             // if discord(twitter) link is valid, but discord(twitter) members is not valid, update the discord(twitter) members
             if(isValid(project.discord_link) && !isValid(project.discord_members)) {
