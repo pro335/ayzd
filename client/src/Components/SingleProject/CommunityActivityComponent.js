@@ -23,30 +23,34 @@ const CommunityActivityComponent = ( {icon, title, amount, url} ) => {
           </div>
           { title === "Twitter" && isValid(project.projectData.twitter_members_24h) && (amount !== project.projectData.twitter_members_24h) &&
             <div className={`relative flex flex-row rounded-2xl overflow-hidden whitespace-nowrap px-3 py-1.5 !ml-auto ${project.projectData.twitter_members > project.projectData.twitter_members_24h ? 'text-brand-green' : 'text-brand-AYZD-PURPLE'}`}>
-              {project.projectData.twitter_members > project.projectData.twitter_members_24h ?
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z" clipRule="evenodd" />
-                </svg>
-                :
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l2.293-2.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-              }
+              <div style={{marginTop: "1px"}}>
+                {project.projectData.twitter_members > project.projectData.twitter_members_24h ?
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                  </svg>
+                  :
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l2.293-2.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                }
+              </div>
               {(Math.abs(project.projectData.twitter_members - project.projectData.twitter_members_24h)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
               <span className={`w-full h-full absolute left-0 top-0 opacity-30 ${project.projectData.twitter_members > project.projectData.twitter_members_24h ? 'bg-secondary' : 'bg-base'}`}></span>
             </div>
           }
           { title === "Discord" && isValid(project.projectData.discord_members_24h) && (amount !== project.projectData.discord_members_24h) &&
             <div className={`relative flex flex-row rounded-2xl overflow-hidden whitespace-nowrap px-3 py-1.5 !ml-auto ${project.projectData.discord_members > project.projectData.discord_members_24h ? 'text-brand-green' : 'text-brand-AYZD-PURPLE'}`}>
-              {project.projectData.discord_members > project.projectData.discord_members_24h ?
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z" clipRule="evenodd" />
-                </svg>
-                :
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l2.293-2.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-              }
+              <div style={{marginTop: "1px"}}>
+                {project.projectData.discord_members > project.projectData.discord_members_24h ?
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                  </svg>
+                  :
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l2.293-2.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                }
+              </div>
               {(Math.abs(project.projectData.discord_members - project.projectData.discord_members_24h)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
               <span className={`w-full h-full absolute left-0 top-0 opacity-30 ${project.projectData.discord_members > project.projectData.discord_members_24h ? 'bg-secondary' : 'bg-base'}`}></span>
             </div>
