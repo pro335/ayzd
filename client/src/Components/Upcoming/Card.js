@@ -77,7 +77,7 @@ const Card = ({ item }) => {
         <div className="border-t text-xs font-medium px-3 pb-3" style={{borderColor: "rgba(255, 255, 255, 0.1)"}}>
           {isValid(item.twitter_members) ? 
             <div
-              className="flex flex-col lg:flex-row mt-3 hover:cursor-pointer"
+              className="flex flex-row mt-3 hover:cursor-pointer"
               onClick={handleClick}
             >
               <div className="flex space-x-2">
@@ -99,7 +99,7 @@ const Card = ({ item }) => {
           }
           {isValid(item.discord_members) ? 
             <div
-              className="flex flex-col lg:flex-row hover:cursor-pointer mt-1"
+              className="flex flex-row hover:cursor-pointer mt-1"
               onClick={handleClick}
             >
               <div className="flex space-x-2">
