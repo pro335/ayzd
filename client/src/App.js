@@ -261,12 +261,6 @@ function App() {
               type: ActionTypes.ALL_LIVE_FEEDS,
               data: livefeeds
             });
-
-            //Sort the livefeednews by the selected project
-            dispatch({
-              type: ActionTypes.FILTERING_LIVE_FEED_BY_PROJECT,
-              projectData: isValid(project) && isValid(project.projectData) ? project.projectData : null,
-            });
           } else {
             dispatch({
               type: ActionTypes.LIVE_FEED_ERR,
@@ -277,6 +271,13 @@ function App() {
           console.error(err);
         }
       }
+
+      //Sort the livefeednews by the selected project
+      dispatch({
+        type: ActionTypes.FILTERING_LIVE_FEED_BY_PROJECT,
+        projectData: isValid(project) && isValid(project.projectData) ? project.projectData : null,
+      });
+      
     }
 
     // async function updateLivefeeds() {
