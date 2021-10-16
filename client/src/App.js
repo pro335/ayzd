@@ -531,6 +531,7 @@ function App() {
             <Route exact path="/projects/:project_unique_id" component={SingleProject} />
             <Route exact path="/drops" component={Upcoming} />
             <Route path="/guides" component={Guides} />
+            <Route exact path="/guides/:url" component={Guides} />
             <Route path="/" component={Dashboard} />
           </Switch>
         </main>

@@ -11,6 +11,7 @@ import config from '../config/config';
 import Banner from "../Components/Banner/Banner";
 import MainBanner from "../Components/Banner/MainBanner";
 import FeedModal from "../Components/Feeds/FeedModal";
+import * as ActionTypes from '../redux/ActionTypes';
 
 const Guides = () => {
 
@@ -27,18 +28,65 @@ const Guides = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [open, setOpen] = useState(false);    // show the guide modal
   const _isMounted = useRef(false); // Initial value _isMounted = false
-
-  useEffect(() => {
+  
+  useEffect( async () => {
     // if (!_isMounted) {
-      SetProjectData(null, project, rankings, dispatch);
-      setTimeout(() => {
-        setIsLoaded(true);
-      }, config.LOADING_TIME);
+      await getGuideFromUrl();
     // }
     // return () => {
     //   _isMounted.current = true;
     // };
-  }, []); // here
+  }, []);
+
+  useEffect( async () => {
+    await getGuideFromUrl();
+  }, [project.projects]);
+
+  
+  const getGuideFromUrl = async () => {
+    
+    setIsLoaded(false);
+    setTimeout(() => {
+      setIsLoaded(true);
+    }, config.LOADING_TIME);
+
+    let arrLocation = window.location.pathname.split('/').filter(function(el) {return isValid(el)});
+
+    if(isValid(arrLocation) && arrLocation.length === 1)    // pathname is "guides"
+      return;
+
+    if(isValid(arrLocation) && arrLocation.length === 3 && isValid(arrLocation[arrLocation.length - 2]) && (arrLocation[arrLocation.length - 2] === "category") && isValid(arrLocation[arrLocation.length - 1]) ) {
+      let unique_id = arrLocation[arrLocation.length - 1];
+
+      let data = null;
+
+      data = {
+        title:"How to Value VeeFriends NFTs? ",
+        full_description: "<p>VeeFriends is an NFT (Non-Fungible Token) project launched by Gary Vaynerchuk, the chairman of VaynerX and the active CEO of VaynerMedia, which consists of 10,255 VeeFriends tokens.",
+        is_video_guide:false,
+        media_video:"",
+        unique_id:"How-to-Value-VeeFriends-NFTs-",
+        _id:"61685c6e9dfbc97a88c62f1f",
+        __v:0
+      }
+
+      dispatch({
+        type: ActionTypes.SET_GUIDE,
+        data: data,
+      });
+
+
+      setOpen(true);
+      
+      // try {
+      //   if(!isValid(project.projectData) || (unique_id !== project.projectData.unique_id)) {
+
+      //   }
+      // } catch (err) {
+
+      // }
+    }
+  }
 
   const onClickHandler = () => {
     setOpen(!open)

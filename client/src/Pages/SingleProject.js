@@ -56,7 +56,7 @@ const SingleProject = () => {
       let data = null;
       
       try {
-        if(!isValid(project.projectData) || (unique_id !== project.projectData.unique_id)) {
+        if(!isValid(project.projectData) || ( isValid(project.projectData) && (unique_id !== project.projectData.unique_id) ) ) {
 
           dispatch({
             type: ActionTypes.SET_PROJECT,

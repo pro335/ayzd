@@ -2,6 +2,7 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import isValid from '../utility/isValid';
+import SetProjectData from '../utility/SetProjectData';
 import config from '../config/config';
 import * as actions from '../redux/actions';
 import * as ActionTypes from '../redux/ActionTypes';
@@ -25,6 +26,9 @@ const Card = ({ item, type="nft", onClickHandler }) => {
       let data = project.projects.filter(function(proj) {
         return item._id === proj._id;
       });
+
+      SetProjectData(data[0], project, rankings, dispatch);
+
       if(isValid(data)) {  
         history.push(`/projects/${item.unique_id}`);
       }
