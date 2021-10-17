@@ -11,6 +11,7 @@ import config from '../config/config';
 import Banner from "../Components/Banner/Banner";
 import MainBanner from "../Components/Banner/MainBanner";
 import FeedModal from "../Components/Feeds/FeedModal";
+import * as actions from '../redux/actions';
 import * as ActionTypes from '../redux/ActionTypes';
 
 const Guides = () => {
@@ -40,7 +41,7 @@ const Guides = () => {
 
   useEffect( async () => {
     await getGuideFromUrl();
-  }, [project.projects]);
+  }, [window.location.pathname]);
 
   
   const getGuideFromUrl = async () => {
@@ -50,7 +51,41 @@ const Guides = () => {
       setIsLoaded(true);
     }, config.LOADING_TIME);
 
+    SetProjectData(null, project, rankings, dispatch);
+
     let arrLocation = window.location.pathname.split('/').filter(function(el) {return isValid(el)});
+
+    //get all guides
+    let guides = [];
+    if(isValid(guide.guides)) {
+      guides = guide.guides;
+    } else {
+      let resGuide = await actions.allGuides();
+      let success = false;
+      try {
+        success = resGuide.data.success;
+        guides = resGuide.data.guides;
+        if(success) {
+          dispatch({
+            type: ActionTypes.ALL_GUIDES,
+            data: guides
+          });
+
+          //Filter guides by the selected project
+          dispatch({
+            type: ActionTypes.FILTERING_GUIDE_BY_PROJECT,
+            projectData: isValid(project) && isValid(project.projectData) ? project.projectData : null,
+          });
+        } else {
+          dispatch({
+            type: ActionTypes.GUIDE_ERR,
+            err: resGuide.data.errMessage
+          });
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
 
     if(isValid(arrLocation) && arrLocation.length === 1)    // pathname is "guides"
       return;
@@ -58,25 +93,19 @@ const Guides = () => {
     if(isValid(arrLocation) && arrLocation.length === 3 && isValid(arrLocation[arrLocation.length - 2]) && (arrLocation[arrLocation.length - 2] === "category") && isValid(arrLocation[arrLocation.length - 1]) ) {
       let unique_id = arrLocation[arrLocation.length - 1];
 
-      let data = null;
-
-      data = {
-        title:"How to Value VeeFriends NFTs? ",
-        full_description: "<p>VeeFriends is an NFT (Non-Fungible Token) project launched by Gary Vaynerchuk, the chairman of VaynerX and the active CEO of VaynerMedia, which consists of 10,255 VeeFriends tokens.",
-        is_video_guide:false,
-        media_video:"",
-        unique_id:"How-to-Value-VeeFriends-NFTs-",
-        _id:"61685c6e9dfbc97a88c62f1f",
-        __v:0
-      }
-
-      dispatch({
-        type: ActionTypes.SET_GUIDE,
-        data: data,
+      let data = guides.filter(function(item) {
+        return item.unique_id === unique_id;
       });
 
+      if(isValid(data)) {
+        dispatch({
+          type: ActionTypes.SET_GUIDE,
+          data: data[0],
+        });
+        setOpen(true);
+      }
 
-      setOpen(true);
+      console.log("aaa")
       
       // try {
       //   if(!isValid(project.projectData) || (unique_id !== project.projectData.unique_id)) {

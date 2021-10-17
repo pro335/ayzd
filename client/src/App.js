@@ -21,10 +21,11 @@ function App() {
 
   const dispatch = useDispatch();
 
-  const { project, livefeed } = useSelector(state => {
+  const { project, livefeed, guide } = useSelector(state => {
     return {
       project: state.project,
       livefed: state.livefeed,
+      guide: state.guide,
     };
   });
 
@@ -71,30 +72,34 @@ function App() {
       });
 
       //get all guides
-      let resGuide = await actions.allGuides();
       let guides = [];
-      try {
-        success = resGuide.data.success;
-        guides = resGuide.data.guides;
-        if(success) {
-          dispatch({
-            type: ActionTypes.ALL_GUIDES,
-            data: guides
-          });
+      if(isValid(guide.guides)) {
+        guides = guide.guides;
+      } else {
+        let resGuide = await actions.allGuides();
+        try {
+          success = resGuide.data.success;
+          guides = resGuide.data.guides;
+          if(success) {
+            dispatch({
+              type: ActionTypes.ALL_GUIDES,
+              data: guides
+            });
 
-          //Filter guides by the selected project
-          dispatch({
-            type: ActionTypes.FILTERING_GUIDE_BY_PROJECT,
-            projectData: isValid(project) && isValid(project.projectData) ? project.projectData : null,
-          });
-        } else {
-          dispatch({
-            type: ActionTypes.GUIDE_ERR,
-            err: resGuide.data.errMessage
-          });
+            //Filter guides by the selected project
+            dispatch({
+              type: ActionTypes.FILTERING_GUIDE_BY_PROJECT,
+              projectData: isValid(project) && isValid(project.projectData) ? project.projectData : null,
+            });
+          } else {
+            dispatch({
+              type: ActionTypes.GUIDE_ERR,
+              err: resGuide.data.errMessage
+            });
+          }
+        } catch (err) {
+          console.error(err);
         }
-      } catch (err) {
-        console.error(err);
       }
 
       // get the projects that has guides

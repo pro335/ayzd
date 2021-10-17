@@ -9,7 +9,6 @@ import SortButton from "../Components/NFT/SortButton"
 import { useSelector, useDispatch } from 'react-redux';
 import isValid from '../utility/isValid';
 import config from '../config/config';
-import * as actions from '../redux/actions';
 import * as ActionTypes from '../redux/ActionTypes';
 import LottieAnimation from '../Components/Lottie/Lottie';
 import LOTTIE_DATA from '../Components/Lottie/data.json';

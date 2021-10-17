@@ -42,8 +42,9 @@ const Card = ({ item, type="nft", onClickHandler }) => {
           type: ActionTypes.SET_GUIDE,
           data: data[0],
         });
-        if(typeof onClickHandler === "function")
-          onClickHandler();
+        history.push(`/guides/category/${data[0].unique_id}`);
+        // if(typeof onClickHandler === "function")
+        //   onClickHandler();
       }
     }
   }
