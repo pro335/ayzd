@@ -14,9 +14,9 @@ import * as actions from "./redux/actions";
 import * as ActionTypes from "./redux/ActionTypes";
 import isValid from "./utility/isValid";
 import config from "./config/config";
+import GoogleAnalytics from "./utility/GoogleAnalytics";
 import moment from "moment-timezone";
 moment.tz.setDefault("Europe/Riga");
-import GoogleAnalytics from "./utility/GoogleAnalytics";
 
 function App() {
   const dispatch = useDispatch();
