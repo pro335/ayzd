@@ -6,7 +6,10 @@ import config from '../../config/config';
 import * as actions from '../../redux/actions';
 import * as ActionTypes from '../../redux/ActionTypes';
 import moment from 'moment';
+import { createPopper } from "@popperjs/core";
 // import ApiCalendar from "react-google-calendar-api";
+
+const color = "pink";
 
 const Card = ({ item }) => {
   const history = useHistory();
@@ -50,6 +53,29 @@ const Card = ({ item }) => {
   }
 
   var main_image = isValid(item) && isValid(item.main_image) && isValid(item.main_image.url) ? item.main_image.url : `${config.bucket_url}/${config.common_image}`;
+
+  //the start of the variables and methods to show tooltip
+  const [tooltipShow, setTooltipShow] = React.useState(false);
+  const twitter_btnRef = React.createRef();
+  const discord_btnRef = React.createRef();
+  const tooltipRef = React.createRef();
+  const openTooltip_twitter = () => {
+    createPopper(twitter_btnRef.current, tooltipRef.current, {
+      placement: "top"
+    });
+    setTooltipShow(true);
+  };
+  const openTooltip_discord = (type) => {
+    createPopper(discord_btnRef.current, tooltipRef.current, {
+      placement: "top"
+    });
+    setTooltipShow(true);
+  };
+  const closeLeftTooltip = () => {
+    setTooltipShow(false);
+  };
+  //end of the vaiables and methods to show tooltip
+
   return (
     <div>
       <div className="bg-brand-gray-800 border border-brand-gray-800 rounded-xl overflow-hidden">
@@ -87,7 +113,12 @@ const Card = ({ item }) => {
                 <p>{item.twitter_members}</p>
               </div>
               {isValid(item.twitter_members_24h) &&
-                <div className="flex flex-row order-2 ml-auto">
+                <div
+                  className="flex flex-row order-2 ml-auto"
+                  onMouseEnter={openTooltip_twitter}
+                  onMouseLeave={closeLeftTooltip}
+                  ref={twitter_btnRef}
+                >
                   <p className={`${item.twitter_members >= item.twitter_members_24h ? 'text-green-400' : 'text-red-500'} ml-auto`}>
                     {item.twitter_members >= item.twitter_members_24h ? '+' : '-'} {(Math.abs(item.twitter_members - item.twitter_members_24h) / item.twitter_members * 100).toFixed(2)} %
                   </p>
@@ -109,7 +140,13 @@ const Card = ({ item }) => {
                 <p>{item.discord_members}</p>
               </div>
               {isValid(item.discord_members_24h) &&
-                <div className="flex flex-row order-2 ml-auto">
+                <div
+                  className="flex flex-row order-2 ml-auto"
+                  onMouseEnter={openTooltip_discord}
+                  onMouseLeave={closeLeftTooltip}
+                  ref={discord_btnRef}
+                >
+
                   <p className={`${item.discord_members >= item.discord_members_24h ? 'text-green-400' : 'text-red-500'} ml-auto`}>
                     {item.discord_members >= item.discord_members_24h ? '+' : '-'} {(Math.abs(item.discord_members - item.discord_members_24h)/item.discord_members*100).toFixed(2)}%
                   </p>
@@ -128,6 +165,25 @@ const Card = ({ item }) => {
           </button>
         </div>
       </div>
+      <div
+        className={
+          (tooltipShow ? "" : "hidden ") +
+          "bg-" +
+          color +
+          "-600 border-0 mt-3 block z-50 font-normal leading-normal text-sm max-w-xs text-left no-underline break-words rounded-lg"
+        }
+        ref={tooltipRef}
+      >
+        <div>
+          <div
+            className={
+              "bg-black text-white opacity-75 p-2 mb-1 rounded-lg"
+            }
+          >
+            Gain in 24h
+          </div>
+        </div>
+      </div>      
     </div>
   )
 }
