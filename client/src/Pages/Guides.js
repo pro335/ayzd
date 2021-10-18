@@ -13,6 +13,7 @@ import MainBanner from "../Components/Banner/MainBanner";
 import FeedModal from "../Components/Feeds/FeedModal";
 import * as actions from '../redux/actions';
 import * as ActionTypes from '../redux/ActionTypes';
+import { Helmet } from 'react-helmet'
 
 const Guides = () => {
 
@@ -123,6 +124,9 @@ const Guides = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{ "NFT Guides on ayzd.com: research, analytics, axie infinity guides, zed run guides, how to guides for opensea and other platforms, videos and many more" }</title>
+      </Helmet>
       <div className="h-full w-full grid lg:grid-cols-6 lg:overflow-hidden">
         <div className="hidden lg:flex flex-col">
           <Sidebar type={"guides"} />

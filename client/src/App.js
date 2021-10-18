@@ -14,7 +14,6 @@ import * as actions from "./redux/actions";
 import * as ActionTypes from "./redux/ActionTypes";
 import isValid from "./utility/isValid";
 import config from "./config/config";
-import GoogleAnalytics from "./utility/GoogleAnalytics";
 import moment from "moment-timezone";
 moment.tz.setDefault("Europe/Riga");
 
@@ -583,7 +582,6 @@ function App() {
             <Route exact path="/guides/:url" component={Guides} />
             <Route path="/" component={Dashboard} />
           </Switch>
-          <GoogleAnalytics />
         </main>
       </Router>
       <Footer />

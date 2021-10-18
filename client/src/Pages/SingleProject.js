@@ -11,6 +11,7 @@ import * as ActionTypes from '../redux/ActionTypes';
 import LottieAnimation from '../Components/Lottie/Lottie';
 import LOTTIE_DATA from '../Components/Lottie/data.json';
 import NotFound from "../Components/NFT/NotFound"
+import { Helmet } from 'react-helmet'
 
 const SingleProject = () => {
 
@@ -123,6 +124,9 @@ const SingleProject = () => {
 
   return (
     <div className="flex flex-col h-full">
+      <Helmet>
+        <title>{ `${isValid(project) && isValid(project.projectData) ? project.projectData.name : ""} - nft project on ayzd.com` }</title>
+      </Helmet>
       {isValid(project) && isValid(project.projectData) ?
         <>
           <Heading />

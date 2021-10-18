@@ -12,6 +12,7 @@ import config from '../config/config';
 import * as ActionTypes from '../redux/ActionTypes';
 import LottieAnimation from '../Components/Lottie/Lottie';
 import LOTTIE_DATA from '../Components/Lottie/data.json';
+import { Helmet } from 'react-helmet'
 
 const Nft = () => {
 
@@ -119,6 +120,10 @@ const Nft = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{ "NFT Project database on ayzd.com: biggest database of all the NFT projects on: opensea, rarible, foundation, solana, ethereum, binance, art" }</title>
+        {/* Individual guide - “%name of a guide% - NFT guides and analytics on ayzd.com” */}
+      </Helmet>
       <div className="h-full relative w-full flex flex-col overflow-hidden">
         <div className="w-full fixed h-16 bg-brand-gray-800 z-30">
           <div className="h-full w-full relative">

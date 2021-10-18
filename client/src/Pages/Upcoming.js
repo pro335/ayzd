@@ -12,6 +12,7 @@ import * as ActionTypes from '../redux/ActionTypes';
 import moment from 'moment-timezone';
 import LottieAnimation from '../Components/Lottie/Lottie';
 import LOTTIE_DATA from '../Components/Lottie/data.json';
+import { Helmet } from 'react-helmet'
 
 const Upcoming = () => {
 
@@ -76,6 +77,9 @@ const Upcoming = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{ "NFT Drop calendar on ayzd.com: nft drops on eth, solana drops, binance drops, crypto.com drops, best collections and nft drop analytics" }</title>
+      </Helmet>
       <div className="h-full relative w-full flex flex-col overflow-hidden">
         <div className="w-full fixed h-16 bg-brand-gray-800 z-30">
           <div className="h-full w-full relative">

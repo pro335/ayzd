@@ -10,6 +10,7 @@ import isValid from '../utility/isValid';
 import config from '../config/config';
 import * as actions from '../redux/actions';
 import * as ActionTypes from '../redux/ActionTypes';
+import { Helmet } from 'react-helmet'
 
 const Trading = () => {
   const [open, setOpen] = useState(false);
@@ -57,6 +58,9 @@ const Trading = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{ "Trading" }</title>
+      </Helmet>
       <div className="h-full w-full grid lg:grid-cols-6 lg:overflow-hidden">
 
         {/* Left */}
