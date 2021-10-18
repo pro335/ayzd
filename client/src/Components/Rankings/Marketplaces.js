@@ -67,7 +67,7 @@ const Marketplaces = ({ title, icon, day, classes, count=10 }) => {
 
                   <div className="flex flex-col md:flex-row items-end md:items-center text-green-400 ml-auto">
                     <div className="md:mr-2">
-                      <span className="text-gray-200 order-1 md:order-none">{item.marketcap}</span>
+                      <p className="text-gray-200 order-1 md:order-none text-right">{item.marketcap}</p>
                       <p className="text-xs text-brand-gray-700 order-2 font-medium text-right">{item.price}</p>
                     </div>
                     <div className={`flex flex-row ${item.percent.indexOf('+') > -1 ? 'text-green-400' : 'text-red-500'}`}>
