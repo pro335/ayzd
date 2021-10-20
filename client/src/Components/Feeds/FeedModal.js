@@ -207,7 +207,7 @@ export default function FeedModal({ open, setOpen, type="dashboard" }) {
                       <div className="h-44 rounded-md overflow-hidden py-4">
                         <img className="w-full h-full object-cover object-center" src={livefeedData.media} alt="" onError={addDefaultSrc} />
                       </div>
-                      <p className="text-sm text-brand-gray-400">
+                      <p className="text-sm text-brand-gray-400 div_modalContainer">
                         {livefeedData.description}
                       </p>
                     </div>
@@ -304,7 +304,7 @@ export default function FeedModal({ open, setOpen, type="dashboard" }) {
                         null
                       }
                     </div>
-                    <div>
+                    <div className="">
                       {/* <!-- Image or video --> */}
                       {isValid(guide) && isValid(guide.guideData) && guide.guideData.is_video_guide && isValid(guide.guideData.media_video) &&
                         <div className="h-84 rounded-md overflow-hidden py-4">
@@ -321,7 +321,7 @@ export default function FeedModal({ open, setOpen, type="dashboard" }) {
                           <img className="w-full h-full object-cover object-center" src={guide.guideData.media_image.url} alt="" onError={addDefaultSrc} />
                         </div>
                       }
-                      <p className="text-sm text-brand-gray-400" dangerouslySetInnerHTML={{__html: guide.guideData.full_description}} />
+                      <p className="text-sm text-brand-gray-400 heading-format div_modalContainer" dangerouslySetInnerHTML={{__html: guide.guideData.full_description}} />
                     </div>                    
                   </div>
                 </div>}
