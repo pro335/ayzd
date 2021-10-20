@@ -52,7 +52,7 @@ const Card = ({ item, type="nft", onClickHandler }) => {
   }
 
   const addDefaultSrc = (e) => {
-    e.target.src = '../assets/images/default_image.svg';
+    e.target.src = '/assets/images/default_image.svg';
   }
 
   var media = null;
@@ -73,7 +73,7 @@ const Card = ({ item, type="nft", onClickHandler }) => {
     else
       media = `${config.bucket_url}/${config.common_image}`;
   } else {    
-    media = isValid(item) && isValid(item.image) ? item.image : '../assets/images/default_image.svg';
+    media = isValid(item) && isValid(item.image) ? item.image : '/assets/images/default_image.svg';
   }
   return (
     <div className={type === "categories" || type === "guides" ? "hover:cursor-pointer" : ""} onClick={handleClick}>
@@ -82,7 +82,7 @@ const Card = ({ item, type="nft", onClickHandler }) => {
           className="block h-41 xl:h-52 relative"
         >
           <img className="w-full h-full object-cover" src={media} alt="" onError={addDefaultSrc} />
-          <img className={`${type==="guides" && item.is_video_guide ? "visible": "invisible"} absolute inset-y-0 top-0 ml-2 mt-2`} src="../assets/icons/video.svg" alt="" />
+          <img className={`${type==="guides" && item.is_video_guide ? "visible": "invisible"} absolute inset-y-0 top-0 ml-2 mt-2`} src="/assets/icons/video.svg" alt="" />
         </div>
         <div className="text-xs font-medium pl-3 py-2 pr-5">
           {

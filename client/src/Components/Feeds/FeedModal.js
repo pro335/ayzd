@@ -91,7 +91,7 @@ export default function FeedModal({ open, setOpen, type="dashboard" }) {
 
 
   const addDefaultSrc = (e) => {
-    e.target.src = '../assets/images/default_image.svg';
+    e.target.src = '/assets/images/default_image.svg';
   }
 
   let main_image = null;
@@ -148,7 +148,7 @@ export default function FeedModal({ open, setOpen, type="dashboard" }) {
                         <span className="inline-block ml-1">
                           <a href={livefeedData.link} target="_blank">
                             <svg className="w-4 h-4">
-                              <use href="../assets/icons/link.svg#icon-linked"></use>
+                              <use href="/assets/icons/link.svg#icon-linked"></use>
                             </svg>
                           </a>
                         </span>
@@ -176,7 +176,7 @@ export default function FeedModal({ open, setOpen, type="dashboard" }) {
                       }
                       {tag !== 0 ?
                         <p className={`bg-opacity-20 flex items-center rounded-full px-2.5 py-1`} style={{backgroundColor: bgColor}}>
-                          <img src={`../assets/icons/${marketType.toLowerCase()}.svg`} alt="" />
+                          <img src={`/assets/icons/${marketType.toLowerCase()}.svg`} alt="" />
                           <span className={`font-semibold ml-1`} style={{color: tagColor, fontSize: "10px"}}>
                             {marketType}
                           </span>
@@ -188,15 +188,15 @@ export default function FeedModal({ open, setOpen, type="dashboard" }) {
                       <div className="flex items-center mt-2 md:mt-0 space-x-3">
 
                         <p className="flex items-center">
-                          <img src="../assets/icons/clock.svg" alt="" />
+                          <img src="/assets/icons/clock.svg" alt="" />
                           <span className="ml-1.5">{moment(livefeedData.created_time).fromNow()}</span>
                         </p>
                         <p className="flex items-center">
-                          <img src="../assets/icons/web.svg" alt="" />
+                          <img src="/assets/icons/web.svg" alt="" />
                           <span className="ml-1.5">{reduceTextLengh(livefeedData.link, 25)}</span>
                         </p>
                         {/* <p className="flex items-center">
-                          <img src="../assets/icons/comment.svg" alt="" />
+                          <img src="/assets/icons/comment.svg" alt="" />
                           <span className="ml-1.5">{livefeedData.tag}</span>
                         </p> */}
                       </div>

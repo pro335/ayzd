@@ -34,7 +34,7 @@ const Heading = () => {
                 {isValid(project.projectData.app_link) ?
                   <a href={project.projectData.app_link} className="text-brand-gray-600 hover:text-brand-gray-300" target="_blank">
                     <svg className="w-4 h-4">
-                      <use href="../assets/icons/link.svg#icon-linked"></use>
+                      <use href="/assets/icons/link.svg#icon-linked"></use>
                     </svg>
                   </a>
                   :

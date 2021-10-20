@@ -72,7 +72,7 @@ const NFTList = () => {
             className="inline-flex items-center bg-brand-gray-800 text-sm text-white font-medium rounded-lg px-4 py-2"
             onClick={() => setOpen(!open)}
           >
-            <img className="mr-3" src="../assets/icons/sort-adjustment.svg" alt="" />
+            <img className="mr-3" src="/assets/icons/sort-adjustment.svg" alt="" />
             <span>Sort</span>
           </button>
         </div>
@@ -153,7 +153,7 @@ const NFTList = () => {
                       className="inline-flex items-center text-sm text-white font-medium  px-4 py-2"
                       onClick={() => setOpen(!open)}
                     >
-                      <img className="mr-3" src="../assets/icons/sort-adjustment.svg" alt="" />
+                      <img className="mr-3" src="/assets/icons/sort-adjustment.svg" alt="" />
                       <span>Sort</span>
                     </button>
                     <div className="relative flex-1 mt-2 p-4">

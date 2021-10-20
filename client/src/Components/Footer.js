@@ -8,13 +8,13 @@ const Footer = () => {
       <div className="flex items-center text-xs font-medium space-x-7">
         <a href="mailto:alex.ayzd@protonmail.com?subject=Partnership opportunity with Ayzd" className="flex items-center text-brand-gray-600 hover:text-brand-gray-300">
           <svg className="w-4 h-4">
-            <use href="../assets/icons/feature-icon.svg#icon-feature"></use>
+            <use href="/assets/icons/feature-icon.svg#icon-feature"></use>
           </svg>
           Feature request
         </a>
         <a href="mailto:alex.ayzd@protonmail.com?subject=Feature request on ayzd.com" className="flex items-center text-brand-gray-600 hover:text-brand-gray-300">
           <svg className="w-4 h-4">
-            <use href="../assets/icons/partnerships.svg#partnerships"></use>
+            <use href="/assets/icons/partnerships.svg#partnerships"></use>
           </svg>
           Partnerships
         </a>
@@ -23,19 +23,19 @@ const Footer = () => {
       <div className="flex items-center space-x-4">
         <a href={"https://twitter.com/ayzdcom"} className="text-brand-gray-600 hover:text-brand-gray-300 onHover" target="_blank">
           <svg className="w-4 h-4">
-            <use href="../assets/icons/twitter.svg#twitter"></use>
+            <use href="/assets/icons/twitter.svg#twitter"></use>
           </svg>
         </a>
 
         <a href={"https://t.me/ayzdcom"} className="text-brand-gray-600 hover:text-brand-gray-300 onHover" target="_blank">
           <svg className="w-4 h-4">
-            <use href="../assets/icons/telegram.svg#telegram"></use>
+            <use href="/assets/icons/telegram.svg#telegram"></use>
           </svg>
         </a>
 
         <a href={"https://discord.gg/banjzrbx"} className="text-brand-gray-600 hover:text-brand-gray-300 onHover" target="_blank">
           <svg className="w-5 h-5">
-            <use href="../assets/icons/discord.svg#discord"></use>
+            <use href="/assets/icons/discord.svg#discord"></use>
           </svg>
         </a>                
       </div>

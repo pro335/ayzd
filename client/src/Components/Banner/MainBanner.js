@@ -34,7 +34,7 @@ const MainBanner = ({onClickHandler}) => {
       {/* code duplicated - for desktop size */}
       <div 
         className="hidden md:flex h-40 lg:h-72 relative flex-col md:flex-row md:items-center justify-between z-40 px-5 py-5 md:pl-9 md:pr-6 mt-0 bg-center bg-cover bg-no-repeat" 
-        style={{backgroundImage: "url(../assets/images/main-banner-bg.png)"}}
+        style={{backgroundImage: "url(/assets/images/main-banner-bg.png)"}}
       >
         <div className="flex flex-col">
           <h4 className="text-xl text-gray-100 text-center md:text-left font-bold leading-6">
@@ -49,13 +49,13 @@ const MainBanner = ({onClickHandler}) => {
           </button>
         </div>
 
-        {/* <img className="w-full h-full absolute top-0 left-0 -z-1 object-cover" src="../assets/images/main-banner-bg.png" alt="" /> */}
+        {/* <img className="w-full h-full absolute top-0 left-0 -z-1 object-cover" src="/assets/images/main-banner-bg.png" alt="" /> */}
       </div>
 
       {/* code duplicated - for mobile size */}
       <div 
         className="flex md:hidden h-40 lg:h-72 relative flex-col md:flex-row md:items-center justify-between z-40 px-5 py-5 md:pl-9 md:pr-6 mt-0 bg-center bg-cover bg-no-repeat" 
-        style={{backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.49), rgba(0, 0, 0, 0.49)), url(../assets/images/main-banner-bg.jxr)"}}
+        style={{backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.49), rgba(0, 0, 0, 0.49)), url(/assets/images/main-banner-bg.png)"}}
       >
         <div className="flex flex-col">
           <h4 className="text-xl text-gray-100 text-center md:text-left font-bold leading-6">

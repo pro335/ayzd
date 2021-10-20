@@ -10,7 +10,7 @@ const SortButton = ({ open, setOpen }) => {
           className="inline-flex items-center bg-brand-gray-800 text-sm text-white font-medium rounded-lg px-4 py-2"
           onClick={() => setOpen(!open)}
         >
-          <img className="mr-3" src="../assets/icons/sort-adjustment.svg" alt="" />
+          <img className="mr-3" src="/assets/icons/sort-adjustment.svg" alt="" />
           <span>Sort</span>
         </button>
       </div>

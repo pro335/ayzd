@@ -25,7 +25,7 @@ const Settings = () => {
           </label>
         </div>
         <div className="flex items-center px-4 py-3">
-          <img src="../assets/icons/bell.svg" alt="" />
+          <img src="/assets/icons/bell.svg" alt="" />
           <p className="text-lg text-gray-100 font-medium ml-2">Notifications</p>
           <Switch
             checked={enabled}
@@ -47,7 +47,7 @@ const Settings = () => {
           <ROI />
 
           <button className="relative bg-brand-gray-900 h-10 w-full flex items-center justify-center font-medium border border-brand-gray-800 hover:bg-brand-gray-700 hover:text-gray-200 rounded-lg mt-4">
-            <img className="absolute left-3" src="../assets/icons/sound.svg" alt="" />
+            <img className="absolute left-3" src="/assets/icons/sound.svg" alt="" />
 
             Test sound
           </button>

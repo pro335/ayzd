@@ -67,7 +67,7 @@ const Trading = () => {
         <div className="h-full col-span-1">
           <div className="h-full border-r border-brand-gray-800">
             <div className="hidden lg:flex items-center space-x-3 p-5">
-              <img src="../assets/icons/grid.svg" alt="" />
+              <img src="/assets/icons/grid.svg" alt="" />
               <p className="textsm font-medium">
                 All
               </p>
@@ -83,7 +83,7 @@ const Trading = () => {
                   className="inline-flex items-center bg-brand-gray-800 text-sm text-white font-medium rounded-lg px-4 py-2"
                   onClick={() => setOpen(!open)}
                 >
-                  <img className="mr-3" src="../assets/icons/sort-adjustment.svg" alt="" />
+                  <img className="mr-3" src="/assets/icons/sort-adjustment.svg" alt="" />
                   <span>Settings</span>
                 </button>
               </div>
@@ -185,7 +185,7 @@ const Trading = () => {
                         </button>
                         <button className="h-10 w-10 border border-brand-gray-500 hover:border-brand-gray-300 shadow-sm rounded-md onHover group mx-3 md:mx-0">
                           <svg className="w-5 h-5 group-hover:text-brand-gray-300 mx-auto">
-                            <use href={`../assets/icons/biggest-sales.svg#icon-biggest-sales`}></use>
+                            <use href={`/assets/icons/biggest-sales.svg#icon-biggest-sales`}></use>
                           </svg>
                         </button>
                       </div>
@@ -275,7 +275,7 @@ const Trading = () => {
                       className="inline-flex items-center text-sm text-white font-medium  px-4 py-2"
                       onClick={() => setOpen(!open)}
                     >
-                      <img className="mr-3" src="../assets/icons/sort-adjustment.svg" alt="" />
+                      <img className="mr-3" src="/assets/icons/sort-adjustment.svg" alt="" />
                       <span>Settings</span>
                     </button>
                     <div className="relative flex-1 mt-2 p-4">

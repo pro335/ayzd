@@ -8,7 +8,7 @@ const SectionHeading = ({ title, icon, buttons, classes, btnLink }) => {
       className={`h-15 flex items-center justify-between border-b ${classes} border-brand-gray-800 px-5 py-3`}>
       <div className="flex items-center">
         <div>
-          <img src={`../assets/icons/${icon}.svg`} alt="" />
+          <img src={`/assets/icons/${icon}.svg`} alt="" />
         </div>
         <p className="lg:text-lg text-gray-100 font-medium leading-6 ml-3">
           {title}

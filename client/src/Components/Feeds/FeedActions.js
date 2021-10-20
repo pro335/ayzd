@@ -47,7 +47,7 @@ const FeedActions = ({ feed: { tag, created_time, link, project, comments } }) =
       >
         {tag !== 0 ?
           <p className={`bg-opacity-20 flex items-center rounded-full px-2.5 py-1`} style={{backgroundColor: bgColor}}>
-            <img src={`../assets/icons/${marketType.toLowerCase()}.svg`} alt="" />
+            <img src={`/assets/icons/${marketType.toLowerCase()}.svg`} alt="" />
             <span className={`font-semibold ml-1`} style={{color: tagColor, fontSize: "10px"}}>
               {marketType}
             </span>
@@ -56,17 +56,17 @@ const FeedActions = ({ feed: { tag, created_time, link, project, comments } }) =
           null
         }
         <p className="flex items-center">
-          <img src="../assets/icons/clock.svg" alt="" />
+          <img src="/assets/icons/clock.svg" alt="" />
           <span className="ml-1.5">
             {moment(created_time).fromNow()}
           </span>
         </p>
         <p className="flex items-center">
-          <img src="../assets/icons/web.svg" alt="" />
+          <img src="/assets/icons/web.svg" alt="" />
           <span className="ml-1.5">{reduceTextLengh(link, 15)}</span>
         </p>
         {/* <p className="flex items-center">
-          <img src="../assets/icons/comment.svg" alt="" />
+          <img src="/assets/icons/comment.svg" alt="" />
           <span className="ml-1.5">{tag}</span>
         </p> */}
       </div>

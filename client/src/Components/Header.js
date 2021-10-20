@@ -83,7 +83,7 @@ const Header = () => {
         <>
           <nav className="h-16 flex items-center">
             <div className="hover:cursor-pointer" onClick={() => handleClick()}>
-              <img src="../assets/Logo.svg" alt="" />
+              <img src="/assets/Logo.svg" alt="" />
             </div>
             <div className="nav-menu hidden lg:flex items-center font-medium space-x-4.5 px-4.5">
               {
@@ -96,7 +96,7 @@ const Header = () => {
                     onClick={() => handleClick(link)}
                   >
                     <svg className="w-5 h-5 mr-2 group-hover:text-brand-AYZD-PURPLE">
-                      <use href={`../assets/icons/${link.icon}.svg#icon-${link.icon}`}></use>
+                      <use href={`/assets/icons/${link.icon}.svg#icon-${link.icon}`}></use>
                     </svg>
                     {link.name}
                   </NavLink>
@@ -165,7 +165,7 @@ const Header = () => {
                       {/* Top */}
                       <div className="flex items-center justify-between px-4">
                         <div>
-                          <img src="../assets/Logo.svg" alt="" />
+                          <img src="/assets/Logo.svg" alt="" />
                         </div>
                         <div className="-mr-2">
                           <Popover.Button className="rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-brand-gray-300">
@@ -186,7 +186,7 @@ const Header = () => {
                               className="group flex items-center hover:text-gray-100 px-2 py-3"
                             >
                               <svg className="w-5 h-5 group-hover:text-brand-AYZD-PURPLE mr-4">
-                                <use href={`../assets/icons/${link.icon}.svg#icon-${link.icon}`}></use>
+                                <use href={`/assets/icons/${link.icon}.svg#icon-${link.icon}`}></use>
                               </svg>
                               {link.name}
                             </NavLink>

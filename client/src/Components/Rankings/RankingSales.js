@@ -19,7 +19,7 @@ const RankingSales = ({ projects, title, icon, day, classes }) => {
                 key={index}
                 className="h-10 flex items-center hover:bg-brand-gray-800 hover:text-gray-200 rounded-md px-2  md:px-3">
                 <div className="w-6 h-6 mr-4">
-                  <img className={`mx-auto h-full ${day ? '' : 'rounded-full'}`} src={`../assets/logos/${item.icon}.svg`} alt="" />
+                  <img className={`mx-auto h-full ${day ? '' : 'rounded-full'}`} src={`/assets/logos/${item.icon}.svg`} alt="" />
                 </div>
                 <div>
                   <p>

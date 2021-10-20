@@ -30,7 +30,7 @@ const StatsTopComponent = ( {icon, title, amount} ) => {
       <div className="flex items-center flex-wrap justify-center lg:justify-between space-y-6 lg:space-y-0 pt-5 pl-5 sm:pl-5 w-full">
         <div className="flex flex-row items-center border border-brand-gray-800 rounded-lg space-x-5 pl-4 pr-auto py-3 px-4 w-full">
           <div className="py-1">
-            <img className="w-full h-full object-cover object-center" src={`../assets/icons/${icon}.svg`} alt="" />
+            <img className="w-full h-full object-cover object-center" src={`/assets/icons/${icon}.svg`} alt="" />
           </div>
           <div>
             <p className="text-xs text-brand-gray-400 leading-4">{title}</p>
@@ -41,7 +41,7 @@ const StatsTopComponent = ( {icon, title, amount} ) => {
               className={ `${width > 515 ? 'flex' : "hidden"} flex-row items-center font-medium space-x-3 bg-black hover:bg-brand-calendar-button hover:border-brand-calendar-button text-white leading-7 rounded-xl px-2 lg:px-4 py-1.5 my-1.5 !ml-auto border border-brand-gray-800`}
               onClick={addToCalendar}
             >
-              <img src="../assets/icons/plus.svg" alt="" />
+              <img src="/assets/icons/plus.svg" alt="" />
               <p>Add to calendar</p>
             </button>
             :
@@ -53,7 +53,7 @@ const StatsTopComponent = ( {icon, title, amount} ) => {
             className={ `${width <= 515 ? 'flex' : "hidden"} flex-row items-center font-medium space-x-3 bg-black hover:bg-brand-calendar-button hover:border-brand-calendar-button text-white leading-7 rounded-xl px-2 lg:px-4 py-1.5 !mx-auto border border-brand-gray-800`}
             onClick={addToCalendar}
           >
-            <img src="../assets/icons/plus.svg" alt="" />
+            <img src="/assets/icons/plus.svg" alt="" />
             <p>Add to calendar</p>
           </button>
           :

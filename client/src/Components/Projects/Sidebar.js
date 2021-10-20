@@ -115,7 +115,7 @@ const Sidebar = ({type="dashboard"}) => {
                 onChange={e => handleSearch(e)}
               />
 
-              <img className="absolute left-4" src="../assets/icons/search.svg" alt="" />
+              <img className="absolute left-4" src="/assets/icons/search.svg" alt="" />
             </div>
           </div>
           {/* end */}

@@ -20,7 +20,7 @@ const Card = ({ item }) => {
   }
 
   const addDefaultSrc = (e) => {
-    e.target.src = '../assets/images/default_image.svg';
+    e.target.src = '/assets/images/default_image.svg';
   }
 
   const addToCalendar = () => {
@@ -108,7 +108,7 @@ const Card = ({ item }) => {
             >
               <div className="flex space-x-2">
                 <svg className="w-4 h-4">
-                  <use href="../assets/icons/twitter.svg#twitter"></use>
+                  <use href="/assets/icons/twitter.svg#twitter"></use>
                 </svg>
                 <p>{item.twitter_members}</p>
               </div>
@@ -135,7 +135,7 @@ const Card = ({ item }) => {
             >
               <div className="flex space-x-2">
                 <svg className="w-4 h-4">
-                  <use href="../assets/icons/discord.svg#discord"></use>
+                  <use href="/assets/icons/discord.svg#discord"></use>
                 </svg>
                 <p>{item.discord_members}</p>
               </div>
@@ -160,7 +160,7 @@ const Card = ({ item }) => {
             className="flex flex-row items-center justify-center font-medium space-x-3 bg-black hover:bg-brand-calendar-button hover:border-brand-calendar-button text-white leading-7 rounded-xl px-2 lg:px-4 py-1.5 mx-auto mt-3 w-full onHover"
             onClick={addToCalendar}
           >
-            <img src="../assets/icons/plus.svg" alt="" />
+            <img src="/assets/icons/plus.svg" alt="" />
             <p>Add to calendar</p>
           </button>
         </div>

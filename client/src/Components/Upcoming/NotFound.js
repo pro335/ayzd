@@ -4,7 +4,7 @@ const NotFound = () => {
   return (
     <div className="h-full w-full flex items-center justify-center">
       <div className="text-center">
-        <img className="mx-auto" src="../assets/icons/not-found.svg" alt="" />
+        <img className="mx-auto" src="/assets/icons/not-found.svg" alt="" />
         <h2 className="text-lg text-gray-100 font-medium mt-2">
           Whoops
         </h2>
