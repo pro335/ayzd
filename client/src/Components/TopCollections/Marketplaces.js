@@ -70,7 +70,7 @@ const Marketplaces = ({ }) => {
 
                   <div className="flex flex-col md:flex-row items-end md:items-center ml-auto">
                     <div className="md:mr-2 flex flex-col">
-                      <span className="text-gray-200 order-1 md:order-none">{item.marketcap}</span>
+                      <span className="text-gray-200 order-1 md:order-none text-right">{item.marketcap}</span>
                       <span className="text-xs text-brand-gray-700 order-2 font-medium text-right">{item.price}</span>
                     </div>
                     <div className={`flex flex-row ${item.percent.indexOf('+') > -1 ? 'text-green-400' : 'text-red-500'}`}>

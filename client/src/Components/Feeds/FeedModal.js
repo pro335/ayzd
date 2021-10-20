@@ -102,7 +102,17 @@ export default function FeedModal({ open, setOpen, type="dashboard" }) {
 
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" static className="fixed inset-0 overflow-hidden z-1000" open={open} onClose={setOpen}>
+      <Dialog 
+        as="div" 
+        static 
+        className="fixed inset-0 overflow-hidden z-1000" 
+        open={open} 
+        onClose={() => {
+          setOpen(false); 
+          if(type === "guides")
+            history.push(`/guides`);
+        }}
+      >
         <div className="absolute inset-0 overflow-hidden">
           <Transition.Child
             as={Fragment}
@@ -261,8 +271,16 @@ export default function FeedModal({ open, setOpen, type="dashboard" }) {
                       <h2 className="text-lg font-semibold">
                         {guide.guideData.title}
                       </h2>
-                      <div className="ml-7 flex items-center">
-                        <button type="button" aria-label="Top Right" className="focus:outline-none ml-auto" onClick={() => setOpen(false)}>
+                      <div className="ml-7 flex items-center">        
+                        <button 
+                          type="button" 
+                          aria-label="Top Right" 
+                          className="focus:outline-none ml-auto" 
+                          onClick={() => { 
+                            setOpen(false); 
+                            history.push(`/guides`); 
+                          }}
+                        >
                           <span className="sr-only">Close panel</span>
                           <XIcon className="h-6 w-6" aria-hidden="true" />
                         </button>

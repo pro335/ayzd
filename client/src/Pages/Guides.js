@@ -31,14 +31,14 @@ const Guides = () => {
   const [open, setOpen] = useState(false);    // show the guide modal
   const _isMounted = useRef(false); // Initial value _isMounted = false
   
-  useEffect( async () => {
-    // if (!_isMounted) {
-      await getGuideFromUrl();
-    // }
-    // return () => {
-    //   _isMounted.current = true;
-    // };
-  }, []);
+  // useEffect( async () => {
+  //   // if (!_isMounted) {
+  //     await getGuideFromUrl();
+  //   // }
+  //   // return () => {
+  //   //   _isMounted.current = true;
+  //   // };
+  // }, []);
 
   useEffect( async () => {
     await getGuideFromUrl();
@@ -52,20 +52,17 @@ const Guides = () => {
       setIsLoaded(true);
     }, config.LOADING_TIME);
 
-    SetProjectData(null, project, rankings, dispatch);
-
     let arrLocation = window.location.pathname.split('/').filter(function(el) {return isValid(el)});
 
+    SetProjectData(null, project, rankings, dispatch);
+
     //get all guides
-    let guides = [];
-    if(isValid(guide.guides)) {
-      guides = guide.guides;
-    } else {
+    if(!isValid(guide) || (isValid(guide) && !isValid(guide.guides))) {
       let resGuide = await actions.allGuides();
       let success = false;
       try {
         success = resGuide.data.success;
-        guides = resGuide.data.guides;
+        let guides = resGuide.data.guides;
         if(success) {
           dispatch({
             type: ActionTypes.ALL_GUIDES,
@@ -91,30 +88,20 @@ const Guides = () => {
     if(isValid(arrLocation) && arrLocation.length === 1)    // pathname is "guides"
       return;
 
-    if(isValid(arrLocation) && arrLocation.length === 3 && isValid(arrLocation[arrLocation.length - 2]) && (arrLocation[arrLocation.length - 2] === "category") && isValid(arrLocation[arrLocation.length - 1]) ) {
-      let unique_id = arrLocation[arrLocation.length - 1];
+    if(isValid(arrLocation) && arrLocation.length === 3 && isValid(arrLocation[arrLocation.length - 2]) && isValid(arrLocation[arrLocation.length - 1]) ) {
+      let project_unique_id = arrLocation[arrLocation.length - 2];
+      let guide_unique_id = arrLocation[arrLocation.length - 1];
 
-      let data = guides.filter(function(item) {
-        return item.unique_id === unique_id;
-      });
+      let data = await actions.getGuideFromUniqueId({ project_unique_id, guide_unique_id });
 
       if(isValid(data)) {
+        let item = data.data.data;
         dispatch({
           type: ActionTypes.SET_GUIDE,
-          data: data[0],
+          data: item,
         });
         setOpen(true);
       }
-
-      console.log("aaa")
-      
-      // try {
-      //   if(!isValid(project.projectData) || (unique_id !== project.projectData.unique_id)) {
-
-      //   }
-      // } catch (err) {
-
-      // }
     }
   }
 

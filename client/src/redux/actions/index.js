@@ -200,6 +200,12 @@ export const allGuides = () => {
     return axios.post("/api/guide/all");
 }
 
+// get the specific guide from project_unique_id and guide_id
+export const getGuideFromUniqueId = (data) => {
+  return axios.post("/api/guide/getGuideFromUniqueId", data);
+}
+
+
 // Scrape data
 export const fetchTopSales = () => {
     return axios.post("/api/getData/getTopSales");

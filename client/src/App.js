@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./Components/Header";
@@ -16,6 +16,7 @@ import isValid from "./utility/isValid";
 import config from "./config/config";
 import moment from "moment-timezone";
 moment.tz.setDefault("Europe/Riga");
+
 
 function App() {
   const dispatch = useDispatch();
@@ -69,56 +70,8 @@ function App() {
         data: temp_projects_has_news,
       });
 
-      //get all guides
-      let guides = [];
-      if (isValid(guide.guides)) {
-        guides = guide.guides;
-      } else {
-        let resGuide = await actions.allGuides();
-        try {
-          success = resGuide.data.success;
-          guides = resGuide.data.guides;
-          if (success) {
-            dispatch({
-              type: ActionTypes.ALL_GUIDES,
-              data: guides,
-            });
-
-            //Filter guides by the selected project
-            dispatch({
-              type: ActionTypes.FILTERING_GUIDE_BY_PROJECT,
-              projectData:
-                isValid(project) && isValid(project.projectData)
-                  ? project.projectData
-                  : null,
-            });
-          } else {
-            dispatch({
-              type: ActionTypes.GUIDE_ERR,
-              err: resGuide.data.errMessage,
-            });
-          }
-        } catch (err) {
-          console.error(err);
-        }
-      }
-
       // get the projects that has guides
-      let temp_projects_has_guides = [],
-        temp_projects_has_guides_id_list = [];
-      guides.map((one_guide) => {
-        if (
-          isValid(one_guide) &&
-          isValid(one_guide.project) &&
-          isValid(one_guide.project._id)
-        ) {
-          let foundIndex = temp_projects_has_guides_id_list.findIndex(
-            (x) => one_guide.project._id === x
-          );
-          if (foundIndex === -1)
-            temp_projects_has_guides_id_list.push(one_guide.project._id);
-        }
-      });
+      let temp_projects_has_guides = [];
       projects.map((one_project, index) => {
         if (index === 0) {
           // if project is "Smart feed"
@@ -132,10 +85,7 @@ function App() {
             },
           });
         } else {
-          let foundIndex = temp_projects_has_guides_id_list.findIndex(
-            (x) => one_project._id === x
-          );
-          if (foundIndex !== -1) temp_projects_has_guides.push(one_project);
+          if (isValid(one_project) && isValid(one_project.guide_list)) temp_projects_has_guides.push(one_project);
         }
       });
       dispatch({
@@ -294,7 +244,7 @@ function App() {
 
     async function fetchLivefeeds() {
       // if livefeeds is not valid
-      if (!isValid(livefeed)) {
+      if (!isValid(livefeed) || (isValid(livefeed) && !isValid(livefeed.livefeeds))) {
         let resLivefeed = await actions.allLivefeeds();
         let livefeeds = [],
           success = false;
@@ -326,6 +276,40 @@ function App() {
             : null,
       });
     }
+
+    async function fetchGuides() {
+
+      //get all guides
+      // if(!isValid(guide) || (isValid(guide) && !isValid(guide.guides))) {
+        let resGuide = await actions.allGuides();
+        try {
+          let success = resGuide.data.success;
+          let guides = resGuide.data.guides;
+          if (success) {
+            dispatch({
+              type: ActionTypes.ALL_GUIDES,
+              data: guides,
+            });
+
+            //Filter guides by the selected project
+            dispatch({
+              type: ActionTypes.FILTERING_GUIDE_BY_PROJECT,
+              projectData:
+                isValid(project) && isValid(project.projectData)
+                  ? project.projectData
+                  : null,
+            });
+          } else {
+            dispatch({
+              type: ActionTypes.GUIDE_ERR,
+              err: resGuide.data.errMessage,
+            });
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      // }
+    }    
 
     // async function updateLivefeeds() {
     //   let resLivefeed = await actions.updateLivefeeds();
@@ -370,6 +354,7 @@ function App() {
     //     console.error(err);
     //   }
     // }
+
     async function fetchTopCollections() {
       let resTopCollections = await actions.fetchTopCollections();
       try {
@@ -536,6 +521,7 @@ function App() {
 
       promises.push(fetchData());
       promises.push(fetchLivefeeds());
+      promises.push(fetchGuides());
       // updateLivefeeds();
       // fetchTopSales();
       promises.push(fetchDaySales());
@@ -569,18 +555,26 @@ function App() {
         <Header />
         <main className="relative w-full flex flex-col pb-8 lg:pb-0 pt-16">
           <Switch>
-            <Route exact path="/nft-projects" component={Nft} />
-            <Route exact path="/rankings" component={Rankings} />
-            <Route exact path="/trading" component={Trading} />
-            <Route
-              exact
-              path="/projects/:project_unique_id"
-              component={SingleProject}
-            />
-            <Route exact path="/drops" component={Upcoming} />
-            <Route path="/guides" component={Guides} />
-            <Route exact path="/guides/:url" component={Guides} />
-            <Route path="/" component={Dashboard} />
+            <Suspense
+              fallback={
+                <div className="spin">
+                  {/* <Spin /> */}
+                </div>
+              }
+            >
+              <Route exact path="/nft-projects" component={Nft} />
+              <Route exact path="/rankings" component={Rankings} />
+              <Route exact path="/trading" component={Trading} />
+              <Route
+                exact
+                path="/projects/:project_unique_id"
+                component={SingleProject}
+              />
+              <Route exact path="/drops" component={Upcoming} />
+              <Route exact path="/guides" component={Guides} />
+              <Route exact path="/guides/:category_id/:guide_id" component={Guides} />
+              <Route exact path="/" component={Dashboard} />
+            </Suspense>
           </Switch>
         </main>
       </Router>

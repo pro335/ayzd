@@ -37,12 +37,14 @@ const Card = ({ item, type="nft", onClickHandler }) => {
       let data = guide.guides.filter(function(proj) {
         return item._id === proj._id;
       });
-      if(isValid(data)) {
-        dispatch({
-          type: ActionTypes.SET_GUIDE,
-          data: data[0],
-        });
-        history.push(`/guides/category/${data[0].unique_id}`);
+      if(isValid(data) && isValid(data[0]) && isValid(data[0].unique_id) && isValid(data[0].project) && isValid(data[0].project.unique_id) ) {
+        // dispatch({
+        //   type: ActionTypes.SET_GUIDE,
+        //   data: data[0],
+        // });
+
+        history.push(`/guides/${data[0].project.unique_id}/${data[0].unique_id}`);
+
         // if(typeof onClickHandler === "function")
         //   onClickHandler();
       }

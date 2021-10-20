@@ -1,11 +1,13 @@
 import { ArrowNarrowRightIcon } from "@heroicons/react/solid";
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import * as ActionTypes from '../../redux/ActionTypes';
+import { Link, useHistory } from 'react-router-dom';
+import isValid from '../../utility/isValid';
 
 const MainBanner = ({onClickHandler}) => {
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const { guide } = useSelector(state => {
     return {
@@ -14,12 +16,17 @@ const MainBanner = ({onClickHandler}) => {
   });
 
   const handleClick = () => {
-    dispatch({
-      type: ActionTypes.SET_GUIDE,
-      data: guide.guides[0],
-    });
-    if(typeof onClickHandler === "function")
-      onClickHandler();
+    if(isValid(guide.guides[0]) && isValid(guide.guides[0].unique_id) && isValid(guide.guides[0].project) && isValid(guide.guides[0].project.unique_id) ) {
+      // dispatch({
+      //   type: ActionTypes.SET_GUIDE,
+      //   data: guide.guides[0],
+      // });
+
+      history.push(`/guides/${guide.guides[0].project.unique_id}/${guide.guides[0].unique_id}`);
+
+      // if(typeof onClickHandler === "function")
+      //   onClickHandler();
+    }
   }
 
   return (
