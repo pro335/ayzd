@@ -1,7 +1,7 @@
 import axios from 'axios';
 import config from '../../config/config';
 
-axios.defaults.baseURL = config.api_url.httpsUrl;
+axios.defaults.baseURL = config.api_url.httpUrl;
 
 if (window.location.protocol == 'https:') {
     axios.defaults.baseURL = config.api_url.httpsUrl;

@@ -304,7 +304,7 @@ export default function FeedModal({ open, setOpen, type="dashboard" }) {
                         null
                       }
                     </div>
-                    <div className="">
+                    <div>
                       {/* <!-- Image or video --> */}
                       {isValid(guide) && isValid(guide.guideData) && guide.guideData.is_video_guide && isValid(guide.guideData.media_video) &&
                         <div className="h-84 rounded-md overflow-hidden py-4">
