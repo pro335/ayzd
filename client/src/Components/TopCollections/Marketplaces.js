@@ -73,8 +73,8 @@ const Marketplaces = ({ }) => {
                       <span className="text-gray-200 order-1 md:order-none text-right">{item.marketcap}</span>
                       <span className="text-xs text-brand-gray-700 order-2 font-medium text-right">{item.price}</span>
                     </div>
-                    <div className={`flex flex-row ${item.percent.indexOf('+') > -1 ? 'text-green-400' : 'text-red-500'}`}>
-                      <p className="ml-auto">{item.percent} </p>
+                    <div className={`flex flex-row text-right ${item.percent.indexOf('+') > -1 ? 'text-green-400' : 'text-red-500'}`}>
+                      <p className="ml-auto w-15">{item.percent} </p>
                       {item.percent.indexOf('+') > -1 ?
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                           <path fillRule="evenodd" d="M5.293 7.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L6.707 7.707a1 1 0 01-1.414 0z" clipRule="evenodd" />

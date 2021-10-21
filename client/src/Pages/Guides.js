@@ -29,6 +29,7 @@ const Guides = () => {
 
   const [isLoaded, setIsLoaded] = useState(false);
   const [open, setOpen] = useState(false);    // show the guide modal
+  const [title, setTitle] = useState("NFT Guides on ayzd.com: research, analytics, axie infinity guides, zed run guides, how to guides for opensea and other platforms, videos and many more");
   const _isMounted = useRef(false); // Initial value _isMounted = false
   
   // useEffect( async () => {
@@ -54,7 +55,7 @@ const Guides = () => {
 
     let arrLocation = window.location.pathname.split('/').filter(function(el) {return isValid(el)});
 
-    SetProjectData(null, project, rankings, dispatch);
+    // SetProjectData(null, project, rankings, dispatch);
 
     //get all guides
     if(!isValid(guide) || (isValid(guide) && !isValid(guide.guides))) {
@@ -85,8 +86,10 @@ const Guides = () => {
       }
     }
 
-    if(isValid(arrLocation) && arrLocation.length === 1)    // pathname is "guides"
+    if(isValid(arrLocation) && arrLocation.length === 1) {   // pathname is "guides"
+      setTitle("NFT Guides on ayzd.com: research, analytics, axie infinity guides, zed run guides, how to guides for opensea and other platforms, videos and many more");
       return;
+    }
 
     if(isValid(arrLocation) && arrLocation.length === 3 && isValid(arrLocation[arrLocation.length - 2]) && isValid(arrLocation[arrLocation.length - 1]) ) {
       let project_unique_id = arrLocation[arrLocation.length - 2];
@@ -101,6 +104,7 @@ const Guides = () => {
           data: item,
         });
         setOpen(true);
+        setTitle(`${item.title} - NFT guides and analytics on ayzd.com`);
       }
     }
   }
@@ -112,7 +116,7 @@ const Guides = () => {
   return (
     <>
       <Helmet>
-        <title>{ "NFT Guides on ayzd.com: research, analytics, axie infinity guides, zed run guides, how to guides for opensea and other platforms, videos and many more" }</title>
+        <title>{ title }</title>
       </Helmet>
       <div className="h-full w-full grid lg:grid-cols-6 lg:overflow-hidden">
         <div className="hidden lg:flex flex-col">
