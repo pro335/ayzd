@@ -55,7 +55,7 @@ const Guides = () => {
 
     let arrLocation = window.location.pathname.split('/').filter(function(el) {return isValid(el)});
 
-    // SetProjectData(null, project, rankings, dispatch);
+    SetProjectData(null, project, rankings, dispatch);
 
     //get all guides
     if(!isValid(guide) || (isValid(guide) && !isValid(guide.guides))) {
