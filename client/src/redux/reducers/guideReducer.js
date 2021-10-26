@@ -88,12 +88,12 @@ const GuideReducer = (state = initState, action) => {
       if( !isValid(projectData) || projectData.name === "All guides") {
         return {
           ...state,
-          guides_show_list: [...state.guides.filter(x => x.project.name !== "Smart feed")],
+          guides_show_list: [...state.guides.filter(x => isValid(projectData) && x.project.name !== "Smart feed")],
         }
       } else {
         return {
           ...state,
-          guides_show_list: [...state.guides.filter(x => x.project.name === projectData.name)],
+          guides_show_list: [...state.guides.filter(x => isValid(projectData) && x.project.name === projectData.name)],
         }
       }
       

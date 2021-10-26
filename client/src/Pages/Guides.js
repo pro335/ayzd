@@ -14,10 +14,12 @@ import FeedModal from "../Components/Feeds/FeedModal";
 import * as actions from '../redux/actions';
 import * as ActionTypes from '../redux/ActionTypes';
 import { Helmet } from 'react-helmet'
+import { useHistory } from 'react-router-dom';
 
 const Guides = () => {
 
   const dispatch = useDispatch();
+  const history = useHistory();
   
   const { project, guide, rankings } = useSelector(state => {
     return {
@@ -97,7 +99,7 @@ const Guides = () => {
 
       let data = await actions.getGuideFromUniqueId({ project_unique_id, guide_unique_id });
 
-      if(isValid(data)) {
+      if(isValid(data) && isValid(data.data.data)) {
         let item = data.data.data;
         dispatch({
           type: ActionTypes.SET_GUIDE,
@@ -105,6 +107,35 @@ const Guides = () => {
         });
         setOpen(true);
         setTitle(`${item.title} - NFT guides and analytics on ayzd.com`);
+      } else {
+        //get all guides
+        let resGuide = await actions.allGuides();
+        let success = false;
+        try {
+          success = resGuide.data.success;
+          let guides = resGuide.data.guides;
+          if(success) {
+            dispatch({
+              type: ActionTypes.ALL_GUIDES,
+              data: guides
+            });
+
+            //Filter guides by the selected project
+            dispatch({
+              type: ActionTypes.FILTERING_GUIDE_BY_PROJECT,
+              projectData: isValid(project) && isValid(project.projectData) ? project.projectData : null,
+            });
+          } else {
+            dispatch({
+              type: ActionTypes.GUIDE_ERR,
+              err: resGuide.data.errMessage
+            });
+          }
+        } catch (err) {
+          console.error(err);
+        }
+        alert("Maybe guides were updated. please click the that guide again!");
+        history.push(`/guides`);
       }
     }
   }

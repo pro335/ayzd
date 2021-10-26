@@ -309,7 +309,7 @@ function App() {
           console.error(err);
         }
       // }
-    }    
+    }
 
     // async function updateLivefeeds() {
     //   let resLivefeed = await actions.updateLivefeeds();

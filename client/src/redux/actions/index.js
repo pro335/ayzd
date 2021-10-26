@@ -197,7 +197,7 @@ export const deleteLivefeed = (id) => {
 
 // guide action(s)
 export const allGuides = () => {
-    return axios.post("/api/guide/all");
+  return axios.post("/api/guide/all");
 }
 
 // get the specific guide from project_unique_id and guide_id
