@@ -4,7 +4,7 @@ import MobileSelectProjects from "./MobileSelectProjects";
 import { useSelector, useDispatch } from 'react-redux';
 import * as actions from '../../redux/actions';
 import * as ActionTypes from '../../redux/ActionTypes';
-import isValid from '../../utility/reduceTextLengh';
+import isValid from '../../utility/isValid';
 import config from '../../config/config';
 import LottieAnimation from '../Lottie/Lottie';
 import LOTTIE_DATA from '../Lottie/data.json';
@@ -22,7 +22,7 @@ const Sidebar = ({type="dashboard"}) => {
     type === "dashboard" && isValid(project.projects_has_news_show_list)
       ? project.projects_has_news_show_list[0].name 
       : ( type === "guides" && isValid(project.projects_has_guides_show_list)
-          ? project.projects_has_guides_show_list[0].name 
+          ? project.projects_has_guides_show_list[0].name
           : ""
       )
   );
@@ -42,12 +42,21 @@ const Sidebar = ({type="dashboard"}) => {
   }, []); // here
 
   useEffect(() => {
-    type === "dashboard" && isValid(project.projects_has_news_show_list)
-      ? setIsActive(project.projects_has_news_show_list[0].name)
-      : ( type === "guides" && isValid(project.projects_has_guides_show_list)
-          ? setIsActive(project.projects_has_guides_show_list[0].name) 
-          : setIsActive("")
-      )
+    if(type === "dashboard" && isValid(project.projects_has_news_show_list)) {
+      setIsActive(project.projects_has_news_show_list[0].name);
+    } else if ( type === "guides" && isValid(project.projects_has_guides_show_list)) {
+      if(!isValid(project.projectData)) {
+        setIsActive(project.projects_has_guides_show_list[0].name);
+      } else {
+        let foundIndex = project.projects_has_guides_show_list.findIndex(x => x._id === project.projectData._id);
+        if(foundIndex !== -1)
+          setIsActive(project.projects_has_guides_show_list[foundIndex].name);
+        else
+          setIsActive(project.projects_has_guides_show_list[0].name);
+      }
+    } else {
+      setIsActive("");
+    }
   }, [project.projects_has_news_show_list, project.projects_has_guides_show_list]); // here
 
   const activeHandler = text => {

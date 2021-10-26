@@ -68,13 +68,16 @@ const Header = () => {
   });
 
   const handleClick = (link = null) => {
-    if(isValid(link) && link.to !== "/")    // if user doesn't click the "Dashboard", i.e. user click "NFT Project", "Rankings"
+    if(isValid(link) && (link.to !== "/" && link.to !== "/guides") )    // if user doesn't click the "Dashboard", i.e. user click "NFT Project", "Rankings"
       return;
 
     // if user click the "Logo" or "Dashboard" navbar
     SetProjectData(null, project, rankings, dispatch);
 
-    history.push(`/`);
+    if(link.to !== "/guides")
+      history.push(`/`);
+    else
+      history.push(`/guides`);
   }
 
   return (
