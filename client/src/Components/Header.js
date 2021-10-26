@@ -60,10 +60,9 @@ const Header = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   
-  const { project, rankings } = useSelector(state => {
+  const { project } = useSelector(state => {
     return {
       project: state.project,
-      rankings: state.rankings,
     };
   });
 
@@ -72,11 +71,11 @@ const Header = () => {
       return;
 
     // if user click the "Logo" or "Dashboard" navbar
-    SetProjectData(null, project, rankings, dispatch);
+    SetProjectData(null, project, null, dispatch);
 
-    if(link.to !== "/guides")
+    if(!isValid(link))
       history.push(`/`);
-    else
+    else if(link.to === "/guides")
       history.push(`/guides`);
   }
 
