@@ -18,10 +18,10 @@ const Heading = () => {
   const main_image = isValid(project.projectData) && isValid(project.projectData.main_image) && isValid(project.projectData.main_image.url) ? project.projectData.main_image.url : `${config.bucket_url}/${config.common_image}`;
 
   return ( 
-    <div className="flex flex-col lg:flex-row items-center flex-wrap justify-center justify-between space-y-6 lg:space-y-0 py-5 px-5 sm:px-6">
+    <div className="flex lg:flex-row items-center flex-col justify-center justify-between space-y-6 lg:space-y-0 py-5 px-5 sm:px-6">
       {/* Left */}
       {isValid(project.projectData) ? 
-        <div className="flex flex-wrap justify-center">
+        <div className="flex justify-center">
           <div className="w-16 h-16">
             <img className={`${project.projectData.name === "Smart feed" ? '' : 'rounded-full'} w-full h-full`} src={main_image} alt="" />
           </div>
@@ -71,20 +71,20 @@ const Heading = () => {
         :
         null
       }
-
+      {/* Moved "Mint Website" button inside div */}
       {/* Right */}
       {isValid(project.projectData) && isValid(project.projectData.btn_label) && isValid(project.projectData.btn_url) ?
-        <div className="flex items-center font-medium mx-auto lg:ml-auto lg:mr-0 space-x-3">
-          <a
-            href={project.projectData.btn_url}
-            className="bg-brand-AYZD-PURPLE hover:bg-purple-700 text-white leading-7 rounded-xl px-4 py-1.5"
-            target="_blank"
-          >
-            {project.projectData.btn_label}
-          </a>
-        </div>
-        :
-        null
+          <div className="flex items-center font-medium mx-auto lg:ml-auto lg:mr-0 space-x-3 flex-shrink-0">
+            <a
+                href={project.projectData.btn_url}
+                className="bg-brand-AYZD-PURPLE hover:bg-purple-700 text-white leading-7 rounded-xl px-4 py-1.5"
+                target="_blank"
+            >
+              {project.projectData.btn_label}
+            </a>
+          </div>
+          :
+          null
       }
   </div>
   )
