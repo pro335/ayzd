@@ -13,6 +13,7 @@ import moment from 'moment-timezone';
 import LottieAnimation from '../Components/Lottie/Lottie';
 import LOTTIE_DATA from '../Components/Lottie/data.json';
 import { Helmet } from 'react-helmet'
+import Banner from "../Components/Banner/Banner";
 
 const Upcoming = () => {
 
@@ -114,7 +115,10 @@ const Upcoming = () => {
             <div className="h-full overflow-y-scroll">
               {
                 isValid(project.upcoming_show_list) ? (
-                  <AllProjects />
+                  <>
+                    <Banner type={"upcoming"} />
+                    <AllProjects />
+                  </>
                 ) : (
                   !isLoaded ?
                     <div className="h-full flex flex-col justify-center items-center pb-15">

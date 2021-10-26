@@ -18,14 +18,14 @@ const Banner = ({type="dashboard"}) => {
         <h4 className="text-lg text-gray-100 font-bold leading-6">
           { type === "dashboard" ? "Visit full project page" : null }
           { type === "guides" && isValid(project)  && isValid(project.projectData) ? `${project.projectData.name} guides` : null }
+          {/* { type === "upcoming" && isValid(project)  && isValid(project.projectData) ? `${project.projectData.name} guides` : null } */}
         </h4>
         <p className="text-sm font-medium text-white text-opacity-60">
           Detailed information, statistics, list of minted nft’s and more
         </p>
       </div>
       <div className="mt-2">
-        { type === "guides" && isValid(project)  && isValid(project.projectData) && project.projectData.name === "Research & Analytics" ? null
-          :
+        { ((type === "dashboard") || (type === "guides" && isValid(project)  && isValid(project.projectData) && project.projectData.name !== "Research & Analytics")) &&
           <Link to={`/projects/${project.projectData.unique_id}`} className="h-10 lg:w-35 md:w-40 block bg-black bg-opacity-70 text-white text-opacity-60 hover:bg-opacity-100 hover:text-opacity-100 inline-flex items-center rounded-lg px-4">
             <span>Project details</span>
             <ArrowNarrowRightIcon className="h-6 w-4 onHover ml-2" />
