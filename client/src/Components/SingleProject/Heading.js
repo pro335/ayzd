@@ -21,8 +21,8 @@ const Heading = () => {
     <div className="flex lg:flex-row items-center flex-col justify-center justify-between space-y-6 lg:space-y-0 py-5 px-5 sm:px-6">
       {/* Left */}
       {isValid(project.projectData) ? 
-        <div className="flex justify-center">
-          <div className="w-16 h-16">
+        <div className="flex justify-center lg:flex-row flex-col">
+          <div className="w-16 h-16 flex-shrink-0 mx-auto">
             <img className={`${project.projectData.name === "Smart feed" ? '' : 'rounded-full'} w-full h-full`} src={main_image} alt="" />
           </div>
           <div className="w-full lg:w-auto text-center lg:pl-5">
@@ -30,7 +30,7 @@ const Heading = () => {
               <h3 className="text-2xl text-gray-100 font-bold">
                 {project.projectData.name}
               </h3>
-              <div className="w-full lg:w-auto flex items-center justify-center lg:justify-start space-x-2 pl-3">
+              <div className="w-full lg:w-auto flex items-center justify-center lg:justify-start space-x-2 pl-3 py-3 lg:py-0">
                 {isValid(project.projectData.app_link) ?
                   <a href={project.projectData.app_link} className="text-brand-gray-600 hover:text-brand-gray-300" target="_blank">
                     <svg className="w-4 h-4">
