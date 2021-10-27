@@ -12,6 +12,8 @@ const initState = {
   previous_upcoming_show_list: [],   // upcoming projects to show
   previous_upcoming_date_list: [],   // data for left side bar in Drop Calendar menu
   current_date_label: null,   // the label of right side in the Drop Calendar page.
+  current_date: null,
+  is_previous: false,    // show the "current & future drops" or "previous drops", true: previous drops, false: current & future drops
   project_id: null,
   project_action: 0, // 0: create, 1: read, 2: update, 3: delete
   projectData: null,
@@ -152,6 +154,8 @@ const ProjectReducer = (state = initState, action) => {
         ...state,
         upcoming_show_list: action.upcoming_show_list,
         current_date_label: action.current_date_label,
+        current_date: action.current_date,
+        is_previous: action.is_previous,
       }      
     case ActionTypes.SET_PROJECTS_HAS_GUIDES:
       return {

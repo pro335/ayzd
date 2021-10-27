@@ -9,18 +9,18 @@ import isValid from '../../utility/isValid';
 const CalendarList = ({ all, title, icon, classes }) => {
 
   const { project, isActive } = useSelector(state => {
-    let temp_isActive = "";
-    // get current_date_label
-    let month_label = "", day_label = "";
-    if(state.project && state.project.current_date_label) {
-      day_label = state.project.current_date_label.split(" ")[0];
-      month_label= state.project.current_date_label.split(" ")[1];
-    }
-    temp_isActive = `${month_label} ${day_label}`;
+    // let temp_isActive = "";
+    // // get current_date
+    // let month_label = "", day_label = "";
+    // if(state.project && state.project.current_date) {
+    //   day_label = state.project.current_date_label.split(" ")[0];
+    //   month_label= state.project.current_date_label.split(" ")[1];
+    // }
+    // temp_isActive = `${month_label} ${day_label}`;
     
     return {
       project: state.project,
-      isActive: temp_isActive,
+      isActive: state.project.current_date,
     };
   });
 

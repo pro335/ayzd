@@ -1,7 +1,8 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import isValid from '../../utility/isValid';
+import timeDiffCalc from '../../utility/timeDiffCalc';
 import config from '../../config/config';
 import * as actions from '../../redux/actions';
 import * as ActionTypes from '../../redux/ActionTypes';
@@ -11,9 +12,16 @@ import { createPopper } from "@popperjs/core";
 
 const color = "pink";
 
-const Card = ({ item }) => {
+const Card = ({ item, currentTime = null }) => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const [timeDiff, setTimeDiff] = useState(null);
+
+  const { project } = useSelector(state => {
+    return {
+      project: state.project,
+    };
+  });
 
   const handleClick = () => {
     history.push(`/projects/${item.unique_id}`);
@@ -76,6 +84,23 @@ const Card = ({ item }) => {
   };
   //end of the vaiables and methods to show tooltip
 
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     if(isValid(item.upcoming_date) && isValid(project.is_previous) && !project.is_previous) {
+  //       let temp_timeDiff = `${timeDiffCalc(new Date(moment(item.upcoming_date).second(0)), new Date())}`;
+  //       setTimeDiff(temp_timeDiff);
+  //     }
+  //   }, 1000); // executes every 1 second.
+  //   return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
+  // }, []);
+
+  useEffect(() => {
+    if(isValid(currentTime)) {
+      let temp_timeDiff = `${timeDiffCalc(new Date(moment(item.upcoming_date).second(0)), currentTime)}`;
+      setTimeDiff(temp_timeDiff);
+    }
+  }, [currentTime]);
+
   return (
     <div>
       <div className="bg-brand-gray-800 border border-brand-gray-800 rounded-xl overflow-hidden">
@@ -91,7 +116,8 @@ const Card = ({ item }) => {
           onClick={handleClick}
         >
           <p>
-            {isValid(item.upcoming_date) ? moment(item.upcoming_date).format("MMM D, YYYY hh:mm A") : null}
+            {/* {isValid(item.upcoming_date) ? moment(item.upcoming_date).format("MMM D, YYYY hh:mm A") : null} */}
+            {timeDiff}
           </p>
           <p className="text-sm text-gray-300">
             {item.name}

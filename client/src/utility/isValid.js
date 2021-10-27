@@ -4,4 +4,4 @@ const isValid = (data) =>  {
   return true;
 }
 
-export default isValid;
+export default isValid; 

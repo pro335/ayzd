@@ -127,11 +127,12 @@ function App() {
       let temp_upcoming_date_list = [],
         temp_previous_upcoming_date_list = [];
 
-      // // add "All upcoming drops" tab to upcoming_date_list.
-      // temp_upcoming_date_list.push({
-      //   date: "All upcoming drops",
-      //   count: 0,
-      // })
+      // add "All upcoming drops" tab to upcoming_date_list.
+      temp_upcoming_date_list.push({
+        date: "All upcoming drops",
+        count: isValid(temp_upcomings) ? temp_upcomings.length : 0,
+        // count: 0,
+      })
 
       // let year_current = moment(new Date()).get('year');
       for (let i = 0; i < 30; i++) {
@@ -181,7 +182,7 @@ function App() {
       });
 
       // filter the count is 0 of the temp_upcoming_date_list.
-      temp_upcoming_date_list = temp_upcoming_date_list.filter(x => x.count !== 0);
+      temp_upcoming_date_list = temp_upcoming_date_list.filter((x, i) => (x.count !== 0));
 
       temp_previous_upcomings.map((item) => {
         let new_date = moment(item.upcoming_date).format("MMMM D");
@@ -206,19 +207,21 @@ function App() {
         temp_current_date_label = "",
         temp_previous_upcoming_show_list = [];
       if (isValid(temp_upcoming_date_list)) {
-        temp_upcoming_show_list = temp_upcomings.filter(function (item) {
-          return (
-            moment(item.upcoming_date).format("MMMM D") ===
-            temp_upcoming_date_list[0].date
-          );
-        });
+        // temp_upcoming_show_list = temp_upcomings.filter(function (item) {
+        //   return (
+        //     moment(item.upcoming_date).format("MMMM D") ===
+        //     temp_upcoming_date_list[0].date
+        //   );
+        // });
 
-        // get current_date_label
-        let month_label = "",
-          day_label = "";
-        month_label = temp_upcoming_date_list[0].date.split(" ")[0];
-        day_label = temp_upcoming_date_list[0].date.split(" ")[1];
-        temp_current_date_label = `${day_label} ${month_label}`;
+        // // get current_date_label
+        // let month_label = "",
+        //   day_label = "";
+        // month_label = temp_upcoming_date_list[0].date.split(" ")[0];
+        // day_label = temp_upcoming_date_list[0].date.split(" ")[1];
+        // temp_current_date_label = `${day_label} ${month_label}`;
+        temp_upcoming_show_list = isValid(temp_upcomings) ? temp_upcomings : [];
+        temp_current_date_label = `${isValid(temp_upcomings) ? temp_upcomings.length : 0} Upcoming NFT Drops`;
       }
       if (isValid(temp_previous_upcoming_date_list)) {
         temp_previous_upcoming_show_list = temp_previous_upcomings.filter(
@@ -240,6 +243,8 @@ function App() {
         type: ActionTypes.SET_UPCOMING_PROJECTS_SHOWING_LIST,
         upcoming_show_list: temp_upcoming_show_list,
         current_date_label: temp_current_date_label,
+        current_date: isValid(temp_upcoming_date_list) ? temp_upcoming_date_list[0].date : "",
+        is_previous: false,
       });
       dispatch({
         type: ActionTypes.SET_PREVIOUS_UPCOMING_PROJECTS,
