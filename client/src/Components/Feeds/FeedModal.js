@@ -317,7 +317,7 @@ export default function FeedModal({ open, setOpen, type="dashboard" }) {
                         </div>
                       }
                       {isValid(guide) && isValid(guide.guideData) && !guide.guideData.is_video_guide && isValid(guide.guideData.media_image) &&
-                        <div className="h-44 rounded-md overflow-hidden py-4">
+                        <div className="rounded-md overflow-hidden py-4">
                           <img className="w-full h-full object-cover object-center" src={guide.guideData.media_image.url} alt="" onError={addDefaultSrc} />
                         </div>
                       }

@@ -179,6 +179,10 @@ function App() {
           });
         }
       });
+
+      // filter the count is 0 of the temp_upcoming_date_list.
+      temp_upcoming_date_list = temp_upcoming_date_list.filter(x => x.count !== 0);
+
       temp_previous_upcomings.map((item) => {
         let new_date = moment(item.upcoming_date).format("MMMM D");
         let foundIndex = temp_previous_upcoming_date_list.findIndex(
@@ -192,6 +196,10 @@ function App() {
           };
         }
       });
+
+      // filter the count is 0 of the temp_previous_upcoming_date_list.
+      temp_previous_upcoming_date_list = temp_previous_upcoming_date_list.filter(x => x.count !== 0);
+
 
       // get upcoming_show_list, current_date_label
       let temp_upcoming_show_list = [],
