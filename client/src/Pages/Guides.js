@@ -30,6 +30,7 @@ const Guides = () => {
   });
 
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isClickedGuide, setIsClickedGuide] = useState(false);
   const [open, setOpen] = useState(false);    // show the guide modal
   const [title, setTitle] = useState("NFT Guides on ayzd.com: research, analytics, axie infinity guides, zed run guides, how to guides for opensea and other platforms, videos and many more");
   const _isMounted = useRef(false); // Initial value _isMounted = false
@@ -98,6 +99,8 @@ const Guides = () => {
       let project_unique_id = arrLocation[arrLocation.length - 2];
       let guide_unique_id = arrLocation[arrLocation.length - 1];
 
+      setIsClickedGuide(true);
+
       let data = await actions.getGuideFromUniqueId({ project_unique_id, guide_unique_id });
 
       if(isValid(data) && isValid(data.data.data)) {
@@ -108,6 +111,7 @@ const Guides = () => {
         });
         setOpen(true);
         setTitle(`${item.title} - NFT guides and analytics on ayzd.com`);
+        setIsClickedGuide(false);
       } else {
         //get all guides
         let resGuide = await actions.allGuides();
@@ -154,6 +158,14 @@ const Guides = () => {
         <div className="hidden lg:flex flex-col">
           <Sidebar type={"guides"} />
         </div>
+        {isClickedGuide && 
+          <div className="h-full pb-5 lg:col-span-5 mt-0 overflow-hidden">
+            <div className="h-full w-full flex flex-col justify-center items-center">
+              <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
+            </div>
+          </div>
+        }
+        {!isClickedGuide && 
         <div className="h-full pb-5 lg:col-span-5 mt-0 overflow-hidden">
           <div className="h-full overflow-y-scroll">
             { isValid(project) && ( !isValid(project.projectData) || (isValid(project.projectData) && project.projectData.name === "All guides" ) ) ?
@@ -178,7 +190,7 @@ const Guides = () => {
               }
             </div>
           </div>
-        </div>
+        </div>}
       </div>
       <FeedModal open={open} setOpen={setOpen} type={"guides"} />
     </>
