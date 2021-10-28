@@ -35,7 +35,7 @@ const initState = {
  * @todo impure state mutation/explaination
  */
 const ProjectReducer = (state = initState, action) => {
-  const { type, data, err } = action;
+  let { type, data, err, sortBy, sortedData } = action;
   let tempData = null;
   switch (type) {
     case ActionTypes.ADD_PROJECT:
@@ -81,9 +81,9 @@ const ProjectReducer = (state = initState, action) => {
         loading: false,
       };
     case ActionTypes.SORTING_PROJECT_BY:
-      let {sortBy} = action;
+      sortBy = action.sortBy;
 
-      let sortedData = [];
+      sortedData = [];
       switch(sortBy) {
         case 'name':
           sortedData = state.projects.sort((a, b) => {
@@ -175,6 +175,34 @@ const ProjectReducer = (state = initState, action) => {
         previous_upcoming_show_list: action.previous_upcoming_show_list,   
         previous_upcoming_date_list: action.previous_upcoming_date_list,   
       }      
+    case ActionTypes.UPCOMING_SORT_BY:
+      sortBy = action.sortBy;
+
+      sortedData = [];
+      switch(sortBy) {
+        case 'cheapest':
+          sortedData = state.upcoming_show_list;
+          break;
+        case 'most_expensive':
+          sortedData = state.upcoming_show_list;
+          break;
+        case 'twitter_members':
+        case 'discord_members':
+          sortedData = state.upcoming_show_list.sort((a, b) => {
+            return b[sortBy] - a[sortBy];
+          });
+          break;
+        case 'biggest_gain':
+          sortedData = state.upcoming_show_list;
+          break;
+        default:
+          sortedData = state.upcoming_show_list;
+          break;
+      }
+      return {
+        ...state,
+        upcoming_show_list: [...sortedData]
+      }
 
     default:
       return state;

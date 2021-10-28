@@ -72,18 +72,18 @@ function App() {
 
       // get the projects that has guides
       let temp_projects_has_guides = [];
-      projects.map((one_project, index) => {
-        if (index === 0) {
+      temp_projects_has_guides.push({
+        // ...one_project,
+        name: "All guides",
+        main_image: {
+          _id: "123454e83a9eb20f12345678", // fake mongodb id
+          name: "all_guides.svg",
+          url: "https://ayzd-storage.fra1.digitaloceanspaces.com/all_guides.svg",
+        },
+      });
+      projects.map((one_project) => {
+        if (isValid(one_project) && (one_project.name === "Smart feed")) {
           // if project is "Smart feed"
-          temp_projects_has_guides.push({
-            ...one_project,
-            name: "All guides",
-            main_image: {
-              _id: "123454e83a9eb20f12345678", // fake mongodb id
-              name: "all_guides.svg",
-              url: "https://ayzd-storage.fra1.digitaloceanspaces.com/all_guides.svg",
-            },
-          });
         } else {
           if (isValid(one_project) && isValid(one_project.guide_list)) temp_projects_has_guides.push(one_project);
         }

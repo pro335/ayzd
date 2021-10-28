@@ -3,7 +3,6 @@ import AllProjects from "../Components/Upcoming/AllProjects"
 import CalendarSidebar from "../Components/Upcoming/CalendarSidebar"
 import NotFound from "../Components/NFT/NotFound"
 import SortButton from "../Components/Upcoming/SortButton"
-import MobileSelectProjects from "../Components/Upcoming/MobileSelectProjects"
 import { useSelector, useDispatch } from 'react-redux';
 import isValid from '../utility/isValid';
 import config from '../config/config';
@@ -81,8 +80,8 @@ const Upcoming = () => {
       <Helmet>
         <title>{ "NFT Drop calendar on ayzd.com: nft drops on eth, solana drops, binance drops, crypto.com drops, best collections and nft drop analytics" }</title>
       </Helmet>
-      <div className="h-full relative w-full flex flex-col overflow-hidden">
-        <div className="w-full fixed h-16 bg-brand-gray-800 z-30">
+      <div className="flex-col h-full relative w-full overflow-hidden">
+        <div className="hidden lg:flex w-full fixed h-16 bg-brand-gray-800 z-30">
           <div className="h-full w-full relative">
             <input type="text" placeholder="Search drops"
               className="h-full w-full bg-transparent text-sm placeholder-brand-gray-500 focus:text-gray-300  focus:outline-none px-14"
@@ -97,12 +96,9 @@ const Upcoming = () => {
         </div>
 
         {/* Content */}
-        <div className="h-full w-full grid lg:grid-cols-6 lg:overflow-hidden pt-16">
+        <div className="h-full w-full grid lg:grid-cols-6 lg:overflow-hidden pt-0 lg:pt-16">
           {/* { isValid(project.upcoming_date_list) ? */}
             <>
-              <div className="lg:hidden px-4 mt-2">
-                <MobileSelectProjects />
-              </div>
               <div className="h-full hidden lg:block border-r border-brand-gray-800 overflow-y-scroll pb-4">
                 <CalendarSidebar all={all} />
               </div>
@@ -111,7 +107,7 @@ const Upcoming = () => {
             null
           } */}
           
-          <div className="h-full pb-5 lg:col-span-5 mt-2 lg:mt-0 overflow-hidden">
+          <div className="h-full pb-5 lg:col-span-5 lg:mt-0 overflow-hidden">
             <div className="h-full overflow-y-scroll">
               {
                 isValid(project.upcoming_show_list) ? (
