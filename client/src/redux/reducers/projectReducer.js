@@ -182,10 +182,14 @@ const ProjectReducer = (state = initState, action) => {
       sortedData = [];
       switch(sortBy) {
         case 'cheapest':
-          sortedData = state.upcoming_show_list;
+          sortedData = state.upcoming_show_list.sort((a, b) => {
+            return Number(a['price_in_dollar'].replace(/[^0-9.]/g, "")) - Number(b['price_in_dollar'].replace(/[^0-9.]/g, ""));
+          });
           break;
         case 'most_expensive':
-          sortedData = state.upcoming_show_list;
+          sortedData = state.upcoming_show_list.sort((a, b) => {
+            return Number(b['price_in_dollar'].replace(/[^0-9.]/g, "")) - Number(a['price_in_dollar'].replace(/[^0-9.]/g, ""));
+          });
           break;
         case 'twitter_members':
         case 'discord_members':
