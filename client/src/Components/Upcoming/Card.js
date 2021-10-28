@@ -138,7 +138,7 @@ const Card = ({ item, currentTime = null }) => {
                 </svg>
                 <p>{item.twitter_members}</p>
               </div>
-              {isValid(item.twitter_members_24h) &&
+              {isValid(item.twitter_members_24h) && (item.twitter_members !== item.twitter_members_24h) &&
                 <div
                   className="flex flex-row order-2 ml-auto"
                   onMouseEnter={openTooltip_twitter}
@@ -165,7 +165,7 @@ const Card = ({ item, currentTime = null }) => {
                 </svg>
                 <p>{item.discord_members}</p>
               </div>
-              {isValid(item.discord_members_24h) &&
+              {isValid(item.discord_members_24h) && (item.discord_members !== item.discord_members_24h) &&
                 <div
                   className="flex flex-row order-2 ml-auto"
                   onMouseEnter={openTooltip_discord}

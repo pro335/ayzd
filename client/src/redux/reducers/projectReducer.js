@@ -1,4 +1,5 @@
 import * as ActionTypes from '../ActionTypes';
+import isValid from '../../utility/isValid';
 const initState = {
   projects: [],
   projects_has_news: [],    // project list in the dashboard page(only projects that has the live news) 
@@ -193,7 +194,18 @@ const ProjectReducer = (state = initState, action) => {
           });
           break;
         case 'biggest_gain':
-          sortedData = state.upcoming_show_list;
+          sortedData = state.upcoming_show_list.sort((a, b) => {
+            let a_twitter_gain = 0, a_discord_gain = 0, b_twitter_gain = 0, b_discord_gain = 0;
+            if(isValid(a['twitter_members']) && a['twitter_members_24h'])
+              a_twitter_gain = (a['twitter_members'] - a['twitter_members_24h']) / a['twitter_members'];
+            if(isValid(a['discord_members']) && a['discord_members_24h'])
+              a_discord_gain = (a['discord_members'] - a['discord_members_24h']) / a['discord_members'];
+            if(isValid(b['twitter_members']) && b['twitter_members_24h'])
+              b_twitter_gain = (b['twitter_members'] - b['twitter_members_24h']) / b['twitter_members'];
+            if(isValid(b['discord_members']) && b['discord_members_24h'])
+              b_discord_gain = (b['discord_members'] - b['discord_members_24h']) / b['discord_members'];
+            return ( b_twitter_gain + b_discord_gain ) - ( a_twitter_gain + a_discord_gain ) ;
+          });
           break;
         default:
           sortedData = state.upcoming_show_list;

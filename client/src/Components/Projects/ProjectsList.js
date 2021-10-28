@@ -83,7 +83,7 @@ const ProjectsList = ({ isActive, activeHandler, type="dashboard" }) => {
   
             return (
               <div
-                className={`${isActive === item.name ? 'bg-brand-gray-800 text-gray-200' : ''} h-10 hover:bg-brand-gray-800 hover:cursor-pointer flex items-center text-brand-gray-600 hover:text-gray-200 onHover px-3 py-2`}
+                className={`${isActive === item.name ? 'bg-brand-gray-800 text-gray-200' : ''} h-10 hover:bg-brand-gray-800 hover:cursor-pointer rounded-lg flex items-center text-brand-gray-600 hover:text-gray-200 onHover px-3 py-2`}
                 onClick={() => handleClick(item)}
                 key={index}
               >
