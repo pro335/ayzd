@@ -292,8 +292,8 @@ function App() {
 
     async function fetchGuides() {
 
-      //get all guides
-      // if(!isValid(guide) || (isValid(guide) && !isValid(guide.guides))) {
+      // get all guides
+      if(!isValid(guide) || (isValid(guide) && !isValid(guide.guides))) {
         let resGuide = await actions.allGuides();
         try {
           let success = resGuide.data.success;
@@ -321,7 +321,7 @@ function App() {
         } catch (err) {
           console.error(err);
         }
-      // }
+      }
     }
 
     // async function updateLivefeeds() {

@@ -155,7 +155,7 @@ const Guides = () => {
         <title>{ title }</title>
       </Helmet>
       <div className="h-full w-full grid lg:grid-cols-6 lg:overflow-hidden">
-        <div className="hidden lg:flex flex-col">
+        <div className="hidden lg:flex flex-col overflow-hidden">
           <Sidebar type={"guides"} />
         </div>
         {isClickedGuide && 

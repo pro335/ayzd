@@ -181,11 +181,12 @@ const Header = () => {
                       <div className="mobile-nav-menu border-b border-brand-gray-800 mt-3 px-4 space-y-1">
                         {
                           navLinks.map((link, index) => (
-                            <NavLink
+                            <NavLink exact
                               to={`${link.to}`}
                               activeClassName="active"
                               key={index}
                               className="group flex items-center hover:text-gray-100 px-2 py-3"
+                              onClick={() => handleClick(link)}
                             >
                               <svg className="w-5 h-5 group-hover:text-brand-AYZD-PURPLE mr-4">
                                 <use href={`/assets/icons/${link.icon}.svg#icon-${link.icon}`}></use>
