@@ -10,6 +10,8 @@ import { Link, useHistory } from "react-router-dom";
 import * as actions from '../../redux/actions';
 import * as ActionTypes from '../../redux/ActionTypes';
 import ReactPlayer from 'react-player';
+import LottieAnimation from '../Lottie/Lottie';
+import LOTTIE_DATA from '../Lottie/data.json';
 
 var moment = require('moment');
 
@@ -262,9 +264,14 @@ export default function FeedModal({ open, setOpen, type="dashboard" }) {
                   </div> */}
                 </div>}
 
+                {type === "guides" && isValid(guide) && !isValid(guide.guideData) &&
+                  <div className="h-full flex flex-col py-6 bg-brand-gray-900 border-l border-brand-gray-800 shadow-xl overflow-y-scroll justify-center items-center">
+                    <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
+                  </div>
+                }
+
                 {type === "guides" && isValid(guide) && isValid(guide.guideData) &&
                 <div className="h-full flex flex-col py-6 bg-brand-gray-900 border-l border-brand-gray-800 shadow-xl overflow-y-scroll">
-                  {/* <!-- Modal Heading --> */}
                   <div className="border-b border-brand-gray-800 pb-7 px-6">
 
                     <div className="flex items-start justify-between text-brand-gray-300">
@@ -305,7 +312,6 @@ export default function FeedModal({ open, setOpen, type="dashboard" }) {
                       }
                     </div>
                     <div>
-                      {/* <!-- Image or video --> */}
                       {isValid(guide) && isValid(guide.guideData) && guide.guideData.is_video_guide && isValid(guide.guideData.media_video) &&
                         <div className="h-84 rounded-md overflow-hidden py-4">
                           <ReactPlayer 

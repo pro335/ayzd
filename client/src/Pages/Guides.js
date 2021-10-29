@@ -49,6 +49,10 @@ const Guides = () => {
   }, [window.location.pathname]);
 
   
+  function delay(time) {
+    return new Promise(resolve => setTimeout(resolve, time));
+  }
+
   const getGuideFromUrl = async () => {
     
     setIsLoaded(false);
@@ -99,6 +103,11 @@ const Guides = () => {
       let project_unique_id = arrLocation[arrLocation.length - 2];
       let guide_unique_id = arrLocation[arrLocation.length - 1];
 
+      dispatch({
+        type: ActionTypes.SET_GUIDE,
+        data: null,
+      });
+      setOpen(true);
       setIsClickedGuide(true);
 
       let data = await actions.getGuideFromUniqueId({ project_unique_id, guide_unique_id });
@@ -109,7 +118,6 @@ const Guides = () => {
           type: ActionTypes.SET_GUIDE,
           data: item,
         });
-        setOpen(true);
         setTitle(`${item.title} - NFT guides and analytics on ayzd.com`);
         setIsClickedGuide(false);
       } else {
@@ -158,13 +166,6 @@ const Guides = () => {
         <div className="hidden lg:flex flex-col overflow-hidden">
           <Sidebar type={"guides"} />
         </div>
-        {isClickedGuide && 
-          <div className="h-full pb-5 lg:col-span-5 mt-0 overflow-hidden">
-            <div className="h-full w-full flex flex-col justify-center items-center">
-              <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
-            </div>
-          </div>
-        }
         {!isClickedGuide && 
         <div className="h-full pb-5 lg:col-span-5 mt-0 overflow-hidden">
           <div className="h-full overflow-y-scroll">
