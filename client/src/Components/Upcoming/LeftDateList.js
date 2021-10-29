@@ -73,7 +73,7 @@ const LeftDateList = ({ isActive, activeHandler }) => {
         upcoming_show_list: temp_upcoming_show_list,
         current_date_label: temp_current_date_label,
         current_date: proj.date,
-        is_previous,
+        is_previous: false,
       });  
     } else {
       data = project.previous_upcoming_date_list.filter(function(item) {
@@ -105,7 +105,7 @@ const LeftDateList = ({ isActive, activeHandler }) => {
         upcoming_show_list: temp_upcoming_show_list,
         current_date_label: temp_current_date_label,
         current_date: proj.date,
-        is_previous,
+        is_previous: true,
       });
     }
   }

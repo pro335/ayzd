@@ -126,7 +126,10 @@ const Card = ({ item, currentTime = null }) => {
             {isValid(item.mint_size) ? `Mint size: ${item.mint_size}` : null}
           </p>
         </div>
-        <div className="border-t text-xs font-medium px-3 pb-3" style={{borderColor: "rgba(255, 255, 255, 0.1)"}}>
+        <div 
+          className={`text-xs font-medium px-3 pb-3 ${ isValid(project.is_previous) && project.is_previous && !isValid(item.twitter_members) && !isValid(item.discord_members) ? "hidden" : "border-t" }`}
+          style={{borderColor: "rgba(255, 255, 255, 0.1)"}}
+        >
           {isValid(item.twitter_members) ? 
             <div
               className="flex flex-row mt-3 hover:cursor-pointer"
@@ -182,13 +185,15 @@ const Card = ({ item, currentTime = null }) => {
             : 
             null
           }
-          <button
-            className="flex flex-row items-center justify-center font-medium space-x-3 bg-black hover:bg-brand-calendar-button hover:border-brand-calendar-button text-white leading-7 rounded-xl px-2 lg:px-4 py-1.5 mx-auto mt-3 w-full onHover"
-            onClick={addToCalendar}
-          >
-            <img src="/assets/icons/plus.svg" alt="" />
-            <p>Add to calendar</p>
-          </button>
+          {isValid(project.is_previous) && !project.is_previous &&
+            <button
+              className="flex flex-row items-center justify-center font-medium space-x-3 bg-black hover:bg-brand-calendar-button hover:border-brand-calendar-button text-white leading-7 rounded-xl px-2 lg:px-4 py-1.5 mx-auto mt-3 w-full onHover"
+              onClick={addToCalendar}
+            >
+              <img src="/assets/icons/plus.svg" alt="" />
+              <p>Add to calendar</p>
+            </button>
+          }
         </div>
       </div>
       <div
