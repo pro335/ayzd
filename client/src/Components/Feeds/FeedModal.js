@@ -15,7 +15,12 @@ import LOTTIE_DATA from '../Lottie/data.json';
 
 var moment = require('moment');
 
-export default function FeedModal({ open, setOpen, type="dashboard" }) {
+export default function FeedModal({ open, setOpen, type="dashboard", is_move_page=true }) {
+
+  /** 
+   *  Description about the parameters
+   *  is_move_page: should move guide page.
+  */
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -111,7 +116,7 @@ export default function FeedModal({ open, setOpen, type="dashboard" }) {
         open={open} 
         onClose={() => {
           setOpen(false); 
-          if(type === "guides")
+          if(type === "guides" && is_move_page)
             history.push(`/guides`);
         }}
       >
@@ -284,8 +289,9 @@ export default function FeedModal({ open, setOpen, type="dashboard" }) {
                           aria-label="Top Right" 
                           className="focus:outline-none ml-auto" 
                           onClick={() => { 
-                            setOpen(false); 
-                            history.push(`/guides`); 
+                            setOpen(false);
+                            if(is_move_page)
+                              history.push(`/guides`); 
                           }}
                         >
                           <span className="sr-only">Close panel</span>
