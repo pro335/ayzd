@@ -157,7 +157,7 @@ const Card = ({ item, currentTime = null }) => {
             : 
             null
           }
-          {isValid(item.discord_members) ? 
+          {/* {isValid(item.discord_members) ? 
             <div
               className="flex flex-row hover:cursor-pointer mt-1"
               onClick={handleClick}
@@ -184,7 +184,7 @@ const Card = ({ item, currentTime = null }) => {
             </div>          
             : 
             null
-          }
+          } */}
           {isValid(project.is_previous) && !project.is_previous &&
             <button
               className="flex flex-row items-center justify-center font-medium space-x-3 bg-black hover:bg-brand-calendar-button hover:border-brand-calendar-button text-white leading-7 rounded-xl px-2 lg:px-4 py-1.5 mx-auto mt-3 w-full onHover"

@@ -127,11 +127,11 @@ const About = () => {
                       :
                       null
                     }
-                    {isValid(project.projectData.discord_members) ?
+                    {/* {isValid(project.projectData.discord_members) ?
                       <CommunityActivityComponent icon="discord_community" title="Discord" amount={project.projectData.discord_members} url={project.projectData.discord_link} />
                       :
                       null
-                    }
+                    } */}
                   </div>
                 </div>
               </div>
