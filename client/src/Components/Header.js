@@ -40,7 +40,7 @@ const navLinks = [
   //   badge: true
   // },
   {
-    name: 'Drop calendar',
+    name: 'Drop & IGO Calendar',
     to: '/drops',
     icon: 'calendar',
     // current: false,

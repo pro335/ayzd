@@ -8,11 +8,11 @@ const initState = {
   projects_has_guides_show_list: [],    // project list in the guides page(only projects that has the guides) to show
   upcomings: [],    // whole upcoming projects
   upcoming_show_list: [],   // upcoming projects to show
-  upcoming_date_list: [],   // data for left side bar in Drop Calendar menu
+  upcoming_date_list: [],   // data for left side bar in Drop & IGO Calendar menu
   previous_upcomings: [],    // whole upcoming projects
   previous_upcoming_show_list: [],   // upcoming projects to show
-  previous_upcoming_date_list: [],   // data for left side bar in Drop Calendar menu
-  current_date_label: null,   // the label of right side in the Drop Calendar page.
+  previous_upcoming_date_list: [],   // data for left side bar in Drop & IGO Calendar menu
+  current_date_label: null,   // the label of right side in the Drop & IGO Calendar page.
   current_date: null,
   is_previous: false,    // show the "current & future drops" or "previous drops", true: previous drops, false: current & future drops
   project_id: null,

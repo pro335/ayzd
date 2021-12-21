@@ -82,6 +82,11 @@ const Card = ({ item, type="nft", onClickHandler }) => {
           className="block h-41 xl:h-52 relative"
         >
           <img className="w-full h-full object-cover" src={media} alt="" onError={addDefaultSrc} />
+          { isValid(item.category) && isValid(item.category.name) && item.category.name === "Metaverse" &&
+            <div className="h-7 absolute inset-y-0 top-0 ml-2 mt-2 text-white bg-metaverse px-1 py-1 rounded-md flex flex-row">
+              <img className="mr-1" src="/assets/icons/metaverse_grey.svg" alt="" /> Metaverse
+            </div>
+          }
           <img className={`${type==="guides" && item.is_video_guide ? "visible": "invisible"} absolute inset-y-0 top-0 ml-2 mt-2`} src="/assets/icons/video.svg" alt="" />
         </div>
         <div className="text-xs font-medium pl-3 py-2 pr-5">

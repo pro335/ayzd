@@ -37,7 +37,8 @@ module.exports = {
       },
       backgroundImage: theme => ({
         'base': "linear-gradient(101.57deg, #A129FF 0%, #7B61FF 100%)",
-        'secondary': "linear-gradient(101.57deg, #10B981 0%, #1EAEFF 100%)"
+        'secondary': "linear-gradient(101.57deg, #10B981 0%, #1EAEFF 100%)",
+        'metaverse': "linear-gradient(90.18deg, #199E5E 1.26%, #0F979F 99.85%)"
       }),
       boxShadow: {
         'footer': '0px 4px 27px 18px rgba(0, 0, 0, 0.6)'

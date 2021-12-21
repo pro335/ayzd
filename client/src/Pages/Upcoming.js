@@ -78,7 +78,7 @@ const Upcoming = () => {
   return (
     <>
       <Helmet>
-        <title>{ "NFT Drop calendar on ayzd.com: nft drops on eth, solana drops, binance drops, crypto.com drops, best collections and nft drop analytics" }</title>
+        <title>{ "NFT Drop & IGO Calendar on ayzd.com: nft drops on eth, solana drops, binance drops, crypto.com drops, best collections and nft drop analytics" }</title>
       </Helmet>
       <div className="flex-col h-full relative w-full overflow-hidden">
         <div className="hidden lg:flex w-full fixed h-16 bg-brand-gray-800 z-30">

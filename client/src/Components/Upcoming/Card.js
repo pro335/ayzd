@@ -109,7 +109,16 @@ const Card = ({ item, currentTime = null }) => {
           onClick={handleClick}
         >
           <img className="w-full h-full object-cover" src={main_image} alt="" onError={addDefaultSrc} />
-          <div className="h-7 absolute inset-y-0 top-0 right-0 text-white bg-base px-2 py-1 mt-2 mr-2 rounded-md">{isValid(item.price) ? `${item.price}` : null}</div>
+          { isValid(item.category) && isValid(item.category.name) && item.category.name === "Metaverse" &&
+            <div className="h-7 absolute inset-y-0 top-0 ml-2 mt-2 text-white bg-metaverse px-1 py-1 rounded-md flex flex-row">
+              <img className="mr-1" src="/assets/icons/metaverse_grey.svg" alt="" /> Metaverse
+            </div>
+          }
+          {isValid(item.isIGO) && item.isIGO ? 
+            <div className="h-7 absolute inset-y-0 top-0 right-0 text-white bg-metaverse px-2 py-1 mt-2 mr-2 rounded-md">IGO</div>
+            :
+            <div className="h-7 absolute inset-y-0 top-0 right-0 text-white bg-base px-2 py-1 mt-2 mr-2 rounded-md">{isValid(item.price) ? `${item.price}` : null}</div>
+          }
         </div>
         <div
           className="text-xs font-medium px-3 py-2 hover:cursor-pointer"

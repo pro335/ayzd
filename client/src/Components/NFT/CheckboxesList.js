@@ -50,25 +50,49 @@ const CheckBoxesList = ({ data, all, handleChange, title, icon, classes }) => {
       />
       <div className="h-full space-y-1 p-2">
         {isValid(data) ?
-          data.map((input, index) => {
-            return (
-              <label key={index} className="h-10 relative flex items-center hover:bg-brand-gray-800  hover:text-gray-200 rounded-md px-2 py-1">
-                <input
-                  id={input._id}
-                  name={input._id}
-                  value={input._id}
-                  type="checkbox"
-                  onChange={() => onChange(input._id)}
-                  // checked={all}
-                  className="form-checkbox w-5 h-5 bg-brand-gray-900 border border-brand-gray-700 rounded text-brand-AYZD-PURPLE"
-                  checked={input.checked}
-                />
-                <span htmlFor={input._id} className="flex-1 text-sm font-medium cursor-pointer capitalize ml-2">
-                  {input.name}
-                </span>
-              </label>
-            )
-          })
+          <>
+            {data.map((input, index) => {
+              return (
+                title === "Categories" && input.name === "Metaverse" &&
+                  <label key={index} className="h-10 relative flex items-center hover:bg-brand-gray-800  hover:text-gray-200 rounded-md px-2 py-1">
+                    <input
+                      id={input._id}
+                      name={input._id}
+                      value={input._id}
+                      type="checkbox"
+                      onChange={() => onChange(input._id)}
+                      // checked={all}
+                      className="form-checkbox w-5 h-5 bg-brand-gray-900 border border-brand-gray-700 rounded text-brand-AYZD-PURPLE"
+                      checked={input.checked}
+                    />
+                    <img className="ml-2" src="/assets/icons/metaverse.svg" alt="" />
+                    <span htmlFor={input._id} className="flex-1 text-sm font-medium text-brand-green cursor-pointer capitalize ml-2">
+                      {input.name}
+                    </span>
+                  </label>
+              )
+            })}
+            {data.map((input, index) => {
+              return (
+                ( ( title === "Categories" && input.name !== "Metaverse" ) || title === "Chain" ) &&
+                  <label key={index} className="h-10 relative flex items-center hover:bg-brand-gray-800  hover:text-gray-200 rounded-md px-2 py-1">
+                    <input
+                      id={input._id}
+                      name={input._id}
+                      value={input._id}
+                      type="checkbox"
+                      onChange={() => onChange(input._id)}
+                      // checked={all}
+                      className="form-checkbox w-5 h-5 bg-brand-gray-900 border border-brand-gray-700 rounded text-brand-AYZD-PURPLE"
+                      checked={input.checked}
+                    />
+                    <span htmlFor={input._id} className="flex-1 text-sm font-medium cursor-pointer capitalize ml-2">
+                      {input.name}
+                    </span>
+                  </label>
+              )
+            })}
+          </>
           :
           ( !isLoaded ?
             <div className="h-full flex flex-col justify-center items-center py-20">
