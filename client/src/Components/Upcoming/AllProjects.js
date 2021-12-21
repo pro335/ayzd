@@ -27,7 +27,16 @@ const AllProjects = ({ }) => {
         <>
           <div className="px-4 md:px-8 lg:px-20 py-3 lg:py-6">
             <div className="flex flex-col lg:flex-row mt-5 lg:mt-0">
-              <p className="text-lg text-gray-300 flex items-center lg:justify-center">{project.current_date_label}</p>
+              <div className="flex flex-col">
+              <p className="text-lg text-gray-300 flex items-center">{project.current_date_label}</p>
+              <p className="text-brand-gray-400 font-medium flex items-center">Want to be featured here?&nbsp;
+                <a href="https://forms.gle/LrF9yUjEZasRMztDA"
+                  style={{textDecoration: "underline"}}
+                  target="_blank"
+                >Add your project</a>
+              </p>
+              
+              </div>
               <Sortby />
             </div>
             {/* <p className="text-sm font-medium">All drop dates are displayed in GMT+3 time zone</p> */}

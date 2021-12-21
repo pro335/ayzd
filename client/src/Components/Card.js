@@ -93,7 +93,7 @@ const Card = ({ item, type="nft", onClickHandler }) => {
                     {isValid(item.category) ? item.category.name : ""}
                   </p>
                   <p className="text-sm text-gray-300">
-                    {item.name}
+                    {item.name}{/* , {item.twitter_members} */}
                   </p>
                 </>
               ) 
