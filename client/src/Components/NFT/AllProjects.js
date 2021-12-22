@@ -7,7 +7,7 @@ const AllProjects = ({ projects, type, onClickHandler }) => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-x-5 lg:gap-y-7">
         {
           projects.map((item, index) =>
-            (type === "guides") || (type !== "guides" && item.name !== "Smart feed" && item.name !== "Research & Analytics") ?
+            (type === "guides") || (type !== "guides" && item.name !== "Smart feed" && item.name !== "Research & Analytics" && item.name !== "Metaverse") ?
               <Card key={index} item={item} type={type} onClickHandler={onClickHandler} />
               :
               null
