@@ -70,7 +70,7 @@ const ProjectsList = ({ isActive, activeHandler, type="dashboard" }) => {
               <div className="w-6 h-6 mr-4">
                 <img className={`${item.name === "Smart feed" ? '' : 'rounded-full'} mx-auto h-full`} src={main_image} alt={item.name} />
               </div>
-              <p>
+              <p className={`${item.name === "Metaverse" ? 'text-brand-green' : ''}`}>
                 {item.name}
               </p>
             </div>
@@ -90,7 +90,7 @@ const ProjectsList = ({ isActive, activeHandler, type="dashboard" }) => {
                 <div className="w-6 h-6 mr-4">
                   <img className={`${item.name === "All guides" || item.name === "Research & Analytics" ? '' : 'rounded-full'} mx-auto h-full`} src={main_image} alt={item.name} />
                 </div>
-                <p>
+                <p className={`${item.name === "Metaverse" ? 'text-brand-green' : ''}`}>
                   {item.name}
                 </p>
               </div>
@@ -103,7 +103,7 @@ const ProjectsList = ({ isActive, activeHandler, type="dashboard" }) => {
               <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
             </div>
             :
-            project.projects_has_news_show_list.length <= 0 && <p>No Projects</p>
+            project.projects_has_news_show_list.length <= 0 && <p>No Data</p>
           )
         )}
     </div>

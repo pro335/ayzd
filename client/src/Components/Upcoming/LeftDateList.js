@@ -125,7 +125,7 @@ const LeftDateList = ({ isActive, activeHandler }) => {
           {project.upcoming_date_list.map((item, index) => {
             return (
               <div
-                className={`${isActive === item.date ? 'bg-brand-gray-800 text-white' : ''} h-10 hover:bg-brand-gray-800 hover:cursor-pointer rounded-lg flex items-center text-brand-gray-600 hover:text-white onHover px-3 py-2 mx-2`}
+                className={`${isActive === item.date ? 'bg-brand-gray-800 text-white' : 'text-brand-gray-600'} h-10 hover:bg-brand-gray-800 hover:cursor-pointer rounded-lg flex items-center hover:text-white onHover px-3 py-2 mx-2`}
                 onClick={() => handleClick(item, false)}
                 key={index}
               >
@@ -147,7 +147,7 @@ const LeftDateList = ({ isActive, activeHandler }) => {
           {project.previous_upcoming_date_list.map((item, index) => {
             return (
               <div
-                className={`${isActive === item.date ? 'bg-brand-gray-800 text-white' : ''} h-10 hover:bg-brand-gray-800 hover:cursor-pointer rounded-lg flex items-center text-brand-gray-600 hover:text-white onHover px-3 py-2 mx-2`}
+                className={`${isActive === item.date ? 'bg-brand-gray-800 text-white' : ''} h-10 hover:bg-brand-gray-800 hover:cursor-pointer rounded-lg flex items-center hover:text-white onHover px-3 py-2 mx-2`}
                 onClick={() => handleClick(item, true)}
                 key={index}
               >
