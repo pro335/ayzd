@@ -203,16 +203,13 @@ const Header = () => {
                           Sign Up
                         </Link> */}
 
-                        <p className="text-brand-gray-500 font-medium text-center leading-6">
-                          {/* Existing customer? */}
                           <a
                             href="https://ayzd.substack.com"
-                            className="bg-brand-AYZD-PURPLE hover:bg-purple-700 text-white leading-7 rounded-xl px-2 py-1.5"
+                            className="block bg-brand-AYZD-PURPLE hover:bg-purple-700 text-white text-center leading-7 rounded-xl px-2 py-1.5"
                             target="_blank"
                           >
                             Subscribe to NFT & Metaverse newsletter
                           </a>
-                        </p>
 
                       </div>
                     </div>
