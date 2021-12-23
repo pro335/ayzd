@@ -80,6 +80,9 @@ export default function FeedModal({ open, setOpen, type="dashboard", is_move_pag
 
   const handleClick = (proj) => {
 
+    if(isValid(proj) && isValid(proj.name) && (proj.name === "Metaverse") )
+      return;
+
     if(type === "guides" && isValid(proj) && isValid(proj.name) && (proj.name === "Research & Analytics") )
       return;
       

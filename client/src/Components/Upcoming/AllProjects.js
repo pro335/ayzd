@@ -40,7 +40,7 @@ const AllProjects = ({ }) => {
               <Sortby />
             </div>
             {/* <p className="text-sm font-medium">All drop dates are displayed in GMT+3 time zone</p> */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 md:gap-x-5 lg:gap-y-7 pt-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 md:gap-x-5 lg:gap-y-7 pt-4">
               {
                 project.upcoming_show_list.map((item, index) =>
                   (item.name !== "Smart feed") && (item.name !== "Research & Analytics") ?
@@ -60,7 +60,7 @@ const AllProjects = ({ }) => {
                 {"Previous drops"}
               </p>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 md:gap-x-5 lg:gap-y-7 pt-4 px-4 md:px-8 lg:px-20">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 md:gap-x-5 lg:gap-y-7 pt-4 px-4 md:px-8 lg:px-20">
               {
                 isValid(project.previous_upcomings) && project.previous_upcomings.slice(0, 10).map((item, index) =>
                   (item.name !== "Smart feed") && (item.name !== "Research & Analytics") ?

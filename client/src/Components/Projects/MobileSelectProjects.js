@@ -69,7 +69,7 @@ export default function MobileSelectProjects({ type="dashboard" }) {
               <span className="flex items-center">
                 <img src={isValid(selected.main_image) ? selected.main_image.url : `${config.bucket_url}/${config.common_image}`} className={`${selected.name === "Smart feed" || selected.name === "All guides" || selected.name === "Research & Analytics" ? '' : 'rounded-full'} flex-shrink-0 h-6 w-6`} />
 
-                <span className="block text-sm font-medium text-gray-200 ml-3">
+                <span className={`${selected.name === "Metaverse" ? 'text-brand-green' : ''} block text-sm font-medium text-gray-200 ml-3`}>
                   {selected.name}
                 </span>
               </span>
@@ -110,7 +110,7 @@ export default function MobileSelectProjects({ type="dashboard" }) {
                             <div className="flex items-center hover:cursor-pointer" onClick={() => handleClick(person)}>
                               <img src={main_image} alt="" className={`${person.name === "Smart feed" ? '' : 'rounded-full'} flex-shrink-0 h-6 w-6`} />
                               <span
-                                className={classNames(selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}
+                                className={`${selected ? 'font-semibold' : 'font-normal'} ${person.name === "Metaverse" ? 'text-brand-green' : ''} ml-3 block truncate}`}
                               >
                                 {person.name}
                               </span>
@@ -140,7 +140,7 @@ export default function MobileSelectProjects({ type="dashboard" }) {
                             <div className="flex items-center hover:cursor-pointer" onClick={() => handleClick(person)}>
                               <img src={main_image} alt="" className={`${person.name === "All guides" || person.name === "Research & Analytics" ? '' : 'rounded-full'} flex-shrink-0 h-6 w-6`} />
                               <span
-                                className={classNames(selected ? 'font-semibold' : 'font-normal', 'ml-3 block truncate')}
+                                className={`${selected ? 'font-semibold' : 'font-normal'} ${person.name === "Metaverse" ? 'text-brand-green' : ''} ml-3 block truncate}`}
                               >
                                 {person.name}
                               </span>
