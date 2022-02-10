@@ -10,10 +10,10 @@ import LottieAnimation from '../Lottie/Lottie';
 import LOTTIE_DATA from '../Lottie/data.json';
 
 const Marketplaces = ({ }) => {
- 
+
   const dispatch = useDispatch();
   const history = useHistory();
-  
+
   const { project, rankings } = useSelector(state => {
     return {
       project: state.project,
@@ -21,9 +21,9 @@ const Marketplaces = ({ }) => {
     };
   });
 
-  
+
   const handleClick = (collection) => {
- 
+
     // let data = project.projects.filter(function(item) {
     //   return item.name === collection.name;
     // });
@@ -45,7 +45,10 @@ const Marketplaces = ({ }) => {
           btnLink="/rankings"
         />
 
-        { !isValid(rankings.tokens_by_market_cap) ?
+        <div className="h-full flex flex-col justify-center items-center py-20">
+          <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
+        </div>
+        {/* { !isValid(rankings.tokens_by_market_cap) ?
           <div className="h-full flex flex-col justify-center items-center py-20">
             <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
           </div>
@@ -91,7 +94,7 @@ const Marketplaces = ({ }) => {
             }
 
           </div>
-        }
+        } */}
       </div>
     </>
   )

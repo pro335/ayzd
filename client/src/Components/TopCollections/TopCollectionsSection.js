@@ -18,15 +18,15 @@ const TopCollectionsSection = ({ }) => {
     return {
       project: state.project,
       rankings: state.rankings,
-      };
+    };
   });
 
   const handleClick = (collection) => {
- 
-    let data = project.projects.filter(function(item) {
+
+    let data = project.projects.filter(function (item) {
       return item.name === collection.name;
     });
-    if(isValid(data)) {
+    if (isValid(data)) {
       history.push(`/projects/${data[0].unique_id}`);
     } else {
       // alert("Doesn't exist")
@@ -43,7 +43,10 @@ const TopCollectionsSection = ({ }) => {
           classes="border-t"
           btnLink="/rankings"
         />
-        { !isValid(rankings.topCollections) ?
+        <div className="h-full flex flex-col justify-center items-center py-20">
+          <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
+        </div>
+        {/* { !isValid(rankings.topCollections) ?
           <div className="h-full flex flex-col justify-center items-center py-20">
             <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
           </div>
@@ -69,7 +72,7 @@ const TopCollectionsSection = ({ }) => {
               ))
             }
           </div>
-        }
+        } */}
       </div>
     </>
   )

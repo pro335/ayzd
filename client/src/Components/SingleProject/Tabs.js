@@ -18,7 +18,7 @@ const Tabs = () => {
   const [openFeedModal, setOpenFeedModal] = useState(false);
 
   const dispatch = useDispatch();
-    
+
   const { project, buttons } = useSelector(state => {
 
     let tempButtons = [];
@@ -27,30 +27,30 @@ const Tabs = () => {
       "title": "About",
     });
 
-    if(isValid(state.project.projectData) && isValid(state.project.trendingNFTs))
-      tempButtons.push({
-        "id": 2,
-        "title": "NFT List",
-      });
+    if (isValid(state.project.projectData) && isValid(state.project.trendingNFTs)) { }
+    //   tempButtons.push({
+    //     "id": 2,
+    //     "title": "NFT List",
+    //   });
 
     // tempButtons.push({
     //   "id": 3,
     //   "title": "Statistics",
     // });
 
-    if(isValid(state.project.projectData) && isValid(state.project.projectData.guide_list))
+    if (isValid(state.project.projectData) && isValid(state.project.projectData.guide_list))
       tempButtons.push({
         "id": 4,
         "title": "Guides",
       });
 
-    if(isValid(state.livefeed) && isValid(state.livefeed.filtered_livefeeds))
-      tempButtons.push({
-        "id": 5,
-        "title": "Newsfeed",
-      });
+    if (isValid(state.livefeed) && isValid(state.livefeed.filtered_livefeeds)) { }
+    // tempButtons.push({
+    //   "id": 5,
+    //   "title": "Newsfeed",
+    // });
 
-    if(isValid(state.project.projectData) && isValid(state.project.projectData.similar_list))
+    if (isValid(state.project.projectData) && isValid(state.project.projectData.similar_list))
       tempButtons.push({
         "id": 6,
         "title": "Similar projects",
@@ -61,21 +61,21 @@ const Tabs = () => {
       buttons: tempButtons,
     };
   });
-  
+
   useEffect(() => {
-    
+
     async function fetchTrendingNFTs() {
-      if(isValid(project.projectData) && isValid(project.projectData.slug)) {
+      if (isValid(project.projectData) && isValid(project.projectData.slug)) {
         let params = {
-          dappSlug: project.projectData.slug, 
-          orderBy: null, 
+          dappSlug: project.projectData.slug,
+          orderBy: null,
           orderDirection: null,
         }
 
         let res = await actions.getTrendingNFTs(params);
         try {
           let { success, trendingNFTs } = res.data;
-          if(success) {
+          if (success) {
             dispatch({
               type: ActionTypes.SET_TRENDING_NFTS,
               data: trendingNFTs
@@ -106,7 +106,7 @@ const Tabs = () => {
       data: index
     });
   };
-  
+
   const onClickHandler = () => {
     setOpenFeedModal(!openFeedModal)
   }
@@ -132,9 +132,9 @@ const Tabs = () => {
           project.activeTab === 1 ? <About /> :
             project.activeTab === 2 ? <NFTList /> :
               // project.activeTab === 3 ? <Statistics /> :
-                project.activeTab === 4 ? <Guides /> :
-                  project.activeTab === 5 ? <LiveFeedSection showDetailsPanel={false} onClickHandler={onClickHandler} /> :
-                    project.activeTab === 6 && <SimilarProjects />
+              project.activeTab === 4 ? <Guides /> :
+                project.activeTab === 5 ? <LiveFeedSection showDetailsPanel={false} onClickHandler={onClickHandler} /> :
+                  project.activeTab === 6 && <SimilarProjects />
         }
       </div>
 
@@ -223,7 +223,7 @@ const Tabs = () => {
           </div>
         </Dialog>
       </Transition.Root>
-      
+
       {/** Feed Modal */}
       <FeedModal open={openFeedModal} setOpen={setOpenFeedModal} />
 

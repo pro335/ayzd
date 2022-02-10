@@ -8,7 +8,7 @@ import * as actions from '../../redux/actions';
 import * as ActionTypes from '../../redux/ActionTypes';
 
 const Heading = () => {
-  
+
   const { project } = useSelector(state => {
     return {
       project: state.project,
@@ -17,10 +17,10 @@ const Heading = () => {
 
   const main_image = isValid(project.projectData) && isValid(project.projectData.main_image) && isValid(project.projectData.main_image.url) ? project.projectData.main_image.url : `${config.bucket_url}/${config.common_image}`;
 
-  return ( 
+  return (
     <div className="flex lg:flex-row items-center flex-col justify-center justify-between space-y-6 lg:space-y-0 py-5 px-5 sm:px-6">
       {/* Left */}
-      {isValid(project.projectData) ? 
+      {isValid(project.projectData) ?
         <div className="flex justify-center lg:flex-row flex-col">
           <div className="w-16 h-16 flex-shrink-0 mx-auto">
             <img className={`${project.projectData.name === "Smart feed" ? '' : 'rounded-full'} w-full h-full`} src={main_image} alt="" />
@@ -46,7 +46,7 @@ const Heading = () => {
             <p className="text-sm text-brand-gray-400 font-medium pb-1.5 text-center md:text-left">
               {project.projectData.small_description}
             </p>
-            <div className="flex items-center justify-center lg:justify-start space-x-2">
+            {/* <div className="flex items-center justify-center lg:justify-start space-x-2">
               {isValid(project.projectDataNotDatabase) && isValid(project.projectDataNotDatabase.isBySalesVolume) && project.projectDataNotDatabase.isBySalesVolume.flag ?
                 <div className="relative text-brand-green rounded-full overflow-hidden whitespace-nowrap px-3 py-1.5">
                   #{project.projectDataNotDatabase.isBySalesVolume.value + 1} by sales volume
@@ -65,7 +65,7 @@ const Heading = () => {
                 :
                 null
               }
-            </div>
+            </div> */}
           </div>
         </div>
         :
@@ -74,19 +74,19 @@ const Heading = () => {
       {/* Moved "Mint Website" button inside div */}
       {/* Right */}
       {isValid(project.projectData) && isValid(project.projectData.btn_label) && isValid(project.projectData.btn_url) ?
-          <div className="flex items-center font-medium mx-auto lg:ml-auto lg:mr-0 space-x-3 flex-shrink-0">
-            <a
-                href={project.projectData.btn_url}
-                className="bg-brand-AYZD-PURPLE hover:bg-purple-700 text-white leading-7 rounded-xl px-4 py-1.5"
-                target="_blank"
-            >
-              {project.projectData.btn_label}
-            </a>
-          </div>
-          :
-          null
+        <div className="flex items-center font-medium mx-auto lg:ml-auto lg:mr-0 space-x-3 flex-shrink-0">
+          <a
+            href={project.projectData.btn_url}
+            className="bg-brand-AYZD-PURPLE hover:bg-purple-700 text-white leading-7 rounded-xl px-4 py-1.5"
+            target="_blank"
+          >
+            {project.projectData.btn_label}
+          </a>
+        </div>
+        :
+        null
       }
-  </div>
+    </div>
   )
 }
 

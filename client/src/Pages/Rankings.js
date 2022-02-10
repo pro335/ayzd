@@ -12,10 +12,10 @@ const Rankings = () => {
   return (
     <div className="w-full lg:overflow-hidden">
       <Helmet>
-        <title>{ "NFT Rankings on ayzd.com: biggest sales amount, sale of the day, gaining momentum, biggest loosers, NFT tokens by market cap and more" }</title>
+        <title>{"NFT Rankings on ayzd.com: biggest sales amount, sale of the day, gaining momentum, biggest loosers, NFT tokens by market cap and more"}</title>
       </Helmet>
       <div className="w-full h-full grid md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 overflow-y-scroll">
-        <BiggestSalesAmount
+        {/* <BiggestSalesAmount
           title="Biggest all time sales amount"
           icon="shopping-cart"
         />
@@ -44,7 +44,7 @@ const Rankings = () => {
           title="NFT tokens by market cap today"
           icon="tokens_market_cap"
           classes="border-t"
-        />
+        /> */}
       </div>
     </div>
   )

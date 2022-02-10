@@ -10,10 +10,10 @@ import LottieAnimation from '../Lottie/Lottie';
 import LOTTIE_DATA from '../Lottie/data.json';
 
 const GainingMomenum = ({ }) => {
- 
+
   const dispatch = useDispatch();
   const history = useHistory();
-  
+
   const { project, rankings } = useSelector(state => {
     return {
       project: state.project,
@@ -21,13 +21,13 @@ const GainingMomenum = ({ }) => {
     };
   });
 
-  
+
   const handleClick = (collection) => {
- 
-    let data = project.projects.filter(function(item) {
+
+    let data = project.projects.filter(function (item) {
       return item.name === collection.name;
     });
-    if(isValid(data)) {
+    if (isValid(data)) {
       history.push(`/projects/${data[0].unique_id}`);
     } else {
       // alert("Doesn't exist")
@@ -45,7 +45,10 @@ const GainingMomenum = ({ }) => {
           btnLink="/rankings"
         />
 
-        { !isValid(rankings.gainers) ?
+        <div className="h-full flex flex-col justify-center items-center py-20">
+          <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
+        </div>
+        {/* { !isValid(rankings.gainers) ?
           <div className="h-full flex flex-col justify-center items-center py-20">
             <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
           </div>
@@ -64,9 +67,6 @@ const GainingMomenum = ({ }) => {
                   <p>
                     {index + 1}. {item.name}
                   </p>
-                  {/* <p className={`${item.gaining > 0 ? 'text-green-400' : 'text-red-500'} ml-auto`}>
-                    {item.gaining > 0 && '+'}{item.gaining} %
-                  </p> */}
                   <div className="ml-auto flex flex-col lg:flex-row">
                     <span className="text-gray-200 order-1 md:order-none text-right">{item.price}</span>
                     <div className="flex flex-row order-2">
@@ -81,7 +81,7 @@ const GainingMomenum = ({ }) => {
             }
 
           </div>
-        }
+        } */}
       </div>
     </>
   )

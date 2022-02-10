@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import isValid from '../../utility/isValid';
 
 const TopSalesSection = () => {
-  
+
   const { rankings } = useSelector(state => {
     return {
       rankings: state.rankings,
@@ -25,7 +25,10 @@ const TopSalesSection = () => {
           btnLink="/rankings"
         />
 
-        { !isValid(rankings.daySales) ?
+        <div className="h-full flex flex-col justify-center items-center py-20">
+          <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
+        </div>
+        {/* { !isValid(rankings.daySales) ?
           <div className="h-full flex flex-col justify-center items-center py-20">
             <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
           </div>
@@ -33,7 +36,7 @@ const TopSalesSection = () => {
           <div className="py-5">
             <TopSalesList />
           </div>
-        }          
+        }           */}
       </div>
     </>
   )

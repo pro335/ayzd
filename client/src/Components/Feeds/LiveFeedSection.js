@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useRef} from 'react'
-import { useSelector} from 'react-redux';
+import React, { useState, useEffect, useRef } from 'react'
+import { useSelector } from 'react-redux';
 import SectionHeading from "../SectionHeading"
 import FeedsList from "./FeedsList"
 import Banner from "../Banner/Banner";
@@ -9,9 +9,9 @@ import LOTTIE_DATA from '../Lottie/data.json';
 import NotFound from "../NFT/NotFound"
 import config from '../../config/config';
 
-const LiveFeedSection = ({ showDetailsPanel=false, onClickHandler }) => {
+const LiveFeedSection = ({ showDetailsPanel = false, onClickHandler }) => {
 
-  const { project, livefeed } = useSelector( state => {
+  const { project, livefeed } = useSelector(state => {
     return {
       project: state.project,
       livefeed: state.livefeed,
@@ -33,23 +33,26 @@ const LiveFeedSection = ({ showDetailsPanel=false, onClickHandler }) => {
   }, []); // here
 
   return (
-      <div className="h-full md:col-span-3 lg:overflow-hidden">
-        {showDetailsPanel && isValid(project.project_id) && isValid(project.projectData) && (project.projectData.name !== "Smart feed" && project.projectData.name !== "Metaverse") ?
-          <Banner />
-          :
-          null
-        }
+    <div className="h-full md:col-span-3 lg:overflow-hidden">
+      {showDetailsPanel && isValid(project.project_id) && isValid(project.projectData) && (project.projectData.name !== "Smart feed" && project.projectData.name !== "Metaverse") ?
+        <Banner />
+        :
+        null
+      }
 
-        {/* <!-- Center Heading --> */}
-        <SectionHeading
-          title="Live news feed"
-          icon="live-feed"
-          buttons=""
-          classes="lg:border-r"
-        />
-        {/* <!-- End --> */}
+      {/* <!-- Center Heading --> */}
+      <SectionHeading
+        title="Live news feed"
+        icon="live-feed"
+        buttons=""
+        classes="lg:border-r"
+      />
+      {/* <!-- End --> */}
 
-        { isValid(livefeed.filtered_livefeeds) ?
+      <div className="h-full flex flex-col justify-center items-center pb-15">
+        <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
+      </div>
+      {/* { isValid(livefeed.filtered_livefeeds) ?
           <FeedsList onClickHandler={onClickHandler} />
           :
           ( !isLoaded ?
@@ -61,8 +64,8 @@ const LiveFeedSection = ({ showDetailsPanel=false, onClickHandler }) => {
               <NotFound />
             </div>
           )
-        }
-      </div>
+        } */}
+    </div>
   )
 }
 

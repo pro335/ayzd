@@ -15,7 +15,7 @@ import moment from 'moment';
 const About = () => {
 
   const dispatch = useDispatch();
-    
+
   const { project } = useSelector(state => {
     return {
       project: state.project,
@@ -23,19 +23,19 @@ const About = () => {
   });
 
   useEffect(() => {
-    
+
     async function fetchTrendingNFTs() {
-      if(isValid(project.projectData) && isValid(project.projectData.slug)) {
+      if (isValid(project.projectData) && isValid(project.projectData.slug)) {
         let params = {
-          dappSlug: project.projectData.slug, 
-          orderBy: null, 
+          dappSlug: project.projectData.slug,
+          orderBy: null,
           orderDirection: null,
         }
 
         let res = await actions.getTrendingNFTs(params);
         try {
           let { success, trendingNFTs } = res.data;
-          if(success) {
+          if (success) {
             dispatch({
               type: ActionTypes.SET_TRENDING_NFTS,
               data: trendingNFTs
@@ -70,7 +70,7 @@ const About = () => {
               icon="project-description"
             />
 
-            <div className="text-sm text-brand-gray-400 font-medium p-4 sm:p-5 space-y-3" dangerouslySetInnerHTML={{__html: project.projectData.full_description}} />
+            <div className="text-sm text-brand-gray-400 font-medium p-4 sm:p-5 space-y-3" dangerouslySetInnerHTML={{ __html: project.projectData.full_description }} />
 
             <div className="w-full">
               <SectionHeading
@@ -83,7 +83,7 @@ const About = () => {
                 <MediaList />
               </div>
             </div>
-            
+
             {isValid(project.projectData) && isValid(project.projectData.member_list) ?
               <div className="border-brand-gray-800 mb-1 lg:mb-8">
                 <div>
@@ -110,12 +110,12 @@ const About = () => {
                 />
                 <div className="w-full lg:w-auto lg:flex lg:flex-col lg:justify-start pr-5">
                   <div className="w-full lg:w-auto lg:flex items-center justify-center lg:justify-start">
-                    { isValid(project.projectData) && (!isValid(project.projectData.isUpcoming) || ( isValid(project.projectData.isUpcoming) && !project.projectData.isUpcoming )) && isValid(project.projectDataNotDatabase) && isValid(project.projectDataNotDatabase.volume) ?
+                    {isValid(project.projectData) && (!isValid(project.projectData.isUpcoming) || (isValid(project.projectData.isUpcoming) && !project.projectData.isUpcoming)) && isValid(project.projectDataNotDatabase) && isValid(project.projectDataNotDatabase.volume) ?
                       <StatsTopComponent icon="sales_volume" title="Sales volume" amount={project.projectDataNotDatabase.volume} />
                       :
                       null
                     }
-                    { isValid(project.projectData) && isValid(project.projectData.isUpcoming) && project.projectData.isUpcoming && isValid(project.projectData.upcoming_date) ?
+                    {isValid(project.projectData) && isValid(project.projectData.isUpcoming) && project.projectData.isUpcoming && isValid(project.projectData.upcoming_date) ?
                       <StatsTopComponent icon="calendar1" title="Drop date (GMT +3)" amount={moment(project.projectData.upcoming_date).format("MMM D, YYYY hh:mm A")} />
                       :
                       null
@@ -138,15 +138,16 @@ const About = () => {
             </div>
 
             {isValid(project.projectData) && isValid(project.trendingNFTs) ?
-              <NFTSliders
-                title="Trending nfts"
-                icon="trending-nft"
-                type="trending-nft"
-              />
+              // <NFTSliders
+              //   title="Trending nfts"
+              //   icon="trending-nft"
+              //   type="trending-nft"
+              // />
+              null
               :
               null
             }
-            { ( isValid(project.projectData) && ( (isValid(project.projectData.score_team) && Number(project.projectData.score_team) > 0 ) || (isValid(project.projectData.score_uniqueness) && Number(project.projectData.score_uniqueness) > 0) || (isValid(project.projectData.score_community) && Number(project.projectData.score_community) > 0) || (isValid(project.projectData.score_v_quality) && Number(project.projectData.score_v_quality) > 0) || (isValid(project.projectData.score_v_potential) && Number(project.projectData.score_v_potential) > 0) || (isValid(project.projectData.score_utility) && Number(project.projectData.score_utility) > 0) ) ) ?
+            {(isValid(project.projectData) && ((isValid(project.projectData.score_team) && Number(project.projectData.score_team) > 0) || (isValid(project.projectData.score_uniqueness) && Number(project.projectData.score_uniqueness) > 0) || (isValid(project.projectData.score_community) && Number(project.projectData.score_community) > 0) || (isValid(project.projectData.score_v_quality) && Number(project.projectData.score_v_quality) > 0) || (isValid(project.projectData.score_v_potential) && Number(project.projectData.score_v_potential) > 0) || (isValid(project.projectData.score_utility) && Number(project.projectData.score_utility) > 0))) ?
               <div className="border-brand-gray-800 mb-1 lg:mb-8">
                 <SectionHeading
                   title="Ayzd project score"
