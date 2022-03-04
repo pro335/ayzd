@@ -3,7 +3,7 @@ import SectionHeading from "./../SectionHeading";
 import FeaturedGuideList from "./FeaturedGuideList";
 import LottieAnimation from '../Lottie/Lottie';
 import LOTTIE_DATA from '../Lottie/data.json';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import isValid from '../../utility/isValid';
 
 const FeaturedGuideSection = () => {
