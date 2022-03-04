@@ -39,7 +39,7 @@ const TopCollectionsSection = ({ }) => {
         <SectionHeading
           title="Top collections"
           icon="top-sales"
-          buttons="view"
+          buttons="View All"
           classes="border-t"
           btnLink="/rankings"
         />

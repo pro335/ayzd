@@ -40,7 +40,7 @@ const GainingMomenum = ({ }) => {
         <SectionHeading
           title="Gaining momenum"
           icon="rocket"
-          buttons="view"
+          buttons="View All"
           classes="border-t"
           btnLink="/rankings"
         />

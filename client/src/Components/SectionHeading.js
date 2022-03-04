@@ -17,27 +17,24 @@ const SectionHeading = ({ title, icon, buttons, classes, btnLink }) => {
 
       {
         buttons && (
-          buttons === "all" ?
-            (
-              <div className="flex items-center space-x-3">
-                <button type="button">
-                  <SortAscendingIcon className="h-4.5 w-4.5 text-brand-gray-400" />
-                </button>
+          // buttons === "all" ?
+          //   (
+          //     <div className="flex items-center space-x-3">
+          //       <button type="button">
+          //         <SortAscendingIcon className="h-4.5 w-4.5 text-brand-gray-400" />
+          //       </button>
 
-                <button type="button"
-                  className="flex items-center text-brand-gray-400 font-medium">
-                  <span>All</span>
+          //       <button type="button"
+          //         className="flex items-center text-brand-gray-400 font-medium">
+          //         <span>All</span>
 
-                  <ChevronDownIcon className="h-5 w-5 text-brand-gray-400 ml-2" />
-                </button>
-              </div>
-            )
-            :
-            (
-              <Link to={btnLink ? btnLink : "/"} className="text-brand-gray-400 font-medium transition-colors duration-200 ease-out hover:text-gray-100">
-                View All
-              </Link>
-            )
+          //         <ChevronDownIcon className="h-5 w-5 text-brand-gray-400 ml-2" />
+          //       </button>
+          //     </div>
+          //   )
+          <Link to={btnLink ? btnLink : "/"} className="text-brand-gray-400 font-medium transition-colors duration-200 ease-out hover:text-gray-100">
+            {buttons}
+          </Link>
         )
 
       }

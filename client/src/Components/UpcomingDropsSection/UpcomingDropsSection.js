@@ -1,16 +1,16 @@
 import React from 'react'
 import SectionHeading from "./../SectionHeading";
-import TopSalesList from "./TopSalesList";
+import UpcomingDropsList from "./UpcomingDropsList";
 import LottieAnimation from '../Lottie/Lottie';
 import LOTTIE_DATA from '../Lottie/data.json';
 import { useSelector, useDispatch } from 'react-redux';
 import isValid from '../../utility/isValid';
 
-const TopSalesSection = () => {
+const UpcomingDropsSection = () => {
 
-  const { rankings } = useSelector(state => {
+  const { project } = useSelector(state => {
     return {
-      rankings: state.rankings,
+      project: state.project,
     };
   });
 
@@ -18,28 +18,24 @@ const TopSalesSection = () => {
     <>
       <div>
         <SectionHeading
-          title="Top sales"
-          icon="top-sales"
+          title="Upcoming drops"
+          icon="calendar_white_icon"
           classes="border-t"
           buttons="View All"
-          btnLink="/rankings"
+          btnLink="/drops"
         />
-
-        <div className="h-full flex flex-col justify-center items-center py-20">
-          <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
-        </div>
-        {/* { !isValid(rankings.daySales) ?
+        {!isValid(project.upcoming_show_list) ?
           <div className="h-full flex flex-col justify-center items-center py-20">
             <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
           </div>
           :
           <div className="py-5">
-            <TopSalesList />
+            <UpcomingDropsList />
           </div>
-        }           */}
+        }
       </div>
     </>
   )
 }
 
-export default TopSalesSection
+export default UpcomingDropsSection

@@ -40,7 +40,7 @@ const Marketplaces = ({ }) => {
         <SectionHeading
           title="NFT tokens by market cap today"
           icon="tokens_market_cap"
-          buttons="view"
+          buttons="View All"
           classes="border-t"
           btnLink="/rankings"
         />

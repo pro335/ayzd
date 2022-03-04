@@ -25,13 +25,13 @@ const navLinks = [
     // current: false,
     badge: false
   },
-  {
-    name: 'Rankings',
-    to: '/rankings',
-    icon: 'ranking',
-    // current: false,
-    badge: false
-  },
+  // {
+  //   name: 'Rankings',
+  //   to: '/rankings',
+  //   icon: 'ranking',
+  //   // current: false,
+  //   badge: false
+  // },
   // {
   //   name: 'Trading floor',
   //   to: '/trading',
@@ -59,7 +59,7 @@ const Header = () => {
 
   const dispatch = useDispatch();
   const history = useHistory();
-  
+
   const { project } = useSelector(state => {
     return {
       project: state.project,
@@ -67,15 +67,15 @@ const Header = () => {
   });
 
   const handleClick = (link = null) => {
-    if(isValid(link) && (link.to !== "/" && link.to !== "/guides") )    // if user doesn't click the "Dashboard", i.e. user click "NFT Project", "Rankings"
+    if (isValid(link) && (link.to !== "/" && link.to !== "/guides"))    // if user doesn't click the "Dashboard", i.e. user click "NFT Project", "Rankings"
       return;
 
     // if user click the "Logo" or "Dashboard" navbar
     SetProjectData(null, project, null, dispatch);
 
-    if(!isValid(link))
+    if (!isValid(link))
       history.push(`/`);
-    else if(link.to === "/guides")
+    else if (link.to === "/guides")
       history.push(`/guides`);
   }
 
@@ -203,13 +203,13 @@ const Header = () => {
                           Sign Up
                         </Link> */}
 
-                          <a
-                            href="https://ayzd.substack.com"
-                            className="block bg-brand-AYZD-PURPLE hover:bg-purple-700 text-white text-center leading-7 rounded-xl px-2 py-1.5"
-                            target="_blank"
-                          >
-                            Subscribe to NFT & Metaverse newsletter
-                          </a>
+                        <a
+                          href="https://ayzd.substack.com"
+                          className="block bg-brand-AYZD-PURPLE hover:bg-purple-700 text-white text-center leading-7 rounded-xl px-2 py-1.5"
+                          target="_blank"
+                        >
+                          Subscribe to NFT & Metaverse newsletter
+                        </a>
 
                       </div>
                     </div>
