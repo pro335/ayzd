@@ -26,9 +26,27 @@ const LivefeedReducer = (state = initState, action) => {
         error: null,
       };
     case ActionTypes.ALL_LIVE_FEEDS:
+      let filtered_data = [];
+      for (let i = 0; i < data.length; i++) {
+        // let random = Math.floor((Math.random() * 10) + 1);
+        // if (random % 3 === 0)
+        filtered_data[i] = {
+          title: "",
+          description: "",
+          media: null,
+          newsfeedSource: "",
+          project: null,
+          link: null,
+          tag: null,
+          _id: null,
+          created_time: null,
+        };
+        //   else
+        //     filtered_data[i] = data[i];
+      }
       return {
         ...state,
-        livefeeds: data,
+        livefeeds: [...filtered_data],//[...data],
         loading: false,
         error: null
       };
@@ -42,7 +60,7 @@ const LivefeedReducer = (state = initState, action) => {
     case ActionTypes.UPDATE_LIVE_FEED:
       tempData = state.livefeeds;
       let foundIndex = state.livefeeds.findIndex(x => x._id === data._id);
-      if(foundIndex !== -1)
+      if (foundIndex !== -1)
         tempData[foundIndex] = data;
       return {
         ...state,
@@ -52,7 +70,7 @@ const LivefeedReducer = (state = initState, action) => {
       };
     case ActionTypes.DELETE_LIVE_FEED:
       tempData = state.livefeeds;
-      tempData = tempData.filter(function(cat) {
+      tempData = tempData.filter(function (cat) {
         return cat._id !== data._id;
       });
       return {
@@ -62,7 +80,7 @@ const LivefeedReducer = (state = initState, action) => {
         error: null,
       };
     case ActionTypes.SORTING_LIVE_FEED_BY:
-      let {sortBy} = action;
+      let { sortBy } = action;
 
       let sortedData = [];
       sortedData = sortBy === 'title' || sortBy === 'link' ?
@@ -95,11 +113,11 @@ const LivefeedReducer = (state = initState, action) => {
         ...state,
         livefeedData: data
       }
-    
+
     case ActionTypes.FILTERING_LIVE_FEED_BY_PROJECT:
       let projectData = action.projectData;
 
-      if( !isValid(projectData) || projectData.name === "Smart feed") {
+      if (!isValid(projectData) || projectData.name === "Smart feed") {
         return {
           ...state,
           filtered_livefeeds: [...state.livefeeds],
@@ -107,10 +125,10 @@ const LivefeedReducer = (state = initState, action) => {
       }
 
       let filtered_livefeeds = [];   // livefeeds that include the project
-      
+
       tempData = state.livefeeds;
-      tempData = tempData.map(function(item) {
-        if(isValid(item.project) && (item.project._id === projectData._id))
+      tempData = tempData.map(function (item) {
+        if (isValid(item.project) && (item.project._id === projectData._id))
           filtered_livefeeds.push(item);
       });
 

@@ -28,16 +28,16 @@ const FeedsList = ({ onClickHandler }) => {
       type: ActionTypes.SET_LIVE_FEED_ID,
       data: feedId,
     });
-  
-    let data = livefeed.filtered_livefeeds.filter(function(item) {
+
+    let data = livefeed.filtered_livefeeds.filter(function (item) {
       return item._id === feedId;
     });
-    if(isValid(data)) {
+    if (isValid(data)) {
       dispatch({
         type: ActionTypes.SET_LIVE_FEED,
         data: data[0],
       });
-      if(typeof onClickHandler === "function")
+      if (typeof onClickHandler === "function")
         onClickHandler();
     }
   }
@@ -45,7 +45,7 @@ const FeedsList = ({ onClickHandler }) => {
   const addDefaultSrc = (e) => {
     e.target.src = '/assets/images/default_livefeed_image.svg';
   }
-  
+
   const loadMore = () => {
     numberOfShowingNews + 20 < livefeed.filtered_livefeeds.length ? setNumberOfShowingNews(numberOfShowingNews + 20) : setNumberOfShowingNews(livefeed.filtered_livefeeds.length);
   }
@@ -58,34 +58,39 @@ const FeedsList = ({ onClickHandler }) => {
         <div className="h-full lg:overflow-y-scroll space-y-2 lg:space-y-4.5">
           {
             livefeed.filtered_livefeeds.slice(0, numberOfShowingNews).map((feed, index) => (
-              <button key={index}
-                className="w-full flex flex-wrap text-left hover:bg-brand-gray-800 rounded-lg onHover px-3.5 py-2"
-                onClick={() => handleClick(feed._id)}
-              >
-                <div className="w-14 h-14 flex-shrink-0 rounded-md overflow-hidden">
-                  <img className="w-full h-full object-cover object-center" src={feed.media} alt="" onError={addDefaultSrc} />
-                </div>
-                <div className="flex-1 font-medium pl-4 pr-4 lg:pr-6">
-                  <h2 className="text-sm md:text-base text-brand-gray-300 leading-4">
-                    {reduceTextLengh(feed.title, 100)}
-                  </h2>
-                  <p className="text-sm text-brand-gray-500 leading-4 line-clamp-2 md:line-clamp-1">
-                    {reduceTextLengh(feed.description, 100)}
-                  </p>
+              isValid(feed) ?
+                <button key={index}
+                  className="w-full flex flex-wrap text-left hover:bg-brand-gray-800 rounded-lg onHover px-3.5 py-2"
+                  onClick={() => handleClick(feed._id)}
+                >
+                  <div className="w-14 h-14 flex-shrink-0 rounded-md overflow-hidden">
+                    <img className="w-full h-full object-cover object-center" src={feed.media} alt="" onError={addDefaultSrc} />
+                  </div>
+                  <div className="flex-1 font-medium pl-4 pr-4 lg:pr-6">
+                    <h2 className="text-sm md:text-base text-brand-gray-300 leading-4">
+                      {reduceTextLengh(feed.title, 100)}
+                    </h2>
+                    <p className="text-sm text-brand-gray-500 leading-4 line-clamp-2 md:line-clamp-1">
+                      {reduceTextLengh(feed.description, 100)}
+                    </p>
+                    {
+                      !isTabletOrMobile && <FeedActions feed={feed} />
+                    }
+                  </div>
                   {
-                    !isTabletOrMobile && <FeedActions feed={feed} />
+                    isTabletOrMobile && <FeedActions feed={feed} />
                   }
-                </div>
-                {
-                  isTabletOrMobile && <FeedActions feed={feed} />
-                }
-              </button>
+                </button>
+                :
+                <button key={index}
+                  className="w-full flex flex-wrap text-left hover:bg-brand-gray-800 rounded-lg onHover px-3.5 py-2"
+                />
             ))
           }
           {numberOfShowingNews < livefeed.filtered_livefeeds.length ?
-            <button 
-              className="flex lg:hidden justify-center w-52 font-medium mx-auto bg-purple-500 hover:bg-purple-700 text-white leading-7 rounded-xl px-4 py-1.5 text-center" 
-              style={{marginTop: '20px', marginBottom: '20px'}}
+            <button
+              className="flex lg:hidden justify-center w-52 font-medium mx-auto bg-purple-500 hover:bg-purple-700 text-white leading-7 rounded-xl px-4 py-1.5 text-center"
+              style={{ marginTop: '20px', marginBottom: '20px' }}
               onClick={loadMore}
             >
               Load more

@@ -49,22 +49,22 @@ const LiveFeedSection = ({ showDetailsPanel = false, onClickHandler }) => {
       />
       {/* <!-- End --> */}
 
-      <div className="h-full flex flex-col justify-center items-center pb-15">
+      {/* <div className="h-full flex flex-col justify-center items-center pb-15">
         <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
-      </div>
-      {/* { isValid(livefeed.filtered_livefeeds) ?
-          <FeedsList onClickHandler={onClickHandler} />
+      </div> */}
+      {isValid(livefeed.filtered_livefeeds) ?
+        <FeedsList onClickHandler={onClickHandler} />
+        :
+        (!isLoaded ?
+          <div className="h-full flex flex-col justify-center items-center pb-15">
+            <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
+          </div>
           :
-          ( !isLoaded ?
-            <div className="h-full flex flex-col justify-center items-center pb-15">
-              <LottieAnimation lotti={LOTTIE_DATA} height={50} width={50} />
-            </div>
-            :
-            <div className="h-full pb-20 lg:pb-52">
-              <NotFound />
-            </div>
-          )
-        } */}
+          <div className="h-full pb-20 lg:pb-52">
+            <NotFound />
+          </div>
+        )
+      }
     </div>
   )
 }
